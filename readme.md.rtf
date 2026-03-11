@@ -1,0 +1,526 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 HelveticaNeue;\f2\fmodern\fcharset0 Courier;
+}
+{\colortbl;\red255\green255\blue255;\red229\green231\blue236;\red0\green0\blue0;\red0\green0\blue0;
+}
+{\*\expandedcolortbl;;\cssrgb\c91765\c92549\c94118;\cssrgb\c0\c0\c0;\cssrgb\c0\c0\c0\c84706;
+}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 You are building a production-quality React + TypeScript admin application for ServiceMaster Clean, a commercial cleaning service business. Read ALL instructions before writing any code.\
+\
+---\
+\
+## TECH STACK\
+\
+- Vite + React 18 + TypeScript\
+- React Router v6 (client-side routing)\
+- Tailwind CSS (configured with the exact custom tokens below)\
+- Lucide React (all icons)\
+- TanStack Table v8 (all data tables)\
+- React Hook Form + Zod (all forms)\
+\
+DO NOT use shadcn/ui. Build all components from scratch using the design system below.\
+\
+---\
+\
+## DESIGN SYSTEM \'97 Implement these EXACTLY. Never use arbitrary values that differ from these tokens.\
+\
+### FONT\
+Use "Helvetica Neue" with system sans-serif fallback. Import from system fonts only \'97 no Google Fonts.\
+```css\
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\
+```\
+\
+### COLOR TOKENS \'97 Configure all in tailwind.config.ts under `theme.extend.colors`\
+```js\
+colors: \{\
+  primary: \{\
+    DEFAULT: '#00A2B2',   // Primary Teal \'97 CTAs, active nav, focus rings\
+    hover:   '#008F9E',   // Teal Hover \'97 hover on primary actions\
+    light:   '#5FD1DB',   // Teal Light \'97 draft status, soft accents\
+    surface: '#E6F8FA',   // Teal Surface \'97 selected rows, info surfaces\
+  \},\
+  text: \{\
+    primary: '#1C1B1F',   // All primary text & icons\
+    subtle:  '#6D6D6D',   // Labels, secondary copy, placeholders\
+  \},\
+  border: \{\
+    DEFAULT: '#CED4DC',   // Input borders, form dividers\
+    light:   '#C9C9C9',   // Dividers, disabled borders\
+    card:    '#EDEDED',   // Card & table row outlines\
+    header:  '#E6E8ED',   // Table/grid header border\
+  \},\
+  surface: \{\
+    page:    '#F4F7FA',   // Main page background, row hover\
+    header:  '#E6E8ED',   // Table header fill\
+    white:   '#FFFFFF',   // Cards, nav sidebar, modal backgrounds\
+  \},\
+  status: \{\
+    active:          '#16A34A',\
+    activeSurface:   '#DCFCE7',\
+    draft:           '#5FD1DB',\
+    draftSurface:    '#ECFEFF',\
+    new:             '#DC2626',\
+    newSurface:      '#FEE2E2',\
+    archived:        '#C9C9C9',\
+    archivedSurface: '#F3F4F6',\
+    warning:         '#F59E0B',\
+    warningSurface:  '#FEF3C7',\
+    danger:          '#DC2626',\
+    dangerSurface:   '#FEE2E2',\
+    success:         '#16A34A',\
+    successSurface:  '#DCFCE7',\
+    info:            '#0EA5E9',\
+    infoSurface:     '#E0F2FE',\
+  \}\
+\}\
+```\
+\
+### TYPOGRAPHY SCALE\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 H1: 36px / font-medium / text-text-primary \uc0\u8594  Page hero headings H2: 32px / font-medium / text-text-primary \u8594  Major section titles H3: 24px / font-medium / text-text-primary \u8594  Page titles, modal/panel headers H4: 20px / font-medium / text-text-primary \u8594  Card headers, sidebar module titles Body: 16px / font-normal / text-text-primary \u8594  Default paragraph, table cells, form inputs Body Medium: 16px / font-medium / text-text-primary \u8594  Emphasized body, table column headers Subtitle: 13px / font-normal / text-text-subtle \u8594  Timestamps, helper text, secondary metadata Caption: 12px / font-normal / text-text-subtle \u8594  Hex values, fine-print, label overlines\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+### SPACING SCALE\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 xs: 4px sm: 8px md: 16px lg: 24px xl: 32px 2xl: 48px 3xl: 64px\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+### BORDER RADIUS\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 rounded-[4px] \uc0\u8594  Filter buttons, input fields, chips (default for inputs) rounded-[6px] \u8594  Checkbox, small internal controls rounded-[8px] \u8594  Cards, buttons, nav items, modals (default for cards/buttons) rounded-[12px] \u8594  Large panels, sheet drawers rounded-full \u8594  Toggle tracks, avatar circles, status dots\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+### SHADOWS\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 Nav item (active): shadow: 0px 1px 8px 0px rgba(0,0,0,0.15) Dropdown / Modal: shadow: 0px 4px 16px rgba(0,0,0,0.15) Row hover: shadow: 0px 1px 4px rgba(0,0,0,0.10) Back button: shadow: 0px 1px 8px 0px rgba(0,0,0,0.15)\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+---\
+\
+## COMPONENT SPECS \'97 Build these as reusable components in /src/components/ui/\
+\
+### Button\
+Two sizes:\
+- Regular: px-4 py-2 rounded-[8px] text-[16px] font-medium\
+- Skinny:  px-3 py-1.5 rounded-[4px] text-[13px] font-medium\
+\
+Four variants:\
+- Primary:   bg-primary text-white, hover:bg-primary-hover\
+- Secondary: bg-white border border-border text-text-primary, hover:bg-surface-page\
+- Danger:    bg-status-danger text-white\
+- Ghost:     border border-border text-text-primary, no background\
+\
+Disabled state: opacity-40 cursor-not-allowed\
+\
+Icon-only sizes:\
+- Regular: 40\'d740px rounded-[8px]\
+- Skinny:  28\'d728px rounded-[4px]\
+\
+### Text Input\
+Two sizes:\
+- Regular: py-2.5 px-4 text-[16px] rounded-[4px]\
+- Skinny:  py-1.5 px-3 text-[13px] rounded-[4px]\
+\
+States:\
+- Default/Focused: bg-white border-border\
+- Filled: bg-white border-border text-text-primary\
+- Error:  bg-status-dangerSurface border-status-danger text-status-danger \'97 show AlertCircle icon right side\
+- Disabled: bg-surface-page border-border-card text-border-light cursor-not-allowed\
+\
+Number input supports optional $ prefix shown as left-aligned text overlay.\
+\
+### Search Input\
+Two sizes matching Text Input sizes.\
+- Search icon (16px / 13px) left-aligned inside, pl-[40px] / pl-[32px]\
+- When filled: show X clear button right side\
+- Disabled: bg-surface-page, muted icon\
+\
+### Status Chips (dot style, rounded-full)\
+Used in tables and detail pages:\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 Active: bg-status-activeSurface border border-status-active/27 dot:bg-status-active text-[
+\f2\fs26 #15803D
+\f0\fs24 ] Draft: bg-status-draftSurface border border-status-draft/27 dot:bg-status-draft text-[
+\f2\fs26 #0891B2
+\f0\fs24 ] New: bg-status-newSurface border border-status-new/27 dot:bg-status-new text-status-new Archived: bg-status-archivedSurface border border-status-archived/27 dot:bg-status-archived text-text-subtle\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 All chips: px-[13px] py-px h-[33.5px] rounded-full gap-[6px] items-center text-[13px] font-medium\
+\
+### Alert Banners (rounded-[4px], with icon)\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 Warning: bg-status-warningSurface border-status-warning text-[
+\f2\fs26 #92400E
+\f0\fs24 ] Danger: bg-status-dangerSurface border-status-danger text-status-danger Success: bg-status-successSurface border-status-success text-[
+\f2\fs26 #15803D
+\f0\fs24 ] Info: bg-status-infoSurface border-status-info text-[
+\f2\fs26 #0369A1
+\f0\fs24 ]\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+### Tags\
+Plain tag: bg-surface-header rounded-[4px] px-3 py-1.5 text-[13px] text-text-primary\
+Removable tag: bg-primary-surface border border-primary/30 rounded-[4px] px-[13px] text-primary text-[13px] \'97 with inline \'d7 button\
+\
+### Numeric Badge\
+20\'d720px rounded-full absolute positioned top-right of icon\
+- Red (#DC2626): unread/new notifications\
+- Teal (#00A2B2): standard counts\
+Text: 10px font-medium text-white\
+\
+### Tables\
+\
+Header row:\
+- bg-surface-header (bg: #E6E8ED)\
+- Text: 16px font-medium text-text-subtle (#6D6D6D)\
+- Cell padding: px-4 py-[10px] (40px height)\
+- First col: checkbox col 52px wide, rounded-[6px] checkbox with border-[#E5E7EB]\
+\
+Body rows:\
+- bg-white\
+- Border: 1px solid #EDEDED between rows (not outside each row \'97 use border-b)\
+- Cell padding: px-4 py-4 (56px row height)\
+- Hover: bg-surface-page shadow-[0px_1px_4px_rgba(0,0,0,0.10)]\
+- Text: 16px font-normal text-text-primary\
+- Row gap: gap-2\
+\
+Table container: rounded-[8px] border border-border-card overflow-hidden\
+\
+---\
+\
+## NAVIGATION SIDEBAR\
+\
+Fixed left sidebar, 240px wide, full viewport height, bg-white, border-r border-border-header.\
+\
+### Logo area (top, h-[64px])\
+- Flex items-center px-4 gap-2\
+- Use a Sparkles icon from Lucide (24px, text-primary)  \
+- Text: "ServiceMaster" font-medium text-[18px] text-text-primary\
+\
+### Nav items\
+Each item: flex items-center gap-3 h-[50px] px-4 rounded-[8px] mx-3 text-[16px] cursor-pointer\
+\
+Active state:\
+- bg-primary text-white font-medium\
+- shadow: 0px 1px 8px 0px rgba(0,0,0,0.15)\
+- Icon: white, 24\'d724px\
+\
+Inactive state:\
+- bg-white border border-border-card text-text-primary font-normal\
+- Icon: text-text-primary, 24\'d724px\
+\
+Section labels above nav groups:\
+- text-[13px] font-medium text-text-subtle uppercase tracking-wider\
+- px-4 pt-4 pb-1\
+\
+### Nav structure:\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 [Logo]\
+MAIN Dashboard icon: LayoutDashboard\
+CUSTOMERS Accounts icon: Building2\
+OPERATIONS Templates icon: FileText\
+ADMIN Users icon: Users Settings icon: Settings\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+### Bottom user chip (fixed bottom of sidebar)\
+- h-[64px] border-t border-border-header px-4\
+- Flex items-center gap-3\
+- Avatar circle: 32px rounded-full bg-primary text-white text-[13px] font-medium (initials)\
+- Stack: user name (14px font-medium text-text-primary), role (12px text-text-subtle)\
+\
+---\
+\
+## PAGE LAYOUT WRAPPER\
+```tsx\
+// AppLayout.tsx\
+<div className="flex h-screen bg-surface-page">\
+  <Sidebar />  \{/* fixed 240px */\}\
+  <main className="flex-1 overflow-y-auto ml-[240px]">\
+    <Outlet />\
+  </main>\
+</div>\
+```\
+\
+Every page content area uses: px-8 py-6 as its outer padding.\
+\
+Page header pattern:\
+```tsx\
+<div className="flex items-start justify-between mb-6">\
+  <div>\
+    <h1 className="text-[32px] font-medium text-text-primary">\{title\}</h1>\
+    <p className="text-[13px] text-text-subtle mt-0.5">\{subtitle\}</p>\
+  </div>\
+  <div className="flex gap-2">\{/* action buttons */\}</div>\
+</div>\
+```\
+\
+---\
+\
+## ROUTES & PAGES\
+\
+Build ALL of the following pages with full working UI and realistic mock data.\
+\
+### Route structure:\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 / \uc0\u8594  Dashboard /accounts \u8594  Accounts List /accounts/:id \u8594  Account Detail /templates \u8594  Pricing Templates /users \u8594  Users /settings \u8594  Settings\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+---\
+\
+### PAGE 1: Dashboard \'97 /\
+\
+Page header: "Dashboard" / "Welcome back, here's what's happening."\
+\
+**4 stat cards** (top row, 4-col grid):\
+Each card: bg-white rounded-[8px] border border-border-card p-6\
+- Total Accounts: count + "+3 this month" trend in green\
+- Active Deals: count\
+- Monthly Revenue: dollar amount with $ prefix\
+- Pending Quotes: count\
+Each card has a Lucide icon in a 40\'d740 rounded-[8px] bg-primary-surface circle.\
+\
+**Middle row (2-col, 60/40 split):**\
+\
+Left \'97 "Recent Accounts" table (compact):\
+Columns: Account Name, Status, Deals, Last Activity\
+5 rows of mock data. "View All \uc0\u8594 " link top right.\
+\
+Right \'97 "Recent Activity" feed:\
+Vertical list of 6 events. Each: icon (16px, text-primary) | event text (14px) | relative time (12px text-text-subtle).\
+Examples: "New account created \'b7 Lakewood Office Park", "Template updated \'b7 Standard Office", "Deal closed \'b7 $4,200/mo"\
+Separator lines between items.\
+\
+**Bottom quick actions bar:**\
+3 buttons: "+ New Account" (primary), "+ New Template" (secondary), "Invite User" (secondary)\
+\
+---\
+\
+### PAGE 2: Accounts \'97 /accounts\
+\
+Page header: "Accounts" / "Manage your customer accounts and associated deals"\
+Right: "+ New Account" button (primary, regular size)\
+\
+**Filter bar** (below header, mb-4):\
+- Search input (regular, placeholder "Search accounts...")\
+- Status dropdown (All / Active / Draft / New / Archived)\
+- Sort dropdown\
+\
+**Accounts Table** (TanStack Table):\
+\
+Columns:\
+1. Checkbox (52px)\
+2. Account Name \'97 text-text-primary font-medium, clicking navigates to /accounts/:id\
+3. Primary Contact \'97 name + email stacked (name: 14px, email: 12px text-text-subtle)\
+4. Status \'97 StatusChip component\
+5. Deals \'97 number with a FileText icon (16px text-text-subtle)\
+6. Buildings \'97 number with a Building2 icon\
+7. Last Activity \'97 relative date, 13px text-text-subtle\
+8. Actions \'97 Eye (view), Pencil (edit), MoreHorizontal (dropdown: Archive, Delete)\
+\
+Pagination footer: "Showing 1\'9615 of 42 accounts" | Previous | Next buttons\
+\
+**Mock data (15 accounts):**\
+Include realistic commercial cleaning customers:\
+- Lakewood Office Park, Active, 3 deals, 2 buildings\
+- Maplewood Solutions, Active, 5 deals, 4 buildings\
+- Skyline Dynamics, Draft, 1 deal, 1 building\
+- Riverside Medical Center, Active, 2 deals, 3 buildings\
+- Northgate Retail Group, New, 1 deal, 6 buildings\
+- Summit Corporate Campus, Active, 4 deals, 2 buildings\
+- Greenfield Academy, Archived, 0 deals, 1 building\
+- Harbor View Plaza, Active, 2 deals, 3 buildings\
+- Eastwood Manufacturing, Draft, 2 deals, 2 buildings\
+- Central Station Hotel, Active, 3 deals, 1 building\
+- Pinecrest Health Clinic, New, 1 deal, 2 buildings\
+- Westpark Financial, Active, 2 deals, 1 building\
+- Oakdale Community Center, Active, 1 deal, 1 building\
+- Metro Tech Solutions, Draft, 1 deal, 2 buildings\
+- Sunrise Distribution Co, Archived, 0 deals, 4 buildings\
+\
+---\
+\
+### PAGE 3: Account Detail \'97 /accounts/:id\
+\
+**Page header:**\
+- Back button (\uc0\u8592  Accounts) \'97 white bg, border-border-card, shadow-[0px_1px_8px_rgba(0,0,0,0.15)], rounded-[8px], text-[14px]\
+- Account name as H3 (24px font-medium)\
+- StatusChip for account status\
+- Right: "Edit Account" (secondary), "+ New Deal" (primary)\
+\
+**Info strip** (bg-white border border-border-card rounded-[8px] p-4 mb-4):\
+Horizontal flex, dividers between:\
+Primary Contact | Phone | Email | Address | Account Type | Member Since\
+\
+**Two tabs** (underline style):\
+Tab bar: border-b border-border-card mb-4\
+Active tab: text-primary border-b-2 border-primary font-medium text-[15px]\
+Inactive tab: text-text-subtle text-[15px] hover:text-text-primary\
+\
+#### Tab 1: Deals\
+"+ New Deal" button top-right above table.\
+\
+Deals table columns:\
+1. Deal Name (e.g. "HQ Building \'97 Weekly Service")\
+2. Template (pricing template name used)\
+3. Buildings count\
+4. Est. Monthly Value ($ amount, font-medium)\
+5. Status \'97 StatusChip\
+6. Created Date\
+7. Actions \'97 View, Edit\
+\
+Mock: 4 deals per account.\
+\
+#### Tab 2: Buildings\
+"+ Add Building" button top-right.\
+\
+Buildings table columns:\
+1. Building Name\
+2. Address\
+3. Sq Footage\
+4. Floors\
+5. Restrooms\
+6. Cleaning Frequency (badge: Daily/Weekly/Bi-weekly)\
+7. Actions \'97 Edit, View\
+\
+Mock: 2-3 buildings per account.\
+\
+---\
+\
+### PAGE 4: Templates \'97 /templates\
+\
+Page header: "Pricing Templates" / "Reusable pricing structures applied to deals"\
+Right: "+ New Template" button (primary)\
+\
+**Templates grid** \'97 3-column card grid (gap-4):\
+Each template card (bg-white border border-border-card rounded-[8px] p-6):\
+- Template name: H4 (20px font-medium)\
+- Description: 2 lines max, 13px text-text-subtle\
+- Two badges row: Category tag (plain tag style) + Pricing Type tag\
+- Divider\
+- "Used in X deals" \'97 13px text-text-subtle with FileText icon\
+- "Last updated: [date]" \'97 12px text-text-subtle\
+- Footer (border-t border-border-card pt-3 mt-3): Edit button (secondary skinny) + Duplicate button (ghost skinny)\
+\
+**Mock templates (9 total):**\
+- Standard Office Clean \'97 Flat Rate \'97 Office \'97 Used in 18 deals\
+- Medical Facility \'97 Per Sq Ft \'97 Medical \'97 Used in 6 deals\
+- Retail Store Package \'97 Hourly \'97 Retail \'97 Used in 12 deals\
+- Industrial Deep Clean \'97 Flat Rate \'97 Industrial \'97 Used in 4 deals\
+- School & Education \'97 Per Sq Ft \'97 Education \'97 Used in 7 deals\
+- Hotel Daily Service \'97 Hourly \'97 Hospitality \'97 Used in 3 deals\
+- Warehouse Maintenance \'97 Flat Rate \'97 Industrial \'97 Used in 9 deals\
+- Government Facility \'97 Per Sq Ft \'97 Government \'97 Used in 2 deals\
+- Small Office Starter \'97 Flat Rate \'97 Office \'97 Used in 22 deals\
+\
+---\
+\
+### PAGE 5: Users \'97 /users\
+\
+Page header: "Users" / "Manage admin users and access"\
+Right: "Invite User" button (primary)\
+\
+Users table columns:\
+1. Name (avatar initials circle + name + email stacked)\
+2. Role \'97 plain tag (Admin / Manager / Rep)\
+3. Status \'97 StatusChip (Active/Inactive)\
+4. Last Login \'97 relative date\
+5. Actions \'97 Edit, Deactivate\
+\
+Mock: 8 users with realistic names, roles, and last login dates.\
+\
+---\
+\
+### PAGE 6: Settings \'97 /settings\
+\
+Page header: "Settings" / "Configure your account and application preferences"\
+\
+Two-column layout (left: settings nav list, right: settings content panel):\
+\
+Left nav (160px, bg-white border-r border-border-card):\
+- General (active by default)\
+- Notifications\
+- Integrations\
+- Billing\
+\
+Right content: Show "General" settings panel with:\
+- Company Name field (text input regular)\
+- Company Address field\
+- Primary Contact Email\
+- Timezone dropdown\
+- "Save Changes" button (primary)\
+\
+---\
+\
+## MOCK DATA NOTES\
+\
+- All mock data lives in /src/data/mockData.ts\
+- Use TypeScript interfaces for all entities: Account, Deal, Building, Template, User\
+- IDs are strings like "acc-001", "deal-001", etc.\
+- Dates are realistic (2024\'962025 range)\
+- All dollar amounts are formatted with toLocaleString('en-US', \{ style: 'currency', currency: 'USD' \})\
+\
+---\
+\
+## FILE STRUCTURE\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \strokec3 src/ components/ layout/ AppLayout.tsx Sidebar.tsx ui/ Button.tsx Input.tsx SearchInput.tsx StatusChip.tsx Badge.tsx Table.tsx (reusable TanStack wrapper) Tag.tsx AlertBanner.tsx pages/ Dashboard.tsx Accounts.tsx AccountDetail.tsx Templates.tsx Users.tsx Settings.tsx data/ mockData.ts types/ index.ts App.tsx main.tsx\
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \strokec2 \
+---\
+\
+## CRITICAL RULES\
+\
+1. NEVER use hardcoded hex values in components. Always use Tailwind color tokens.\
+2. NEVER use blue or green as primary colors. Primary is ALWAYS teal (#00A2B2).\
+3. Font is ALWAYS Helvetica Neue \'97 never Inter, Roboto, or any other font.\
+4. All buttons, inputs, and cards must match the exact pixel specs above.\
+5. Nav active state uses bg-primary (teal) with white text and shadow \'97 NOT a teal text underline.\
+6. Status chips are dot-style rounded-full \'97 NOT square badges.\
+7. Table headers are #E6E8ED fill with #6D6D6D medium text.\
+8. Page background is ALWAYS #F4F7FA \'97 never white or gray-100.\
+9. Use Lucide React for ALL icons \'97 no other icon library.\
+10. All pages must have realistic, complete mock data \'97 no "Lorem ipsum" or placeholder text.\
+11. React Router must be fully wired \'97 clicking account names navigates to detail, back button works, active nav item reflects current route.\
+12. Build all components from scratch \'97 do not install shadcn/ui.\
+}
