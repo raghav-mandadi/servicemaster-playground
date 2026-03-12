@@ -1,103 +1,119 @@
 import { useState } from 'react';
 import type { AccountHealthScore, CriterionRating } from '../../types/health';
-import { WelcomeScreen } from './mobile/WelcomeScreen';
-import { CriteriaSelect } from './mobile/CriteriaSelect';
-import { CriteriaConfirm } from './mobile/CriteriaConfirm';
-import { PostJobIntro } from './mobile/PostJobIntro';
-import { CriterionRate } from './mobile/CriterionRate';
-import { GutCheck } from './mobile/GutCheck';
-import { ThankYou } from './mobile/ThankYou';
+import { HomeScreen }       from './mobile/HomeScreen';
+import { WelcomeScreen }    from './mobile/WelcomeScreen';
+import { CriteriaSelect }   from './mobile/CriteriaSelect';
+import { CriteriaConfirm }  from './mobile/CriteriaConfirm';
+import { PostJobIntro }     from './mobile/PostJobIntro';
+import { CriterionRate }    from './mobile/CriterionRate';
+import { GutCheck }         from './mobile/GutCheck';
+import { ThankYou }         from './mobile/ThankYou';
+import { RecurringSurvey }  from './mobile/RecurringSurvey';
+import { FeedbackForm }     from './mobile/FeedbackForm';
+import { ComplaintForm }    from './mobile/ComplaintForm';
+import { ContactScreen }    from './mobile/ContactScreen';
 
 export type PreviewMode = 'prejob' | 'postjob';
+type SurveyKey = 'prejob' | 'recurring' | 'postjob';
+type Section   = 'home' | 'prejob' | 'recurring' | 'postjob' | 'feedback' | 'complaint' | 'contact';
+type PreJobScreen  = 'welcome' | 'select' | 'confirm';
+type PostJobScreen = 'intro' | `rate-${number}` | 'gutcheck' | 'thankyou';
 
 interface MobileAppProps {
-  mode: PreviewMode;
-  account: AccountHealthScore | null;
+  mode?:         PreviewMode;
+  account:       AccountHealthScore | null;
   onModeChange?: (mode: PreviewMode) => void;
 }
 
-type PreJobScreen = 'welcome' | 'select' | 'confirm';
-type PostJobScreen = 'intro' | `rate-${number}` | 'gutcheck' | 'thankyou';
+export function MobileApp({ account }: MobileAppProps) {
+  // Navigation
+  const [section,  setSection]  = useState<Section>('home');
 
-export function MobileApp({ mode, account, onModeChange }: MobileAppProps) {
+  // Survey completion
+  const [completedSurveys, setCompletedSurveys] = useState<Set<SurveyKey>>(new Set());
+
   // Pre-job state
-  const [preJobScreen, setPreJobScreen] = useState<PreJobScreen>('welcome');
+  const [preJobScreen,     setPreJobScreen]     = useState<PreJobScreen>('welcome');
   const [selectedCriteria, setSelectedCriteria] = useState<string[]>([]);
 
   // Post-job state
   const [postJobScreen, setPostJobScreen] = useState<PostJobScreen>('intro');
-  const [ratingIndex, setRatingIndex] = useState(0);
-  const [ratings, setRatings] = useState<{ criterion: string; rating: CriterionRating; note?: string }[]>([]);
-  const [gutCheck, setGutCheck] = useState<'positive' | 'negative' | null>(null);
+  const [ratingIndex,   setRatingIndex]   = useState(0);
+  const [ratings,       setRatings]       = useState<{ criterion: string; rating: CriterionRating; note?: string }[]>([]);
+  const [gutCheck,      setGutCheck]      = useState<'positive' | 'negative' | null>(null);
 
-  // Use the most recent pre-job survey's criteria for post-job, or fallback
   const preJobCriteria: string[] =
     account?.preJobSurveys[0]?.selectedCriteria ??
     ['restrooms', 'floors', 'trash', 'surfaces', 'lobby'];
 
-  const surveyAvg = account?.lastSurveyScore ?? null;
+  const surveyAvg    = account?.lastSurveyScore ?? null;
+  const accountName  = account?.accountName ?? 'Your Location';
+  const firstName    = accountName.split(' ')[0];
+  const scheduledDate = account?.preJobSurveys[0]?.scheduledDate ?? '2025-01-23';
+  const dealName     = account?.dealName ?? 'Bi-Weekly Cleaning';
 
-  function resetPreJob() {
-    setPreJobScreen('welcome');
-    setSelectedCriteria([]);
+  const jobs = [{ dealName, scheduledDate }];
+
+  function complete(survey: SurveyKey) {
+    setCompletedSurveys(prev => new Set([...prev, survey]));
+    setSection('home');
   }
 
-  function resetPostJob() {
+  function resetAll() {
+    setCompletedSurveys(new Set());
+    setSection('home');
+    setPreJobScreen('welcome');
+    setSelectedCriteria([]);
     setPostJobScreen('intro');
     setRatingIndex(0);
     setRatings([]);
     setGutCheck(null);
   }
 
-  const accountName = account?.accountName ?? 'Sandra';
-  const firstName = accountName.split(' ')[0];
-  const scheduledDate = account?.preJobSurveys[0]?.scheduledDate ?? '2025-01-20';
+  function startSurvey(key: SurveyKey) {
+    if (key === 'prejob') {
+      setPreJobScreen('welcome');
+      setSelectedCriteria([]);
+      setSection('prejob');
+    } else if (key === 'recurring') {
+      setSection('recurring');
+    } else {
+      setPostJobScreen('intro');
+      setRatingIndex(0);
+      setRatings([]);
+      setGutCheck(null);
+      setSection('postjob');
+    }
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {/* Mode tabs */}
-      <div
-        style={{
-          display: 'flex',
-          borderBottom: '1px solid #E6E8ED',
-          background: '#fff',
-          flexShrink: 0,
-        }}
-      >
-        {(['prejob', 'postjob'] as PreviewMode[]).map(m => (
-          <button
-            key={m}
-            onClick={() => {
-              onModeChange?.(m);
-              if (m === 'prejob') resetPreJob();
-              else resetPostJob();
-            }}
-            style={{
-              flex: 1,
-              padding: '10px 0',
-              fontSize: 13,
-              fontWeight: mode === m ? 600 : 400,
-              color: mode === m ? '#00A2B2' : '#6D6D6D',
-              borderBottom: mode === m ? '2px solid #00A2B2' : '2px solid transparent',
-              background: 'none',
-              cursor: 'pointer',
-              fontFamily: 'Helvetica Neue, sans-serif',
-            }}
-          >
-            {m === 'prejob' ? 'Pre-Job' : 'Post-Job'}
-          </button>
-        ))}
-      </div>
-
-      {/* Screen content */}
       <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-        {mode === 'prejob' && (
+
+        {/* ── Home ── */}
+        {section === 'home' && (
+          <HomeScreen
+            firstName={firstName}
+            accountName={accountName}
+            jobs={jobs}
+            completedSurveys={completedSurveys}
+            onStartSurvey={startSurvey}
+            onFeedback={() => setSection('feedback')}
+            onComplaint={() => setSection('complaint')}
+            onContact={() => setSection('contact')}
+            onReset={resetAll}
+          />
+        )}
+
+        {/* ── Pre-job flow ── */}
+        {section === 'prejob' && (
           <>
             {preJobScreen === 'welcome' && (
               <WelcomeScreen
                 firstName={firstName}
                 scheduledDate={scheduledDate}
                 onNext={() => setPreJobScreen('select')}
+                onSkip={() => complete('prejob')}
               />
             )}
             {preJobScreen === 'select' && (
@@ -110,13 +126,22 @@ export function MobileApp({ mode, account, onModeChange }: MobileAppProps) {
             {preJobScreen === 'confirm' && (
               <CriteriaConfirm
                 selected={selectedCriteria}
-                onDone={resetPreJob}
+                onDone={() => complete('prejob')}
               />
             )}
           </>
         )}
 
-        {mode === 'postjob' && (
+        {/* ── Recurring satisfaction ── */}
+        {section === 'recurring' && (
+          <RecurringSurvey
+            onBack={() => setSection('home')}
+            onComplete={() => complete('recurring')}
+          />
+        )}
+
+        {/* ── Post-job flow ── */}
+        {section === 'postjob' && (
           <>
             {postJobScreen === 'intro' && (
               <PostJobIntro
@@ -124,7 +149,7 @@ export function MobileApp({ mode, account, onModeChange }: MobileAppProps) {
                 onStart={() => {
                   setRatingIndex(0);
                   setRatings([]);
-                  setPostJobScreen(`rate-0`);
+                  setPostJobScreen('rate-0');
                 }}
               />
             )}
@@ -170,11 +195,21 @@ export function MobileApp({ mode, account, onModeChange }: MobileAppProps) {
                 avgScore={surveyAvg ?? (ratings.reduce((s, r) => s + r.rating, 0) / ratings.length)}
                 hasLowRating={ratings.some(r => r.rating <= 2)}
                 sentiment={gutCheck ?? 'positive'}
-                onReset={resetPostJob}
+                onReset={() => complete('postjob')}
               />
             )}
           </>
         )}
+
+        {/* ── Feedback ── */}
+        {section === 'feedback'  && <FeedbackForm  onBack={() => setSection('home')} />}
+
+        {/* ── Complaint ── */}
+        {section === 'complaint' && <ComplaintForm onBack={() => setSection('home')} />}
+
+        {/* ── Contact ── */}
+        {section === 'contact'   && <ContactScreen onBack={() => setSection('home')} />}
+
       </div>
     </div>
   );

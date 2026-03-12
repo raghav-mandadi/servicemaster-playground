@@ -30,7 +30,7 @@ export function ThankYou({ firstName, avgScore, hasLowRating, sentiment, onReset
         <p style={{ fontSize: 24, fontWeight: 700, color: '#1C1B1F', marginBottom: 8 }}>
           Thank you, {firstName}!
         </p>
-        <p style={{ fontSize: 14, color: '#6D6D6D', lineHeight: 1.6, marginBottom: 28 }}>
+        <p style={{ fontSize: 15, color: '#6D6D6D', lineHeight: 1.6, marginBottom: 28 }}>
           Your feedback goes directly to your ServiceMaster team. We review every response.
         </p>
 
@@ -75,18 +75,18 @@ export function ThankYou({ firstName, avgScore, hasLowRating, sentiment, onReset
           onClick={onReset}
           style={{
             width: '100%',
-            padding: '14px',
-            background: 'transparent',
-            color: '#00A2B2',
+            padding: '15px',
+            background: '#00A2B2',
+            color: '#fff',
             borderRadius: 14,
-            fontSize: 14,
-            fontWeight: 500,
-            border: '1px solid #00A2B2',
+            fontSize: 15,
+            fontWeight: 600,
+            border: 'none',
             cursor: 'pointer',
             fontFamily: 'Helvetica Neue, sans-serif',
           }}
         >
-          ↺ Preview again
+          Back to Home
         </button>
       </div>
     </div>

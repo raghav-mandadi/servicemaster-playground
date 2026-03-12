@@ -1,12 +1,13 @@
 import { Sparkles } from 'lucide-react';
 
 interface WelcomeScreenProps {
-  firstName: string;
+  firstName:     string;
   scheduledDate: string;
-  onNext: () => void;
+  onNext:        () => void;
+  onSkip?:       () => void;
 }
 
-export function WelcomeScreen({ firstName, scheduledDate, onNext }: WelcomeScreenProps) {
+export function WelcomeScreen({ firstName, scheduledDate, onNext, onSkip }: WelcomeScreenProps) {
   const formattedDate = new Date(scheduledDate + 'T00:00:00').toLocaleDateString('en-US', {
     weekday: 'long', month: 'long', day: 'numeric',
   });
@@ -24,7 +25,7 @@ export function WelcomeScreen({ firstName, scheduledDate, onNext }: WelcomeScree
       {/* Main content */}
       <div style={{ flex: 1 }}>
         <p style={{ fontSize: 28, fontWeight: 700, color: '#1C1B1F', marginBottom: 8, lineHeight: 1.2 }}>
-          Hi {firstName}! 👋
+          Hi {firstName}!
         </p>
         <p style={{ fontSize: 15, color: '#6D6D6D', marginBottom: 24, lineHeight: 1.5 }}>
           Your ServiceMaster team is scheduled for<br />
@@ -41,17 +42,7 @@ export function WelcomeScreen({ firstName, scheduledDate, onNext }: WelcomeScree
         }}>
           <p style={{ fontSize: 14, color: '#1C1B1F', lineHeight: 1.6, margin: 0 }}>
             Before they arrive, take <strong>30 seconds</strong> to tell us what a great job looks like to you.
-            <br /><br />
-            We'll report back on <strong>exactly what you said mattered</strong> — not just a generic rating.
           </p>
-        </div>
-
-        {/* Social proof dots */}
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 8 }}>
-          {['#16A34A', '#16A34A', '#16A34A', '#16A34A', '#16A34A'].map((c, i) => (
-            <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
-          ))}
-          <span style={{ fontSize: 12, color: '#6D6D6D', marginLeft: 4 }}>Customers who set standards are 3× more likely to get the service they want</span>
         </div>
       </div>
 
@@ -69,10 +60,29 @@ export function WelcomeScreen({ firstName, scheduledDate, onNext }: WelcomeScree
           border: 'none',
           cursor: 'pointer',
           fontFamily: 'Helvetica Neue, sans-serif',
+          marginBottom: 12,
         }}
       >
         Set My Standards →
       </button>
+
+      {onSkip && (
+        <button
+          onClick={onSkip}
+          style={{
+            width: '100%',
+            padding: '12px',
+            background: 'none',
+            color: '#8E8E93',
+            border: 'none',
+            fontSize: 14,
+            cursor: 'pointer',
+            fontFamily: 'Helvetica Neue, sans-serif',
+          }}
+        >
+          Skip for now
+        </button>
+      )}
     </div>
   );
 }

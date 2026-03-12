@@ -85,10 +85,68 @@ export function PhoneFrame({ children }: PhoneFrameProps) {
           </div>
         </div>
 
+        {/* Safari-like browser chrome */}
+        <div
+          style={{
+            height: 44,
+            background: '#F2F2F7',
+            borderBottom: '1px solid #D8D8DC',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 10px',
+            gap: 8,
+            flexShrink: 0,
+          }}
+        >
+          {/* Back / Forward */}
+          <div style={{ display: 'flex', gap: 2 }}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11 13L7 9l4-4" stroke="#C7C7CC" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M7 13l4-4-4-4" stroke="#C7C7CC" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+
+          {/* URL pill */}
+          <div style={{
+            flex: 1,
+            background: '#FFFFFF',
+            borderRadius: 8,
+            border: '1px solid #D8D8DC',
+            height: 28,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 4,
+          }}>
+            {/* Lock icon */}
+            <svg width="9" height="11" viewBox="0 0 9 11" fill="none">
+              <rect x="1" y="4.5" width="7" height="6" rx="1.5" stroke="#8E8E93" strokeWidth="1.2"/>
+              <path d="M2.5 4.5V3a2 2 0 014 0v1.5" stroke="#8E8E93" strokeWidth="1.2" strokeLinecap="round"/>
+            </svg>
+            <span style={{ fontSize: 11, color: '#8E8E93', fontFamily: 'Helvetica Neue, sans-serif', letterSpacing: 0 }}>
+              servicemaster.com/tasks/m8x2k
+            </span>
+          </div>
+
+          {/* Share + Tabs */}
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M5 4l3-3 3 3" stroke="#C7C7CC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 10v4h12v-4" stroke="#C7C7CC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="1.5" y="1.5" width="13" height="13" rx="3" stroke="#C7C7CC" strokeWidth="1.5"/>
+              <path d="M5 8h6M8 5v6" stroke="#C7C7CC" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </div>
+        </div>
+
         {/* App content */}
         <div
           style={{
-            height: 'calc(100% - 44px - 34px)',
+            height: 'calc(100% - 44px - 44px - 34px)',
             overflowY: 'auto',
             overflowX: 'hidden',
             background: '#fff',
