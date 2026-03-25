@@ -1,7 +1,6 @@
 export type AccountStatus = 'Active' | 'Draft' | 'New' | 'Archived';
 export type DealStatus = 'Active' | 'Draft' | 'New' | 'Archived';
-export type UserRole = 'Admin' | 'Manager' | 'Rep';
-export type UserStatus = 'Active' | 'Inactive';
+export type FieldRole = 'gm' | 'ops_manager' | 'supervisor' | 'cs' | 'sales';
 export type CleaningFrequency = 'Daily' | 'Weekly' | 'Bi-Weekly' | 'Monthly';
 export type PricingType = 'Flat Rate' | 'Per Sq Ft' | 'Hourly';
 
@@ -60,10 +59,9 @@ export interface Template {
 }
 
 export interface User {
-  id: string;
+  userId: string;
   name: string;
   email: string;
-  role: UserRole;
-  status: UserStatus;
-  lastLogin: string;
+  role: FieldRole;
+  assignedSiteIds: string[];
 }
