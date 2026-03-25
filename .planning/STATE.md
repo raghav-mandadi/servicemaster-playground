@@ -1,0 +1,82 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: Ready to execute
+stopped_at: Completed 01-cleanup-data-unification plan 02 (data layer migration)
+last_updated: "2026-03-25T10:38:13.373Z"
+progress:
+  total_phases: 3
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 2
+---
+
+# Project State
+
+## Project Reference
+
+See: .planning/PROJECT.md (updated 2026-03-25)
+
+**Core value:** Every screen shows consistent, trustworthy data for the active location
+**Current focus:** Phase 01 — Cleanup & Data Unification
+
+## Current Position
+
+Phase: 01 (Cleanup & Data Unification) — EXECUTING
+Plan: 3 of 3
+
+## Performance Metrics
+
+**Velocity:**
+
+- Total plans completed: 0
+- Average duration: -
+- Total execution time: 0 hours
+
+**By Phase:**
+
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| - | - | - | - |
+
+**Recent Trend:**
+
+- Last 5 plans: -
+- Trend: -
+
+*Updated after each plan completion*
+| Phase 01-cleanup-data-unification P01 | 2 | 2 tasks | 2 files |
+| Phase 01-cleanup-data-unification P02 | 2 | 2 tasks | 1 files |
+
+## Accumulated Context
+
+### Decisions
+
+Decisions are logged in PROJECT.md Key Decisions table.
+Recent decisions affecting current work:
+
+- Tenant via React Context (avoids prop drilling; all pages need tenant access)
+- `users.json` as canonical user schema (has `assignedSiteIds`, more complete)
+- Keep `mockDataLoader.ts` as single import point (existing swap-point pattern)
+- Assign tenant field in JSON, filter at loader (keeps filtering logic in one place)
+- [Phase 01-cleanup-data-unification]: Remove UserRole and UserStatus types entirely — they are orphaned after User interface migration to users.json schema
+- [Phase 01-cleanup-data-unification]: Retain CriterionMeta and CRITERIA_META in health.ts — still consumed by EventLogScreen.tsx; only survey flow types removed
+- [Phase 01-cleanup-data-unification]: Types-first migration: update type contracts before runtime code so TypeScript validates correctness automatically
+- [Phase 01-cleanup-data-unification]: Compute riskProfile from events.json at load time in buildHealthScores() — no longer read from sites.json
+- [Phase 01-cleanup-data-unification]: mockDataLoader.ts is the single import point for all app data (accounts, accountHealthScores, users, templates, recentActivity)
+- [Phase 01-cleanup-data-unification]: watchlist threshold: incidentCount12m >= 2 (complaint + sensitive_event types only)
+
+### Pending Todos
+
+None yet.
+
+### Blockers/Concerns
+
+None yet.
+
+## Session Continuity
+
+Last session: 2026-03-25T10:38:13.371Z
+Stopped at: Completed 01-cleanup-data-unification plan 02 (data layer migration)
+Resume file: None

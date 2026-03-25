@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — Update User type in types/index.ts and remove survey types from types/health.ts
-- [ ] 01-02-PLAN.md — Extend mockDataLoader.ts: derive riskProfile from events, add users/templates/recentActivity exports
+- [x] 01-02-PLAN.md — Extend mockDataLoader.ts: derive riskProfile from events, add users/templates/recentActivity exports
 - [ ] 01-03-PLAN.md — Migrate Users.tsx, Dashboard.tsx, Templates.tsx to mockDataLoader.ts; retire mockData.ts
 
 ### Phase 2: Tenant Context
@@ -63,6 +63,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Cleanup & Data Unification | 1/3 | In Progress|  |
+| 1. Cleanup & Data Unification | 2/3 | In Progress|  |
 | 2. Tenant Context | 0/TBD | Not started | - |
 | 3. Project Memory | 0/TBD | Not started | - |
