@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
 import type { HealthEvent, EventType } from '../../../types/health';
 import type { ScoreBreakdownItem } from '../../../utils/healthScoring';
 import { isInherentlyPositive } from '../../../utils/healthScoring';
@@ -18,30 +18,6 @@ const ROLE_LABEL: Record<string, string> = {
   operations:  'Operations',
 };
 
-const OUTCOME_COLOR: Record<string, string> = {
-  pass:            '#16A34A',
-  positive:        '#16A34A',
-  super_positive:  '#16A34A',
-  needs_attention: '#D97706',
-  neutral:         '#6D6D6D',
-  concerns:        '#D97706',
-  yellow:          '#D97706',
-  fail:            '#DC2626',
-  negative:        '#DC2626',
-  super_negative:  '#DC2626',
-  red:             '#DC2626',
-  incident:        '#DC2626',
-  damage:          '#DC2626',
-  security:        '#DC2626',
-  other:           '#6D6D6D',
-};
-
-const SEVERITY_COLOR: Record<string, string> = {
-  low:    '#6D6D6D',
-  medium: '#D97706',
-  high:   '#DC2626',
-};
-
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
@@ -54,23 +30,6 @@ function formatTime(iso: string): string {
 
 function isDisplayResolved(event: HealthEvent): boolean {
   return !!event.resolvedAt || event.resolutionStatus === 'resolved' || isInherentlyPositive(event);
-}
-
-// ─── Score impact badge ────────────────────────────────────────────────────────
-
-function ImpactBadge({ impact }: { impact: number }) {
-  if (impact === 0) return null;
-  const positive = impact > 0;
-  const color    = positive ? '#16A34A' : '#DC2626';
-  const label    = `${positive ? '+' : ''}${impact}`;
-  return (
-    <span
-      className="text-[10px] font-bold px-1.5 py-px rounded tabular-nums"
-      style={{ background: color + '15', color }}
-    >
-      {label}
-    </span>
-  );
 }
 
 // ─── Section divider ──────────────────────────────────────────────────────────
@@ -146,13 +105,6 @@ function EventCard({ event, impact, isExpanded, isUnread, onToggle, onUpdateStat
   const inProgress = !resolved && event.resolutionStatus === 'in_progress';
   const autoResolved = isInherentlyPositive(event);
 
-  const badgeText  = event.severity ?? event.outcome ?? null;
-  const badgeColor = event.severity
-    ? SEVERITY_COLOR[event.severity]
-    : event.outcome
-    ? (OUTCOME_COLOR[event.outcome] ?? '#6D6D6D')
-    : null;
-
   function handleSave(note: string) {
     if (!noteMode) return;
     onUpdateStatus?.(event.id, noteMode, note);
@@ -165,40 +117,50 @@ function EventCard({ event, impact, isExpanded, isUnread, onToggle, onUpdateStat
     }`}>
       {/* Summary row */}
       <div
-        className="flex items-center gap-3 px-3.5 py-2.5 cursor-pointer hover:bg-surface-header transition-colors"
+        className="flex items-start gap-3 px-3.5 py-2.5 cursor-pointer hover:bg-surface-header transition-colors"
         onClick={onToggle}
       >
-        <div
-          className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-          style={{ background: meta.color + '12', border: `1px solid ${meta.color}25` }}
-        >
-          <Icon size={11} color={meta.color} />
+        {/* Left column */}
+        <div className="flex-1 min-w-0">
+          {/* Row 1: unread dot, icon, type label, date */}
+          <div className="flex items-center gap-2">
+            {isUnread
+              ? <span className="w-2 h-2 rounded-full bg-[#DC2626] flex-shrink-0" />
+              : <span className="w-2 h-2 flex-shrink-0" />
+            }
+            <div
+              className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: meta.color + '12', border: `1px solid ${meta.color}25` }}
+            >
+              <Icon size={11} color={meta.color} />
+            </div>
+            <span className={`text-[12px] font-semibold ${resolved ? 'text-text-subtle' : 'text-text-primary'}`}>
+              {meta.label}
+            </span>
+            <span className="text-[11px] text-text-subtle flex-shrink-0">{formatDate(event.loggedAt)}</span>
+          </div>
+          {/* Row 2: description, indented under icon */}
+          <p className="text-[11px] text-text-subtle leading-snug line-clamp-2 pl-[28px] mt-0.5">
+            {event.description}
+          </p>
         </div>
 
-        {isUnread && (
-          <span className="w-2 h-2 rounded-full bg-[#DC2626] flex-shrink-0" />
-        )}
-
-        <div className="flex items-center gap-2 flex-1 min-w-0 flex-wrap">
-          <span className={`text-[12px] font-semibold ${resolved ? 'text-text-subtle' : 'text-text-primary'}`}>
-            {meta.label}
-          </span>
-          {badgeText && badgeColor && (
+        {/* Right column */}
+        <div className="flex flex-col items-end gap-0.5 flex-shrink-0 pl-3">
+          {impact !== 0 && (
             <span
-              className="text-[10px] font-semibold px-1.5 py-px rounded capitalize"
-              style={{ background: badgeColor + '18', color: badgeColor }}
+              className="text-[20px] font-bold tabular-nums leading-none"
+              style={{ color: impact > 0 ? '#16A34A' : '#DC2626' }}
             >
-              {badgeText.replace(/_/g, ' ')}
+              {impact > 0 ? `+${impact}` : `${impact}`}
             </span>
           )}
-          {resolved    && <span className="text-[10px] font-medium text-[#16A34A] bg-[#F0FDF4] px-1.5 py-px rounded">Resolved</span>}
-          {inProgress  && <span className="text-[10px] font-medium text-[#D97706] bg-[#FFFBEB] px-1.5 py-px rounded">In Progress</span>}
-          <ImpactBadge impact={impact} />
-          {event.hasPhotos && <Camera size={10} color="#8E8E93" className="flex-shrink-0" />}
-        </div>
-
-        <div className="flex items-center gap-2 flex-shrink-0">
-          <span className="text-[11px] text-text-subtle">{formatDate(event.loggedAt)}</span>
+          <span className="text-[10px] text-text-subtle">
+            {(() => {
+              const days = Math.floor((Date.now() - new Date(event.loggedAt).getTime()) / 86_400_000);
+              return days === 0 ? 'today' : `${days}d ago`;
+            })()}
+          </span>
           {isExpanded ? <ChevronUp size={12} className="text-text-subtle" /> : <ChevronDown size={12} className="text-text-subtle" />}
         </div>
       </div>
