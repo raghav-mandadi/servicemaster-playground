@@ -10,9 +10,10 @@
 import accountsJson  from './accounts.json';
 import sitesJson     from './sites.json';
 import eventsJson    from './events.json';
+import usersJson     from './users.json';
 
 import type { AccountHealthScore, HealthEvent, HealthTier, HealthSignal, RiskProfile, SiteContact } from '../types/health';
-import type { Account, AccountStatus, BuildingDetail } from '../types/index';
+import type { Account, AccountStatus, BuildingDetail, User, Template } from '../types/index';
 import { DEFAULT_SCORING_CONFIG }  from './scoringConfig';
 import type { ScoringConfig }      from './scoringConfig';
 import { computeLiveScore }        from '../utils/healthScoring';
@@ -165,3 +166,44 @@ export function buildAccounts(): Account[] {
 // Pre-built exports — used as static imports throughout the app.
 export const accountHealthScores = buildHealthScores();
 export const accounts = buildAccounts();
+
+// ── Users ─────────────────────────────────────────────────────────────────────
+export const users: User[] = usersJson as User[];
+
+// ── Templates ─────────────────────────────────────────────────────────────────
+export const templates: Template[] = [
+  {
+    id: 'tpl-001',
+    name: 'Janitorial Service',
+    description: 'Recurring janitorial services covering routine cleaning of all interior spaces including restrooms, common areas, workstations, and floors on a scheduled frequency.',
+    category: 'Janitorial',
+    pricingType: 'Flat Rate',
+    usedInDeals: 34,
+    lastUpdated: '2025-01-10',
+  },
+  {
+    id: 'tpl-002',
+    name: 'Project Service',
+    description: 'One-time or periodic deep cleaning projects such as post-construction cleanups, floor stripping and waxing, carpet extraction, and specialty surface treatments.',
+    category: 'Project',
+    pricingType: 'Flat Rate',
+    usedInDeals: 12,
+    lastUpdated: '2025-01-08',
+  },
+];
+
+// ── Recent Activity ───────────────────────────────────────────────────────────
+export interface ActivityItem {
+  id: string;
+  text: string;
+  time: string;
+}
+
+export const recentActivity: ActivityItem[] = [
+  { id: 'act-001', text: 'New account created · Centennial Medical Plaza', time: '2 hours ago' },
+  { id: 'act-002', text: 'Template updated · Janitorial Service', time: '4 hours ago' },
+  { id: 'act-003', text: 'Site closed · $12,000/mo — Lakewood Office Park', time: '6 hours ago' },
+  { id: 'act-004', text: 'Account updated · Riverside Medical Center', time: '1 day ago' },
+  { id: 'act-005', text: 'New user invited · Jessica Okafor', time: '1 day ago' },
+  { id: 'act-006', text: 'Site created · Northgate Hospital East Wing — $7,800/mo', time: '2 days ago' },
+];
