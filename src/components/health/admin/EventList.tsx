@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, ChevronDown, ChevronUp, CheckCircle2, Clock, Circle, Trash2 } from 'lucide-react';
+import { Camera, ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
 import type { HealthEvent, EventType } from '../../../types/health';
 import type { ScoreBreakdownItem } from '../../../utils/healthScoring';
 import { isInherentlyPositive } from '../../../utils/healthScoring';
@@ -50,24 +50,10 @@ function formatTime(iso: string): string {
   return new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 }
 
-// ─── Status dot ───────────────────────────────────────────────────────────────
+// ─── Status helpers ────────────────────────────────────────────────────────────
 
 function isDisplayResolved(event: HealthEvent): boolean {
   return !!event.resolvedAt || event.resolutionStatus === 'resolved' || isInherentlyPositive(event);
-}
-
-function StatusDot({ event, metaColor }: { event: HealthEvent; metaColor: string }) {
-  const resolved   = isDisplayResolved(event);
-  const inProgress = !resolved && event.resolutionStatus === 'in_progress';
-
-  if (resolved)   return <CheckCircle2 size={15} color="#16A34A" />;
-  if (inProgress) return <Clock size={15} color="#D97706" />;
-  return (
-    <div
-      className="w-[15px] h-[15px] rounded-full flex-shrink-0"
-      style={{ background: metaColor + '20', border: `1.5px solid ${metaColor}` }}
-    />
-  );
 }
 
 // ─── Score impact badge ────────────────────────────────────────────────────────
@@ -145,12 +131,13 @@ interface EventCardProps {
   event:           HealthEvent;
   impact:          number;
   isExpanded:      boolean;
+  isUnread:        boolean;
   onToggle:        () => void;
   onUpdateStatus?: (eventId: string, status: 'in_progress' | 'resolved', note: string) => void;
   onDelete?:       (eventId: string) => void;
 }
 
-function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus, onDelete }: EventCardProps) {
+function EventCard({ event, impact, isExpanded, isUnread, onToggle, onUpdateStatus, onDelete }: EventCardProps) {
   const [noteMode, setNoteMode] = useState<'in_progress' | 'resolved' | null>(null);
 
   const meta       = EVENT_META[event.type];
@@ -181,16 +168,16 @@ function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus, onDele
         className="flex items-center gap-3 px-3.5 py-2.5 cursor-pointer hover:bg-surface-header transition-colors"
         onClick={onToggle}
       >
-        <div className="flex-shrink-0">
-          <StatusDot event={event} metaColor={meta.color} />
-        </div>
-
         <div
           className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
           style={{ background: meta.color + '12', border: `1px solid ${meta.color}25` }}
         >
           <Icon size={11} color={meta.color} />
         </div>
+
+        {isUnread && (
+          <span className="w-2 h-2 rounded-full bg-[#DC2626] flex-shrink-0" />
+        )}
 
         <div className="flex items-center gap-2 flex-1 min-w-0 flex-wrap">
           <span className={`text-[12px] font-semibold ${resolved ? 'text-text-subtle' : 'text-text-primary'}`}>
@@ -330,7 +317,7 @@ function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus, onDele
                       key={n}
                       className="w-14 h-14 rounded-[6px] bg-border-card/60 border border-border-card flex items-center justify-center"
                     >
-                      <Circle size={14} className="text-text-subtle/40" />
+                      <span className="w-3.5 h-3.5 rounded-full border border-text-subtle/40" />
                     </div>
                   ))}
                 </div>
@@ -363,6 +350,24 @@ function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus, onDele
 export function EventList({ events, breakdown, onUpdateStatus, onDelete }: EventListProps) {
   const [expandedId,  setExpandedId]  = useState<string | null>(null);
   const [typeFilter,  setTypeFilter]  = useState<EventType | 'all'>('all');
+  const [viewedIds,   setViewedIds]   = useState<Set<string>>(() => {
+    try {
+      const raw = localStorage.getItem('sm_viewed_events');
+      return new Set(raw ? JSON.parse(raw) : []);
+    } catch {
+      return new Set();
+    }
+  });
+
+  function markViewed(id: string) {
+    setViewedIds(prev => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      try { localStorage.setItem('sm_viewed_events', JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  }
 
   if (events.length === 0) {
     return (
@@ -399,7 +404,11 @@ export function EventList({ events, breakdown, onUpdateStatus, onDelete }: Event
               event={ev}
               impact={getImpact(ev.id)}
               isExpanded={expandedId === ev.id}
-              onToggle={() => setExpandedId(expandedId === ev.id ? null : ev.id)}
+              isUnread={!viewedIds.has(ev.id)}
+              onToggle={() => {
+                markViewed(ev.id);
+                setExpandedId(expandedId === ev.id ? null : ev.id);
+              }}
               onUpdateStatus={onUpdateStatus}
               onDelete={onDelete}
             />

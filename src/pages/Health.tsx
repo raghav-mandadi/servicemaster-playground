@@ -259,6 +259,7 @@ export function Health() {
               onOpenPhonePreview={() => setShowPhoneModal(true)}
               scoringConfig={scoringConfig}
               eventsForDeal={selectedDeal ? (eventsMap[selectedDeal.dealId] ?? []) : []}
+              allAccountEvents={selectedAccountDeals.flatMap(d => eventsMap[d.dealId] ?? [])}
               onAddEvent={handleAddEvent}
               onDeleteEvent={handleDeleteEvent}
             />
