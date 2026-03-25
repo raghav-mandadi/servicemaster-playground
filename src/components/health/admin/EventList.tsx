@@ -124,10 +124,7 @@ function EventCard({ event, impact, isExpanded, isUnread, onToggle, onUpdateStat
         <div className="flex-1 min-w-0">
           {/* Row 1: unread dot, icon, type label, date */}
           <div className="flex items-center gap-2">
-            {isUnread
-              ? <span className="w-2 h-2 rounded-full bg-[#DC2626] flex-shrink-0" />
-              : <span className="w-2 h-2 flex-shrink-0" />
-            }
+            {isUnread && <span className="w-2 h-2 rounded-full bg-[#DC2626] flex-shrink-0" />}
             <div
               className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
               style={{ background: meta.color + '12', border: `1px solid ${meta.color}25` }}
@@ -140,7 +137,7 @@ function EventCard({ event, impact, isExpanded, isUnread, onToggle, onUpdateStat
             <span className="text-[11px] text-text-subtle flex-shrink-0">{formatDate(event.loggedAt)}</span>
           </div>
           {/* Row 2: description, indented under icon */}
-          <p className="text-[11px] text-text-subtle leading-snug line-clamp-2 pl-[48px] mt-0.5">
+          <p className="text-[11px] text-text-subtle leading-snug line-clamp-2 mt-0.5">
             {event.description}
           </p>
         </div>
