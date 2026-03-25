@@ -85,9 +85,10 @@ None yet.
 | 260325-5fu | Health page cleanup: remove trend markers, fix live scoring, clear event data, add event deletion, persist events to localStorage | 2026-03-25 | 69d494f | [260325-5fu-health-page-cleanup-remove-trend-markers](./quick/260325-5fu-health-page-cleanup-remove-trend-markers/) |
 | 260325-5zh | Health page UI polish: replace StatusDot with unread-dot badge (localStorage), remove live-scoring labels, redesign AccountSummary with stat cards and View Account link | 2026-03-25 | 46f30dc | [260325-5zh-health-page-ui-polish-remove-activity-lo](./quick/260325-5zh-health-page-ui-polish-remove-activity-lo/) |
 | 260325-a9n | Reformat EventCard summary row: two-column layout with large impact number, description preview, days-ago, unread dot | 2026-03-25 | 2b13815 | [260325-a9n-reformat-activity-log-items-unread-icon-](./quick/260325-a9n-reformat-activity-log-items-unread-icon-/) |
+| 260325-cop | Add top-level Log Event button to Health page top bar with two-step GlobalEventLogModal (site picker + EventLogForm); events appear in Activity Log | 2026-03-25 | d7e7baf | [260325-cop-add-top-level-event-logger-modal-with-si](./quick/260325-cop-add-top-level-event-logger-modal-with-si/) |
 
 ## Session Continuity
 
-Last session: 2026-03-25T11:25:00.000Z
-Stopped at: Completed quick task 260325-a9n: Reformat EventCard summary row
+Last session: 2026-03-25T12:00:00.000Z
+Stopped at: Completed quick task 260325-cop: Add top-level Event Logger modal with site picker
 Resume file: None
