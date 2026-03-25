@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { StatusChip } from '../components/ui/StatusChip';
 import { accounts } from '../data/mockDataLoader';
-import { recentActivity } from '../data/mockData';
+import { recentActivity } from '../data/mockDataLoader';
 
 const statCards = [
   { label: 'Total Accounts', value: '42', trend: '+3 this month', icon: Building2 },

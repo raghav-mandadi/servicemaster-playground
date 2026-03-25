@@ -1,6 +1,6 @@
 import { Pencil, Copy, FileText, Plus } from 'lucide-react';
 import { Button } from '../components/ui/Button';
-import { templates } from '../data/mockData';
+import { templates } from '../data/mockDataLoader';
 
 export function Templates() {
   return (
