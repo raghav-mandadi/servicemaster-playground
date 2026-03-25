@@ -1,19 +1,5 @@
 // ─── Survey Framework Types ───────────────────────────────────────────────────
 
-export type SurveyCriterion =
-  | 'restrooms'
-  | 'lobby'
-  | 'trash'
-  | 'kitchen'
-  | 'surfaces'
-  | 'floors'
-  | 'windows'
-  | 'punctuality'
-  | 'disruption'
-  | 'communication';
-
-export type CriterionRating = 1 | 2 | 3 | 4 | 5;
-
 export interface CriterionMeta {
   key: string;
   emoji: string;
@@ -54,34 +40,6 @@ export function getCriterionMeta(key: string): { emoji: string; label: string; q
   if (found) return found;
   const label = key.startsWith('custom:') ? key.slice(7) : key;
   return { emoji: '✏️', label, question: `Did we meet your expectation for: ${label}?` };
-}
-
-export interface PreJobSurveyResponse {
-  id: string;
-  accountId: string;
-  dealId: string;
-  scheduledDate: string;
-  selectedCriteria: SurveyCriterion[];
-  submittedAt: string | null;
-}
-
-export interface PostJobCriterionRating {
-  criterion: string;
-  rating: CriterionRating;
-  note?: string;
-}
-
-export interface PostJobSurveyResponse {
-  id: string;
-  preJobId: string;
-  accountId: string;
-  dealId: string;
-  serviceDate: string;
-  criterionRatings: PostJobCriterionRating[];
-  overallSentiment: 'positive' | 'negative';
-  followUpNote?: string;
-  averageScore: number;
-  submittedAt: string;
 }
 
 // ─── Health Event Types ───────────────────────────────────────────────────────
@@ -194,8 +152,6 @@ export interface AccountHealthScore {
   signals: HealthSignal[];
   lastSurveyDate: string | null;
   lastSurveyScore: number | null;
-  recentSurveys?: PostJobSurveyResponse[];
-  preJobSurveys?: PreJobSurveyResponse[];
   actionItems: string[];
   events: HealthEvent[];
   // Site detail fields
