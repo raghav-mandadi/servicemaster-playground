@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { X, SlidersHorizontal, Filter } from 'lucide-react';
+import { X, SlidersHorizontal, Filter, Plus } from 'lucide-react';
 import { AccountHealthList } from '../components/health/admin/AccountHealthList';
 import type { HealthSelection } from '../components/health/admin/AccountHealthList';
 import { HealthDetail } from '../components/health/admin/HealthDetail';
+import { GlobalEventLogModal } from '../components/health/admin/GlobalEventLogModal';
 import { PhoneFrame } from '../components/health/PhoneFrame';
 import { MobileApp } from '../components/health/MobileApp';
 import { ScoringRulesPanel } from '../components/health/admin/ScoringRulesPanel';
@@ -65,8 +66,9 @@ export function Health() {
   const [selected, setSelected] = useState<HealthSelection | null>(
     firstRed ? { type: 'deal', dealId: firstRed.dealId, accountId: firstRed.accountId } : null
   );
-  const [showPhoneModal,   setShowPhoneModal]   = useState(false);
-  const [showScoringRules, setShowScoringRules] = useState(false);
+  const [showPhoneModal,      setShowPhoneModal]      = useState(false);
+  const [showScoringRules,    setShowScoringRules]    = useState(false);
+  const [showGlobalLogEvent,  setShowGlobalLogEvent]  = useState(false);
   const [currentUserId,    setCurrentUserId]    = useState<string>('user-004');
   const [filterMySites,    setFilterMySites]    = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
@@ -217,19 +219,33 @@ export function Health() {
           )}
         </div>
 
-        {/* Scoring Rules */}
-        <button
-          onClick={() => setShowScoringRules(true)}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 6,
-            fontSize: 12, fontWeight: 500, color: '#6D6D6D',
-            background: 'none', border: '1px solid #E6E8ED',
-            borderRadius: 6, padding: '5px 10px', cursor: 'pointer',
-          }}
-        >
-          <SlidersHorizontal size={13} />
-          Scoring Rules
-        </button>
+        {/* Right side controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <button
+            onClick={() => setShowGlobalLogEvent(true)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              fontSize: 12, fontWeight: 600, color: '#fff',
+              background: '#00A2B2', border: 'none',
+              borderRadius: 6, padding: '5px 12px', cursor: 'pointer',
+            }}
+          >
+            <Plus size={13} />
+            Log Event
+          </button>
+          <button
+            onClick={() => setShowScoringRules(true)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              fontSize: 12, fontWeight: 500, color: '#6D6D6D',
+              background: 'none', border: '1px solid #E6E8ED',
+              borderRadius: 6, padding: '5px 10px', cursor: 'pointer',
+            }}
+          >
+            <SlidersHorizontal size={13} />
+            Scoring Rules
+          </button>
+        </div>
       </div>
 
       {/* ── Main split panel ─────────────────────────────────────────────── */}
@@ -324,6 +340,15 @@ export function Health() {
           config={scoringConfig}
           onChange={setScoringConfig}
           onClose={() => setShowScoringRules(false)}
+        />
+      )}
+
+      {/* ── Global Log Event modal ─────────────────────────────────────────── */}
+      {showGlobalLogEvent && (
+        <GlobalEventLogModal
+          sites={liveAccountScores}
+          onAddEvent={handleAddEvent}
+          onClose={() => setShowGlobalLogEvent(false)}
         />
       )}
     </div>
