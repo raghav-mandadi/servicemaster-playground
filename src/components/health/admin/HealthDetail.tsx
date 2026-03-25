@@ -268,7 +268,7 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig, events, onAddE
             </button>
           )}
         </div>
-        <ScoreGauge score={displayScore} tier={displayTier} size="sm" />
+        <ScoreGauge score={displayScore} tier={displayTier} size="lg" />
         <div className="flex-1 min-w-0">
           {/* Name + deal */}
           <div className="flex items-baseline gap-2 flex-wrap pr-28">
