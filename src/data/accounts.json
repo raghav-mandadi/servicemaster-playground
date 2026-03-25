@@ -1,0 +1,3007 @@
+[
+  {
+    "accountId": "acc-001",
+    "accountName": "Lakewood Office Park",
+    "status": "Active",
+    "industry": "Commercial Real Estate",
+    "primaryContact": {
+      "name": "Donna Hargrove",
+      "title": "Facilities Director",
+      "phone": "(312) 555-0182",
+      "email": "d.hargrove@lakewoodop.com"
+    },
+    "address": {
+      "street": "1400 N Lake Shore Dr",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60610"
+    },
+    "memberSince": "2021-03-15",
+    "buildings": [
+      {
+        "buildingId": "bld-001-a",
+        "name": "HQ Building",
+        "sqFootage": 45000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Main Lobby", "type": "lobby" },
+              { "name": "Reception", "type": "office" },
+              { "name": "Conference Room A", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Open Office", "type": "office" },
+              { "name": "Conference Room B", "type": "conference" },
+              { "name": "Storage", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-001-b",
+        "name": "East Wing",
+        "sqFootage": 30000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Tenant Suite 100", "type": "office" },
+              { "name": "Tenant Suite 102", "type": "office" },
+              { "name": "Mail Room", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 200", "type": "office" },
+              { "name": "Small Conference Room", "type": "conference" },
+              { "name": "Kitchenette", "type": "kitchen" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-001-c",
+        "name": "West Wing",
+        "sqFootage": 25000,
+        "cleaningFrequency": "Bi-Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Entry Vestibule", "type": "lobby" },
+              { "name": "Leasing Office", "type": "office" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Office Suite A", "type": "office" },
+              { "name": "Office Suite B", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "Hallway", "type": "hallway" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-002",
+    "accountName": "Maplewood Solutions",
+    "status": "Active",
+    "industry": "Technology",
+    "primaryContact": {
+      "name": "Brian Kowalski",
+      "title": "Office Manager",
+      "phone": "(312) 555-0247",
+      "email": "b.kowalski@maplewoodsolutions.com"
+    },
+    "address": {
+      "street": "222 W Adams St",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60606"
+    },
+    "memberSince": "2020-07-01",
+    "buildings": [
+      {
+        "buildingId": "bld-002-a",
+        "name": "Maplewood HQ",
+        "sqFootage": 22000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Dev Team Open Floor", "type": "office" },
+              { "name": "Server Room", "type": "other" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Executive Offices", "type": "office" },
+              { "name": "War Room", "type": "conference" },
+              { "name": "QA Lab", "type": "other" },
+              { "name": "Kitchenette", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Training Room", "type": "conference" },
+              { "name": "HR Suite", "type": "office" },
+              { "name": "Storage Closet", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-003",
+    "accountName": "Northgate Plaza",
+    "status": "Active",
+    "industry": "Retail",
+    "primaryContact": {
+      "name": "Sandra Cho",
+      "title": "Property Manager",
+      "phone": "(847) 555-0391",
+      "email": "s.cho@northgateplaza.com"
+    },
+    "address": {
+      "street": "1500 Sherman Ave",
+      "city": "Evanston",
+      "state": "IL",
+      "zip": "60201"
+    },
+    "memberSince": "2019-05-20",
+    "buildings": [
+      {
+        "buildingId": "bld-003-a",
+        "name": "Main Retail Building",
+        "sqFootage": 60000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Concourse", "type": "lobby" },
+              { "name": "Food Court", "type": "kitchen" },
+              { "name": "Retail Unit 101", "type": "other" },
+              { "name": "Retail Unit 103", "type": "other" },
+              { "name": "Customer Service Desk", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Retail Unit 201", "type": "other" },
+              { "name": "Retail Unit 205", "type": "other" },
+              { "name": "Management Office", "type": "office" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-003-b",
+        "name": "Annex Building",
+        "sqFootage": 15000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Loading Dock Office", "type": "office" },
+              { "name": "Warehouse Storage", "type": "storage" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-004",
+    "accountName": "Riverside Medical Center",
+    "status": "Active",
+    "industry": "Healthcare",
+    "primaryContact": {
+      "name": "Patricia Nguyen",
+      "title": "Facilities Manager",
+      "phone": "(708) 555-0412",
+      "email": "p.nguyen@riversidemedical.com"
+    },
+    "address": {
+      "street": "800 W Lake St",
+      "city": "Oak Park",
+      "state": "IL",
+      "zip": "60301"
+    },
+    "memberSince": "2018-11-01",
+    "buildings": [
+      {
+        "buildingId": "bld-004-a",
+        "name": "Main Medical Building",
+        "sqFootage": 50000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Entrance Lobby", "type": "lobby" },
+              { "name": "Admissions", "type": "office" },
+              { "name": "Waiting Room", "type": "other" },
+              { "name": "Exam Room 101", "type": "other" },
+              { "name": "Exam Room 102", "type": "other" },
+              { "name": "Nursing Station", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Radiology Suite", "type": "other" },
+              { "name": "Lab", "type": "other" },
+              { "name": "Staff Break Room", "type": "kitchen" },
+              { "name": "Administration", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Surgical Suite A", "type": "other" },
+              { "name": "Recovery Room", "type": "other" },
+              { "name": "Staff Lounge", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-005",
+    "accountName": "Summit Corporate Campus",
+    "status": "Active",
+    "industry": "Commercial Real Estate",
+    "primaryContact": {
+      "name": "Gerald Franks",
+      "title": "Campus Operations Director",
+      "phone": "(630) 555-0503",
+      "email": "g.franks@summitcorpcampus.com"
+    },
+    "address": {
+      "street": "1200 E Diehl Rd",
+      "city": "Naperville",
+      "state": "IL",
+      "zip": "60563"
+    },
+    "memberSince": "2019-02-14",
+    "buildings": [
+      {
+        "buildingId": "bld-005-a",
+        "name": "Building One",
+        "sqFootage": 70000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Grand Lobby", "type": "lobby" },
+              { "name": "Concierge Desk", "type": "office" },
+              { "name": "Conference Center A", "type": "conference" },
+              { "name": "Cafe", "type": "kitchen" },
+              { "name": "Security Office", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 200", "type": "office" },
+              { "name": "Tenant Suite 210", "type": "office" },
+              { "name": "Conference Room 2A", "type": "conference" },
+              { "name": "Kitchenette", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 300", "type": "office" },
+              { "name": "Board Room", "type": "conference" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-005-b",
+        "name": "Building Two",
+        "sqFootage": 55000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Tenant Suite 100", "type": "office" },
+              { "name": "Conference Room 1B", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 200", "type": "office" },
+              { "name": "Open Workspace", "type": "office" },
+              { "name": "Phone Booths", "type": "other" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-005-c",
+        "name": "Building Three",
+        "sqFootage": 40000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Flex Office Space", "type": "office" },
+              { "name": "Small Meeting Room", "type": "conference" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Training Room", "type": "conference" },
+              { "name": "Storage", "type": "storage" },
+              { "name": "Kitchenette", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-006",
+    "accountName": "Harbor View Hotel",
+    "status": "Active",
+    "industry": "Hospitality",
+    "primaryContact": {
+      "name": "Renata Blum",
+      "title": "Housekeeping Director",
+      "phone": "(312) 555-0618",
+      "email": "r.blum@harborviewhotel.com"
+    },
+    "address": {
+      "street": "505 N Michigan Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60611"
+    },
+    "memberSince": "2020-01-10",
+    "buildings": [
+      {
+        "buildingId": "bld-006-a",
+        "name": "Hotel Tower",
+        "sqFootage": 80000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Grand Lobby", "type": "lobby" },
+              { "name": "Front Desk", "type": "office" },
+              { "name": "Concierge", "type": "office" },
+              { "name": "Restaurant", "type": "kitchen" },
+              { "name": "Bar & Lounge", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Banquet Hall A", "type": "conference" },
+              { "name": "Banquet Hall B", "type": "conference" },
+              { "name": "Catering Kitchen", "type": "kitchen" },
+              { "name": "Storage", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Business Center", "type": "office" },
+              { "name": "Fitness Room", "type": "other" },
+              { "name": "Pool Area", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-007",
+    "accountName": "Westfield Community College",
+    "status": "Active",
+    "industry": "Education",
+    "primaryContact": {
+      "name": "James Okafor",
+      "title": "Facilities Coordinator",
+      "phone": "(630) 555-0729",
+      "email": "j.okafor@westfieldcc.edu"
+    },
+    "address": {
+      "street": "3300 W Jefferson St",
+      "city": "Westfield",
+      "state": "IL",
+      "zip": "60559"
+    },
+    "memberSince": "2018-08-01",
+    "buildings": [
+      {
+        "buildingId": "bld-007-a",
+        "name": "Main Academic Building",
+        "sqFootage": 65000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Entrance", "type": "lobby" },
+              { "name": "Admissions Office", "type": "office" },
+              { "name": "Classroom 101", "type": "conference" },
+              { "name": "Classroom 102", "type": "conference" },
+              { "name": "Student Lounge", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Library", "type": "other" },
+              { "name": "Faculty Offices", "type": "office" },
+              { "name": "Computer Lab", "type": "other" },
+              { "name": "Classroom 201", "type": "conference" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Science Lab A", "type": "other" },
+              { "name": "Science Lab B", "type": "other" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-007-b",
+        "name": "Student Services Center",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Financial Aid Office", "type": "office" },
+              { "name": "Counseling Suite", "type": "office" },
+              { "name": "Cafeteria", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-008",
+    "accountName": "Greenleaf Distribution Center",
+    "status": "Active",
+    "industry": "Logistics",
+    "primaryContact": {
+      "name": "Marcus Webb",
+      "title": "Operations Manager",
+      "phone": "(815) 555-0834",
+      "email": "m.webb@greenleafdist.com"
+    },
+    "address": {
+      "street": "1800 Industria Dr",
+      "city": "Joliet",
+      "state": "IL",
+      "zip": "60435"
+    },
+    "memberSince": "2021-06-15",
+    "buildings": [
+      {
+        "buildingId": "bld-008-a",
+        "name": "Distribution Warehouse",
+        "sqFootage": 75000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Receiving Dock Area", "type": "other" },
+              { "name": "Shipping Dock Area", "type": "other" },
+              { "name": "Floor Office", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "Safety Manager Office", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Operations Center", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "HR Office", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-009",
+    "accountName": "Pinewood Elementary School",
+    "status": "Active",
+    "industry": "Education",
+    "primaryContact": {
+      "name": "Carol Petersen",
+      "title": "Head Custodian",
+      "phone": "(847) 555-0956",
+      "email": "c.petersen@pinewoodelem.k12.il.us"
+    },
+    "address": {
+      "street": "400 Pinecrest Blvd",
+      "city": "Schaumburg",
+      "state": "IL",
+      "zip": "60173"
+    },
+    "memberSince": "2022-01-10",
+    "buildings": [
+      {
+        "buildingId": "bld-009-a",
+        "name": "School Main Building",
+        "sqFootage": 30000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Entrance Hall", "type": "lobby" },
+              { "name": "Principal's Office", "type": "office" },
+              { "name": "Kindergarten Room", "type": "conference" },
+              { "name": "Classroom 101", "type": "conference" },
+              { "name": "Cafeteria", "type": "kitchen" },
+              { "name": "Gymnasium", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Classroom 201", "type": "conference" },
+              { "name": "Classroom 202", "type": "conference" },
+              { "name": "Art Room", "type": "other" },
+              { "name": "Library", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-010",
+    "accountName": "Crestline Financial Group",
+    "status": "Active",
+    "industry": "Financial Services",
+    "primaryContact": {
+      "name": "Angela Prescott",
+      "title": "Office Services Manager",
+      "phone": "(312) 555-1023",
+      "email": "a.prescott@crestlinefinancial.com"
+    },
+    "address": {
+      "street": "10 S Wacker Dr",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60606"
+    },
+    "memberSince": "2019-09-01",
+    "buildings": [
+      {
+        "buildingId": "bld-010-a",
+        "name": "Crestline Tower",
+        "sqFootage": 35000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Client Services", "type": "office" },
+              { "name": "Teller Area", "type": "other" },
+              { "name": "Vault Anteroom", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Trading Floor", "type": "office" },
+              { "name": "Conference Room A", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "IT Room", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Executive Suite", "type": "office" },
+              { "name": "Board Room", "type": "conference" },
+              { "name": "Executive Lounge", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-011",
+    "accountName": "Midtown Market",
+    "status": "Active",
+    "industry": "Retail",
+    "primaryContact": {
+      "name": "Steven Liu",
+      "title": "Store Operations Manager",
+      "phone": "(312) 555-1145",
+      "email": "s.liu@midtownmarket.com"
+    },
+    "address": {
+      "street": "700 N Michigan Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60611"
+    },
+    "memberSince": "2020-04-01",
+    "buildings": [
+      {
+        "buildingId": "bld-011-a",
+        "name": "Midtown Market Store",
+        "sqFootage": 28000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Sales Floor", "type": "other" },
+              { "name": "Checkout Area", "type": "other" },
+              { "name": "Customer Service Desk", "type": "office" },
+              { "name": "Deli & Prepared Foods", "type": "kitchen" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Manager's Office", "type": "office" },
+              { "name": "Back Stock Room", "type": "storage" },
+              { "name": "Receiving Area", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-012",
+    "accountName": "Oakridge Research Institute",
+    "status": "Active",
+    "industry": "Biotech",
+    "primaryContact": {
+      "name": "Dr. Helen Marsh",
+      "title": "Lab Operations Director",
+      "phone": "(847) 555-1201",
+      "email": "h.marsh@oakridgeresearch.org"
+    },
+    "address": {
+      "street": "2100 Ridge Ave",
+      "city": "Evanston",
+      "state": "IL",
+      "zip": "60201"
+    },
+    "memberSince": "2018-03-01",
+    "buildings": [
+      {
+        "buildingId": "bld-012-a",
+        "name": "Research Complex",
+        "sqFootage": 45000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Administrative Office", "type": "office" },
+              { "name": "Main Laboratory", "type": "other" },
+              { "name": "Cell Culture Room", "type": "other" },
+              { "name": "Equipment Storage", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Genomics Lab", "type": "other" },
+              { "name": "Clean Room", "type": "other" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Executive Offices", "type": "office" },
+              { "name": "Board Room", "type": "conference" },
+              { "name": "Archives", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-013",
+    "accountName": "Clearwater Dental Group",
+    "status": "Active",
+    "industry": "Healthcare",
+    "primaryContact": {
+      "name": "Olivia Hernandez",
+      "title": "Practice Administrator",
+      "phone": "(630) 555-1312",
+      "email": "o.hernandez@clearwaterdental.com"
+    },
+    "address": {
+      "street": "3600 Finley Rd",
+      "city": "Downers Grove",
+      "state": "IL",
+      "zip": "60515"
+    },
+    "memberSince": "2022-05-01",
+    "buildings": [
+      {
+        "buildingId": "bld-013-a",
+        "name": "Dental Clinic",
+        "sqFootage": 8000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Waiting Room", "type": "lobby" },
+              { "name": "Reception Desk", "type": "office" },
+              { "name": "Treatment Room 1", "type": "other" },
+              { "name": "Treatment Room 2", "type": "other" },
+              { "name": "Treatment Room 3", "type": "other" },
+              { "name": "Sterilization Room", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Doctors' Offices", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "Records Storage", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-014",
+    "accountName": "Stonegate Law Offices",
+    "status": "Active",
+    "industry": "Professional Services",
+    "primaryContact": {
+      "name": "Richard Callahan",
+      "title": "Office Administrator",
+      "phone": "(312) 555-1467",
+      "email": "r.callahan@stonegatlaw.com"
+    },
+    "address": {
+      "street": "77 W Wacker Dr",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "memberSince": "2020-11-15",
+    "buildings": [
+      {
+        "buildingId": "bld-014-a",
+        "name": "Stonegate Law Suite",
+        "sqFootage": 18000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Client Waiting Area", "type": "other" },
+              { "name": "Conference Room A", "type": "conference" },
+              { "name": "Conference Room B", "type": "conference" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Partner Offices", "type": "office" },
+              { "name": "Associate Offices", "type": "office" },
+              { "name": "Law Library", "type": "other" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "File Room", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-015",
+    "accountName": "Valley View Fitness Center",
+    "status": "Active",
+    "industry": "Recreation",
+    "primaryContact": {
+      "name": "Todd Sarnowski",
+      "title": "Facility Manager",
+      "phone": "(630) 555-1521",
+      "email": "t.sarnowski@valleyviewfitness.com"
+    },
+    "address": {
+      "street": "2000 E New York St",
+      "city": "Aurora",
+      "state": "IL",
+      "zip": "60502"
+    },
+    "memberSince": "2021-01-20",
+    "buildings": [
+      {
+        "buildingId": "bld-015-a",
+        "name": "Fitness Center",
+        "sqFootage": 25000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Entrance", "type": "lobby" },
+              { "name": "Cardio Floor", "type": "other" },
+              { "name": "Weight Room", "type": "other" },
+              { "name": "Group Fitness Studio", "type": "other" },
+              { "name": "Locker Room - Men", "type": "other" },
+              { "name": "Locker Room - Women", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Yoga Studio", "type": "other" },
+              { "name": "Cycle Room", "type": "other" },
+              { "name": "Staff Office", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-016",
+    "accountName": "Eastside Auto Group",
+    "status": "Archived",
+    "industry": "Automotive",
+    "primaryContact": {
+      "name": "George Papadopoulos",
+      "title": "Dealership Manager",
+      "phone": "(708) 555-1634",
+      "email": "g.papadopoulos@eastsideauto.com"
+    },
+    "address": {
+      "street": "5500 W Cermak Rd",
+      "city": "Cicero",
+      "state": "IL",
+      "zip": "60804"
+    },
+    "memberSince": "2019-04-01",
+    "buildings": [
+      {
+        "buildingId": "bld-016-a",
+        "name": "Showroom & Service",
+        "sqFootage": 32000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Showroom Floor", "type": "lobby" },
+              { "name": "Sales Offices", "type": "office" },
+              { "name": "Service Drive", "type": "other" },
+              { "name": "Customer Waiting Lounge", "type": "other" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Finance Office", "type": "office" },
+              { "name": "Service Manager Office", "type": "office" },
+              { "name": "Parts Storage", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-017",
+    "accountName": "Pacific Rim Restaurant Group",
+    "status": "Active",
+    "industry": "Food & Beverage",
+    "primaryContact": {
+      "name": "Amy Tanaka",
+      "title": "Operations Director",
+      "phone": "(312) 555-1798",
+      "email": "a.tanaka@pacificrimrg.com"
+    },
+    "address": {
+      "street": "215 W Erie St",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60654"
+    },
+    "memberSince": "2021-08-01",
+    "buildings": [
+      {
+        "buildingId": "bld-017-a",
+        "name": "Restaurant HQ",
+        "sqFootage": 12000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Dining Room", "type": "other" },
+              { "name": "Bar Area", "type": "other" },
+              { "name": "Main Kitchen", "type": "kitchen" },
+              { "name": "Hostess Stand", "type": "lobby" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Corporate Office", "type": "office" },
+              { "name": "Private Dining Room", "type": "conference" },
+              { "name": "Dry Storage", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-018",
+    "accountName": "Metropolitan Transit Authority",
+    "status": "Active",
+    "industry": "Government",
+    "primaryContact": {
+      "name": "Luis Garza",
+      "title": "Facilities Director",
+      "phone": "(312) 555-1856",
+      "email": "l.garza@metrochicago.gov"
+    },
+    "address": {
+      "street": "567 W Lake St",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60661"
+    },
+    "memberSince": "2018-06-15",
+    "buildings": [
+      {
+        "buildingId": "bld-018-a",
+        "name": "Administrative Headquarters",
+        "sqFootage": 50000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Public Lobby", "type": "lobby" },
+              { "name": "Customer Service Center", "type": "office" },
+              { "name": "Security Desk", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Operations Center", "type": "office" },
+              { "name": "Dispatch Room", "type": "office" },
+              { "name": "Conference Room A", "type": "conference" },
+              { "name": "IT Department", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Executive Offices", "type": "office" },
+              { "name": "Board Room", "type": "conference" },
+              { "name": "Staff Lounge", "type": "kitchen" },
+              { "name": "Records Room", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-019",
+    "accountName": "Silverstone Technology Park",
+    "status": "Active",
+    "industry": "Commercial Real Estate",
+    "primaryContact": {
+      "name": "Claire Donnelly",
+      "title": "Property Operations Manager",
+      "phone": "(847) 555-1967",
+      "email": "c.donnelly@silverstonetechpark.com"
+    },
+    "address": {
+      "street": "1000 E Higgins Rd",
+      "city": "Schaumburg",
+      "state": "IL",
+      "zip": "60173"
+    },
+    "memberSince": "2019-11-01",
+    "buildings": [
+      {
+        "buildingId": "bld-019-a",
+        "name": "Innovation Center",
+        "sqFootage": 60000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Atrium Lobby", "type": "lobby" },
+              { "name": "Coworking Space", "type": "office" },
+              { "name": "Conference Suite A", "type": "conference" },
+              { "name": "Cafeteria", "type": "kitchen" },
+              { "name": "Tech Demo Room", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 200", "type": "office" },
+              { "name": "Tenant Suite 210", "type": "office" },
+              { "name": "Phone Room", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 300", "type": "office" },
+              { "name": "Large Conference Room", "type": "conference" },
+              { "name": "Breakout Space", "type": "other" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-019-b",
+        "name": "Tech Hub East",
+        "sqFootage": 40000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Open Workspace", "type": "office" },
+              { "name": "Meeting Room", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Private Offices", "type": "office" },
+              { "name": "Server Closet", "type": "other" },
+              { "name": "Storage", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-019-c",
+        "name": "Tech Hub West",
+        "sqFootage": 35000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Hot Desk Area", "type": "office" },
+              { "name": "Collaborative Space", "type": "conference" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Suite 200", "type": "office" },
+              { "name": "Kitchenette", "type": "kitchen" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-020",
+    "accountName": "Bayside Veterinary Clinic",
+    "status": "Active",
+    "industry": "Healthcare",
+    "primaryContact": {
+      "name": "Megan Fairfield",
+      "title": "Clinic Manager",
+      "phone": "(847) 555-2047",
+      "email": "m.fairfield@baysidevet.com"
+    },
+    "address": {
+      "street": "320 Green Bay Rd",
+      "city": "Wilmette",
+      "state": "IL",
+      "zip": "60091"
+    },
+    "memberSince": "2022-03-01",
+    "buildings": [
+      {
+        "buildingId": "bld-020-a",
+        "name": "Veterinary Clinic",
+        "sqFootage": 7000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Waiting Room", "type": "lobby" },
+              { "name": "Reception", "type": "office" },
+              { "name": "Exam Room 1", "type": "other" },
+              { "name": "Exam Room 2", "type": "other" },
+              { "name": "Surgery Suite", "type": "other" },
+              { "name": "Kennel Area", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-021",
+    "accountName": "Lakeshore Athletic Club",
+    "status": "Active",
+    "industry": "Recreation",
+    "primaryContact": {
+      "name": "Derek Solis",
+      "title": "General Manager",
+      "phone": "(312) 555-2178",
+      "email": "d.solis@lakeshoreathleticclub.com"
+    },
+    "address": {
+      "street": "211 N Stetson Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "memberSince": "2020-09-01",
+    "buildings": [
+      {
+        "buildingId": "bld-021-a",
+        "name": "Athletic Club",
+        "sqFootage": 40000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Lobby", "type": "lobby" },
+              { "name": "Membership Desk", "type": "office" },
+              { "name": "Cardio Room", "type": "other" },
+              { "name": "Free Weights Area", "type": "other" },
+              { "name": "Locker Room - Men", "type": "other" },
+              { "name": "Locker Room - Women", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Indoor Pool", "type": "other" },
+              { "name": "Racquetball Courts", "type": "other" },
+              { "name": "Juice Bar", "type": "kitchen" },
+              { "name": "Private Training Rooms", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Yoga Studio", "type": "other" },
+              { "name": "Pilates Room", "type": "other" },
+              { "name": "Manager's Office", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-022",
+    "accountName": "Northside Church & Community Center",
+    "status": "Active",
+    "industry": "Nonprofit",
+    "primaryContact": {
+      "name": "Pastor William Greene",
+      "title": "Executive Director",
+      "phone": "(773) 555-2289",
+      "email": "w.greene@northsidechurch.org"
+    },
+    "address": {
+      "street": "1600 W Touhy Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60626"
+    },
+    "memberSince": "2021-05-01",
+    "buildings": [
+      {
+        "buildingId": "bld-022-a",
+        "name": "Church & Community Center",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Sanctuary", "type": "other" },
+              { "name": "Narthex", "type": "lobby" },
+              { "name": "Fellowship Hall", "type": "conference" },
+              { "name": "Kitchen", "type": "kitchen" },
+              { "name": "Youth Room", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Pastor's Office", "type": "office" },
+              { "name": "Classrooms", "type": "conference" },
+              { "name": "Library", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-023",
+    "accountName": "Diamond Head Pharmaceuticals",
+    "status": "Active",
+    "industry": "Healthcare",
+    "primaryContact": {
+      "name": "Dr. Samuel Park",
+      "title": "Facilities & Safety Manager",
+      "phone": "(847) 555-2301",
+      "email": "s.park@diamondheadpharma.com"
+    },
+    "address": {
+      "street": "3500 N Green Bay Rd",
+      "city": "North Chicago",
+      "state": "IL",
+      "zip": "60064"
+    },
+    "memberSince": "2019-07-01",
+    "buildings": [
+      {
+        "buildingId": "bld-023-a",
+        "name": "R&D Campus",
+        "sqFootage": 55000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Security Checkpoint", "type": "office" },
+              { "name": "Chemistry Lab A", "type": "other" },
+              { "name": "Chemistry Lab B", "type": "other" },
+              { "name": "Equipment Staging", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Formulation Lab", "type": "other" },
+              { "name": "QA/QC Lab", "type": "other" },
+              { "name": "Research Offices", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Executive Suite", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Records Archive", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-024",
+    "accountName": "Riverview Apartments",
+    "status": "Active",
+    "industry": "Residential",
+    "primaryContact": {
+      "name": "Tanya Morrison",
+      "title": "Property Manager",
+      "phone": "(708) 555-2445",
+      "email": "t.morrison@riverviewapts.com"
+    },
+    "address": {
+      "street": "3700 S Harlem Ave",
+      "city": "Berwyn",
+      "state": "IL",
+      "zip": "60402"
+    },
+    "memberSince": "2023-01-15",
+    "buildings": [
+      {
+        "buildingId": "bld-024-a",
+        "name": "Riverview Building A",
+        "sqFootage": 18000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Mailroom", "type": "other" },
+              { "name": "Management Office", "type": "office" },
+              { "name": "Laundry Room", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Common Hallway", "type": "hallway" },
+              { "name": "Resident Lounge", "type": "other" },
+              { "name": "Storage Closets", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-025",
+    "accountName": "Cedar Point Manufacturing",
+    "status": "Active",
+    "industry": "Industrial",
+    "primaryContact": {
+      "name": "Frank Delacroix",
+      "title": "Plant Manager",
+      "phone": "(815) 555-2512",
+      "email": "f.delacroix@cedarpointmfg.com"
+    },
+    "address": {
+      "street": "4200 N Main St",
+      "city": "Rockford",
+      "state": "IL",
+      "zip": "61103"
+    },
+    "memberSince": "2020-02-01",
+    "buildings": [
+      {
+        "buildingId": "bld-025-a",
+        "name": "Manufacturing Plant",
+        "sqFootage": 78000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Production Floor", "type": "other" },
+              { "name": "Assembly Area", "type": "other" },
+              { "name": "Quality Control Station", "type": "other" },
+              { "name": "Break Room A", "type": "kitchen" },
+              { "name": "Break Room B", "type": "kitchen" },
+              { "name": "Receiving & Shipping", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Plant Manager Office", "type": "office" },
+              { "name": "Engineering Office", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Parts Storage", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-026",
+    "accountName": "Hillside Retirement Village",
+    "status": "Active",
+    "industry": "Senior Living",
+    "primaryContact": {
+      "name": "Nancy Buchanan",
+      "title": "Executive Director",
+      "phone": "(708) 555-2678",
+      "email": "n.buchanan@hillsideretirement.com"
+    },
+    "address": {
+      "street": "4800 N Mannheim Rd",
+      "city": "Hillside",
+      "state": "IL",
+      "zip": "60162"
+    },
+    "memberSince": "2018-09-01",
+    "buildings": [
+      {
+        "buildingId": "bld-026-a",
+        "name": "Main Residence Building",
+        "sqFootage": 55000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Lobby", "type": "lobby" },
+              { "name": "Dining Room", "type": "kitchen" },
+              { "name": "Activity Room", "type": "conference" },
+              { "name": "Beauty Salon", "type": "other" },
+              { "name": "Nursing Station", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Resident Hallway", "type": "hallway" },
+              { "name": "Physical Therapy Room", "type": "other" },
+              { "name": "Resident Lounge", "type": "other" },
+              { "name": "Staff Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Memory Care Wing", "type": "other" },
+              { "name": "Garden Room", "type": "other" },
+              { "name": "Administrative Office", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-027",
+    "accountName": "Westlake Public Library",
+    "status": "Active",
+    "industry": "Government",
+    "primaryContact": {
+      "name": "Janet Carlson",
+      "title": "Library Director",
+      "phone": "(630) 555-2745",
+      "email": "j.carlson@westlake.lib.il.us"
+    },
+    "address": {
+      "street": "428 N Cass Ave",
+      "city": "Westmont",
+      "state": "IL",
+      "zip": "60559"
+    },
+    "memberSince": "2021-09-01",
+    "buildings": [
+      {
+        "buildingId": "bld-027-a",
+        "name": "Public Library",
+        "sqFootage": 22000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Main Entrance", "type": "lobby" },
+              { "name": "Circulation Desk", "type": "office" },
+              { "name": "Adult Reading Room", "type": "other" },
+              { "name": "Children's Section", "type": "other" },
+              { "name": "Computer Lab", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Meeting Room A", "type": "conference" },
+              { "name": "Meeting Room B", "type": "conference" },
+              { "name": "Staff Offices", "type": "office" },
+              { "name": "Archives Room", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-028",
+    "accountName": "Crossroads Shopping Center",
+    "status": "Active",
+    "industry": "Retail",
+    "primaryContact": {
+      "name": "Philip Estrada",
+      "title": "Mall Operations Manager",
+      "phone": "(630) 555-2856",
+      "email": "p.estrada@crossroadsshopping.com"
+    },
+    "address": {
+      "street": "500 E Boughton Rd",
+      "city": "Bolingbrook",
+      "state": "IL",
+      "zip": "60440"
+    },
+    "memberSince": "2020-03-15",
+    "buildings": [
+      {
+        "buildingId": "bld-028-a",
+        "name": "Main Mall",
+        "sqFootage": 75000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Atrium", "type": "lobby" },
+              { "name": "Food Court", "type": "kitchen" },
+              { "name": "Anchor Store A", "type": "other" },
+              { "name": "Retail Row", "type": "other" },
+              { "name": "Management Office", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Anchor Store B", "type": "other" },
+              { "name": "Specialty Shops", "type": "other" },
+              { "name": "Cinema Lobby", "type": "lobby" },
+              { "name": "Storage Rooms", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-029",
+    "accountName": "Downtown Athletic Club",
+    "status": "Active",
+    "industry": "Recreation",
+    "primaryContact": {
+      "name": "Rachel Kim",
+      "title": "Club Manager",
+      "phone": "(312) 555-2967",
+      "email": "r.kim@downtownac.com"
+    },
+    "address": {
+      "street": "190 N State St",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "memberSince": "2019-06-01",
+    "buildings": [
+      {
+        "buildingId": "bld-029-a",
+        "name": "Athletic Club",
+        "sqFootage": 35000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Front Desk", "type": "office" },
+              { "name": "Gym Floor", "type": "other" },
+              { "name": "Locker Room - Men", "type": "other" },
+              { "name": "Locker Room - Women", "type": "other" },
+              { "name": "Smoothie Bar", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Group Fitness Studio", "type": "other" },
+              { "name": "Boxing Room", "type": "other" },
+              { "name": "Climbing Wall", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-030",
+    "accountName": "Highland Medical Clinic",
+    "status": "Active",
+    "industry": "Healthcare",
+    "primaryContact": {
+      "name": "Dr. Karen Sullivan",
+      "title": "Clinic Director",
+      "phone": "(847) 555-3012",
+      "email": "k.sullivan@highlandmedical.com"
+    },
+    "address": {
+      "street": "1707 St Johns Ave",
+      "city": "Highland Park",
+      "state": "IL",
+      "zip": "60035"
+    },
+    "memberSince": "2022-07-01",
+    "buildings": [
+      {
+        "buildingId": "bld-030-a",
+        "name": "Medical Clinic",
+        "sqFootage": 12000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Waiting Room", "type": "lobby" },
+              { "name": "Check-In Desk", "type": "office" },
+              { "name": "Exam Room 1", "type": "other" },
+              { "name": "Exam Room 2", "type": "other" },
+              { "name": "Exam Room 3", "type": "other" },
+              { "name": "Lab Draw Station", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Physician Offices", "type": "office" },
+              { "name": "Staff Break Room", "type": "kitchen" },
+              { "name": "Medical Records", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-031",
+    "accountName": "Emerald Coast Tech Hub",
+    "status": "Active",
+    "industry": "Technology",
+    "primaryContact": {
+      "name": "Nathan Pierce",
+      "title": "Office Operations Lead",
+      "phone": "(847) 555-3123",
+      "email": "n.pierce@emeraldcoasttech.com"
+    },
+    "address": {
+      "street": "5202 Old Orchard Rd",
+      "city": "Skokie",
+      "state": "IL",
+      "zip": "60077"
+    },
+    "memberSince": "2023-03-01",
+    "buildings": [
+      {
+        "buildingId": "bld-031-a",
+        "name": "Tech Hub Office",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Open Dev Floor", "type": "office" },
+              { "name": "Server Room", "type": "other" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Design Studio", "type": "office" },
+              { "name": "Sprint Room", "type": "conference" },
+              { "name": "Equipment Storage", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-032",
+    "accountName": "Fox Valley Industrial Park",
+    "status": "Draft",
+    "industry": "Industrial",
+    "primaryContact": {
+      "name": "Howard Vance",
+      "title": "Park Manager",
+      "phone": "(847) 555-3234",
+      "email": "h.vance@foxvalleyip.com"
+    },
+    "address": {
+      "street": "1900 Bowes Rd",
+      "city": "Elgin",
+      "state": "IL",
+      "zip": "60123"
+    },
+    "memberSince": "2024-01-10",
+    "buildings": [
+      {
+        "buildingId": "bld-032-a",
+        "name": "Industrial Unit A",
+        "sqFootage": 50000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Warehouse Floor", "type": "other" },
+              { "name": "Loading Bay", "type": "other" },
+              { "name": "Floor Supervisor Office", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "Equipment Storage", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-032-b",
+        "name": "Office Building",
+        "sqFootage": 8000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Main Office", "type": "office" },
+              { "name": "Conference Room", "type": "conference" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-033",
+    "accountName": "Blue Ridge University",
+    "status": "Active",
+    "industry": "Education",
+    "primaryContact": {
+      "name": "Dr. Thomas Wentworth",
+      "title": "Director of Facilities",
+      "phone": "(630) 555-3345",
+      "email": "t.wentworth@blueridgeuniversity.edu"
+    },
+    "address": {
+      "street": "501 College Ave",
+      "city": "Wheaton",
+      "state": "IL",
+      "zip": "60187"
+    },
+    "memberSince": "2018-07-01",
+    "buildings": [
+      {
+        "buildingId": "bld-033-a",
+        "name": "Main Academic Hall",
+        "sqFootage": 70000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Grand Foyer", "type": "lobby" },
+              { "name": "Registrar's Office", "type": "office" },
+              { "name": "Lecture Hall 100", "type": "conference" },
+              { "name": "Lecture Hall 101", "type": "conference" },
+              { "name": "Student Union Cafe", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Department Offices", "type": "office" },
+              { "name": "Classroom 201", "type": "conference" },
+              { "name": "Classroom 202", "type": "conference" },
+              { "name": "Faculty Lounge", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Graduate Studies Office", "type": "office" },
+              { "name": "Seminar Room A", "type": "conference" },
+              { "name": "Archives", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-033-b",
+        "name": "Science & Research Building",
+        "sqFootage": 45000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Biology Lab", "type": "other" },
+              { "name": "Chemistry Lab", "type": "other" },
+              { "name": "Equipment Room", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Physics Lab", "type": "other" },
+              { "name": "Research Lab", "type": "other" },
+              { "name": "Professor Offices", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-033-c",
+        "name": "Student Life Center",
+        "sqFootage": 30000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Atrium", "type": "lobby" },
+              { "name": "Cafeteria", "type": "kitchen" },
+              { "name": "Bookstore", "type": "other" },
+              { "name": "Student Activities Office", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Game Room", "type": "other" },
+              { "name": "Student Lounge", "type": "other" },
+              { "name": "Meeting Rooms", "type": "conference" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-034",
+    "accountName": "Harbor Point Marina",
+    "status": "Archived",
+    "industry": "Recreation",
+    "primaryContact": {
+      "name": "Bob Harrington",
+      "title": "Marina Manager",
+      "phone": "(847) 555-3478",
+      "email": "b.harrington@harborpointmarina.com"
+    },
+    "address": {
+      "street": "101 N Harbor Pl",
+      "city": "Waukegan",
+      "state": "IL",
+      "zip": "60085"
+    },
+    "memberSince": "2019-03-01",
+    "buildings": [
+      {
+        "buildingId": "bld-034-a",
+        "name": "Marina Club House",
+        "sqFootage": 9000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Main Lounge", "type": "lobby" },
+              { "name": "Marina Office", "type": "office" },
+              { "name": "Ship Store", "type": "other" },
+              { "name": "Snack Bar", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-035",
+    "accountName": "Sunridge Solar Offices",
+    "status": "Active",
+    "industry": "Technology",
+    "primaryContact": {
+      "name": "Ethan Rowe",
+      "title": "Office Manager",
+      "phone": "(630) 555-3567",
+      "email": "e.rowe@sunridgesolar.com"
+    },
+    "address": {
+      "street": "2200 S Main St",
+      "city": "Lombard",
+      "state": "IL",
+      "zip": "60148"
+    },
+    "memberSince": "2023-06-01",
+    "buildings": [
+      {
+        "buildingId": "bld-035-a",
+        "name": "Sunridge Office Building",
+        "sqFootage": 15000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Sales Floor", "type": "office" },
+              { "name": "Client Showroom", "type": "other" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Engineering Office", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-036",
+    "accountName": "Iron Gate Security",
+    "status": "Active",
+    "industry": "Commercial",
+    "primaryContact": {
+      "name": "Walt Simmons",
+      "title": "Operations Director",
+      "phone": "(708) 555-3645",
+      "email": "w.simmons@irongate-security.com"
+    },
+    "address": {
+      "street": "9800 S Cicero Ave",
+      "city": "Oak Lawn",
+      "state": "IL",
+      "zip": "60453"
+    },
+    "memberSince": "2022-02-01",
+    "buildings": [
+      {
+        "buildingId": "bld-036-a",
+        "name": "Security Operations Center",
+        "sqFootage": 12000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Dispatch Center", "type": "office" },
+              { "name": "Training Room", "type": "conference" },
+              { "name": "Equipment Room", "type": "storage" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-037",
+    "accountName": "Metro Bank of Chicago",
+    "status": "Active",
+    "industry": "Financial Services",
+    "primaryContact": {
+      "name": "Carolyn Hughes",
+      "title": "Branch Operations Manager",
+      "phone": "(312) 555-3723",
+      "email": "c.hughes@metrobankchicago.com"
+    },
+    "address": {
+      "street": "33 S State St",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60603"
+    },
+    "memberSince": "2019-12-01",
+    "buildings": [
+      {
+        "buildingId": "bld-037-a",
+        "name": "Main Branch",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Banking Floor", "type": "lobby" },
+              { "name": "Teller Area", "type": "other" },
+              { "name": "Safe Deposit Room", "type": "other" },
+              { "name": "Client Offices", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Loan Department", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "IT Server Room", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-038",
+    "accountName": "Ashwood Assisted Living",
+    "status": "Active",
+    "industry": "Senior Living",
+    "primaryContact": {
+      "name": "Brenda Olszewski",
+      "title": "Facility Director",
+      "phone": "(847) 555-3812",
+      "email": "b.olszewski@ashwoodassistedliving.com"
+    },
+    "address": {
+      "street": "1300 N Rand Rd",
+      "city": "Palatine",
+      "state": "IL",
+      "zip": "60074"
+    },
+    "memberSince": "2021-04-01",
+    "buildings": [
+      {
+        "buildingId": "bld-038-a",
+        "name": "Assisted Living Facility",
+        "sqFootage": 42000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Welcome Lobby", "type": "lobby" },
+              { "name": "Dining Room", "type": "kitchen" },
+              { "name": "Family Lounge", "type": "other" },
+              { "name": "Activity Room", "type": "conference" },
+              { "name": "Nursing Station", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Resident Corridor", "type": "hallway" },
+              { "name": "Physical Therapy", "type": "other" },
+              { "name": "Chapel", "type": "other" },
+              { "name": "Staff Office", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-039",
+    "accountName": "Peninsula Golf Club",
+    "status": "Active",
+    "industry": "Recreation",
+    "primaryContact": {
+      "name": "Victor Lamont",
+      "title": "Club General Manager",
+      "phone": "(847) 555-3934",
+      "email": "v.lamont@peninsulagolfclub.com"
+    },
+    "address": {
+      "street": "200 Bateman Rd",
+      "city": "Barrington",
+      "state": "IL",
+      "zip": "60010"
+    },
+    "memberSince": "2020-06-01",
+    "buildings": [
+      {
+        "buildingId": "bld-039-a",
+        "name": "Clubhouse",
+        "sqFootage": 25000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Entrance", "type": "lobby" },
+              { "name": "Dining Room", "type": "kitchen" },
+              { "name": "Bar & Grill", "type": "other" },
+              { "name": "Pro Shop", "type": "other" },
+              { "name": "Locker Room - Men", "type": "other" },
+              { "name": "Locker Room - Women", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Banquet Room", "type": "conference" },
+              { "name": "Administrative Office", "type": "office" },
+              { "name": "Storage", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-040",
+    "accountName": "Northgate Community Hospital",
+    "status": "Active",
+    "industry": "Healthcare",
+    "primaryContact": {
+      "name": "Dr. Angela Brooks",
+      "title": "Director of Environmental Services",
+      "phone": "(847) 555-4045",
+      "email": "a.brooks@northgatehospital.org"
+    },
+    "address": {
+      "street": "2500 Ballard Rd",
+      "city": "Des Plaines",
+      "state": "IL",
+      "zip": "60016"
+    },
+    "memberSince": "2018-04-01",
+    "buildings": [
+      {
+        "buildingId": "bld-040-a",
+        "name": "Hospital Main Tower",
+        "sqFootage": 80000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Main Entrance Lobby", "type": "lobby" },
+              { "name": "Emergency Room", "type": "other" },
+              { "name": "Admissions", "type": "office" },
+              { "name": "Gift Shop", "type": "other" },
+              { "name": "Cafeteria", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "ICU", "type": "other" },
+              { "name": "Nursing Station", "type": "office" },
+              { "name": "Patient Rooms Wing A", "type": "other" },
+              { "name": "Family Lounge", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Surgical Suite A", "type": "other" },
+              { "name": "Surgical Suite B", "type": "other" },
+              { "name": "Recovery Room", "type": "other" },
+              { "name": "Staff Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 4,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Administrative Offices", "type": "office" },
+              { "name": "Board Room", "type": "conference" },
+              { "name": "Medical Records", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-040-b",
+        "name": "Medical Office Building",
+        "sqFootage": 30000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Outpatient Clinic", "type": "other" },
+              { "name": "Lab Draw Station", "type": "other" },
+              { "name": "Pharmacy", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Specialist Suites", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-040-c",
+        "name": "Rehab & Therapy Center",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Physical Therapy Gym", "type": "other" },
+              { "name": "Occupational Therapy Room", "type": "other" },
+              { "name": "Staff Office", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-041",
+    "accountName": "Cascade Business Center",
+    "status": "New",
+    "industry": "Commercial Real Estate",
+    "primaryContact": {
+      "name": "Matthew Lawson",
+      "title": "Property Manager",
+      "phone": "(630) 555-4156",
+      "email": "m.lawson@cascadebusinesscenter.com"
+    },
+    "address": {
+      "street": "2800 Maple Ave",
+      "city": "Lisle",
+      "state": "IL",
+      "zip": "60532"
+    },
+    "memberSince": "2025-01-15",
+    "buildings": [
+      {
+        "buildingId": "bld-041-a",
+        "name": "Cascade Office Building",
+        "sqFootage": 30000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Leasing Office", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite A", "type": "office" },
+              { "name": "Tenant Suite B", "type": "office" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-042",
+    "accountName": "Riverfront Hotel & Suites",
+    "status": "Active",
+    "industry": "Hospitality",
+    "primaryContact": {
+      "name": "Stephanie Walsh",
+      "title": "General Manager",
+      "phone": "(312) 555-4267",
+      "email": "s.walsh@riverfronthotel.com"
+    },
+    "address": {
+      "street": "150 N Riverside Plaza",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60606"
+    },
+    "memberSince": "2020-10-01",
+    "buildings": [
+      {
+        "buildingId": "bld-042-a",
+        "name": "Hotel Tower",
+        "sqFootage": 75000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Hotel Lobby", "type": "lobby" },
+              { "name": "Front Desk", "type": "office" },
+              { "name": "Restaurant", "type": "kitchen" },
+              { "name": "Bar", "type": "other" },
+              { "name": "Gift Shop", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Ballroom", "type": "conference" },
+              { "name": "Meeting Room A", "type": "conference" },
+              { "name": "Meeting Room B", "type": "conference" },
+              { "name": "Pre-Function Area", "type": "lobby" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Fitness Center", "type": "other" },
+              { "name": "Pool Area", "type": "other" },
+              { "name": "Business Center", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-043",
+    "accountName": "Oakwood Learning Academy",
+    "status": "Draft",
+    "industry": "Education",
+    "primaryContact": {
+      "name": "Maria Espinoza",
+      "title": "Principal",
+      "phone": "(708) 555-4378",
+      "email": "m.espinoza@oakwoodlearning.org"
+    },
+    "address": {
+      "street": "15900 S Central Ave",
+      "city": "Oak Forest",
+      "state": "IL",
+      "zip": "60452"
+    },
+    "memberSince": "2024-08-01",
+    "buildings": [
+      {
+        "buildingId": "bld-043-a",
+        "name": "Academy Building",
+        "sqFootage": 24000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Main Hallway", "type": "lobby" },
+              { "name": "Front Office", "type": "office" },
+              { "name": "Classroom A", "type": "conference" },
+              { "name": "Classroom B", "type": "conference" },
+              { "name": "Art Room", "type": "other" },
+              { "name": "Cafeteria", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Classroom C", "type": "conference" },
+              { "name": "Classroom D", "type": "conference" },
+              { "name": "Library", "type": "other" },
+              { "name": "Staff Room", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-044",
+    "accountName": "Lakeview Corporate Tower",
+    "status": "Active",
+    "industry": "Commercial Real Estate",
+    "primaryContact": {
+      "name": "Susan Bergmann",
+      "title": "Building Director",
+      "phone": "(312) 555-4489",
+      "email": "s.bergmann@lakeviewcorporatetower.com"
+    },
+    "address": {
+      "street": "900 N Michigan Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60611"
+    },
+    "memberSince": "2019-01-15",
+    "buildings": [
+      {
+        "buildingId": "bld-044-a",
+        "name": "North Tower",
+        "sqFootage": 80000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Grand Lobby", "type": "lobby" },
+              { "name": "Concierge", "type": "office" },
+              { "name": "Retail Suite 100", "type": "other" },
+              { "name": "Cafe", "type": "kitchen" },
+              { "name": "Security Desk", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 200", "type": "office" },
+              { "name": "Conference Room 2A", "type": "conference" },
+              { "name": "Kitchenette", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 300", "type": "office" },
+              { "name": "Tenant Suite 310", "type": "office" },
+              { "name": "Hallway", "type": "hallway" }
+            ]
+          },
+          {
+            "floorNumber": 4,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Penthouse Office Suite", "type": "office" },
+              { "name": "Executive Board Room", "type": "conference" },
+              { "name": "Executive Lounge", "type": "kitchen" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-044-b",
+        "name": "South Tower",
+        "sqFootage": 65000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Tenant Office 100", "type": "office" },
+              { "name": "Conference Room 1B", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Open Office", "type": "office" },
+              { "name": "Private Suite", "type": "office" },
+              { "name": "Storage", "type": "storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-044-c",
+        "name": "Parking & Amenities Deck",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Parking Level A Office", "type": "office" },
+              { "name": "Bike Room", "type": "other" },
+              { "name": "Storage Cages", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-045",
+    "accountName": "Granite Insurance Group",
+    "status": "Active",
+    "industry": "Financial Services",
+    "primaryContact": {
+      "name": "Paul Hendricks",
+      "title": "Office Services Director",
+      "phone": "(847) 555-4512",
+      "email": "p.hendricks@graniteinsurance.com"
+    },
+    "address": {
+      "street": "9600 W Bryn Mawr Ave",
+      "city": "Rosemont",
+      "state": "IL",
+      "zip": "60018"
+    },
+    "memberSince": "2021-11-01",
+    "buildings": [
+      {
+        "buildingId": "bld-045-a",
+        "name": "Granite Insurance HQ",
+        "sqFootage": 28000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Reception", "type": "lobby" },
+              { "name": "Client Services", "type": "office" },
+              { "name": "Claims Office", "type": "office" },
+              { "name": "Conference Room", "type": "conference" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Underwriting Department", "type": "office" },
+              { "name": "Actuarial Office", "type": "office" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "File Room", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Executive Offices", "type": "office" },
+              { "name": "Board Room", "type": "conference" },
+              { "name": "Executive Kitchen", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-046",
+    "accountName": "Eastwood Data Center",
+    "status": "New",
+    "industry": "Technology",
+    "primaryContact": {
+      "name": "Ian Stockton",
+      "title": "Facilities Engineer",
+      "phone": "(847) 555-4634",
+      "email": "i.stockton@eastwooddatacenter.com"
+    },
+    "address": {
+      "street": "1200 Busse Rd",
+      "city": "Elk Grove Village",
+      "state": "IL",
+      "zip": "60007"
+    },
+    "memberSince": "2025-03-01",
+    "buildings": [
+      {
+        "buildingId": "bld-046-a",
+        "name": "Data Center Facility",
+        "sqFootage": 40000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Security Vestibule", "type": "lobby" },
+              { "name": "NOC Room", "type": "office" },
+              { "name": "Server Hall A", "type": "other" },
+              { "name": "Server Hall B", "type": "other" },
+              { "name": "UPS Room", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Operations Office", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "Equipment Storage", "type": "storage" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-047",
+    "accountName": "Shoreline Fitness",
+    "status": "New",
+    "industry": "Recreation",
+    "primaryContact": {
+      "name": "Amber Collins",
+      "title": "Studio Manager",
+      "phone": "(847) 555-4778",
+      "email": "a.collins@shorelinefitness.com"
+    },
+    "address": {
+      "street": "1840 Maple Ave",
+      "city": "Evanston",
+      "state": "IL",
+      "zip": "60201"
+    },
+    "memberSince": "2025-04-01",
+    "buildings": [
+      {
+        "buildingId": "bld-047-a",
+        "name": "Fitness Studio",
+        "sqFootage": 10000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Entrance Lobby", "type": "lobby" },
+              { "name": "Front Desk", "type": "office" },
+              { "name": "Main Workout Floor", "type": "other" },
+              { "name": "Locker Room", "type": "other" },
+              { "name": "Spin Studio", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-048",
+    "accountName": "Midwest Food Distributors",
+    "status": "Draft",
+    "industry": "Food & Logistics",
+    "primaryContact": {
+      "name": "Dennis Kowalczyk",
+      "title": "Warehouse Operations Manager",
+      "phone": "(708) 555-4889",
+      "email": "d.kowalczyk@midwestfooddist.com"
+    },
+    "address": {
+      "street": "2100 Lake St",
+      "city": "Melrose Park",
+      "state": "IL",
+      "zip": "60160"
+    },
+    "memberSince": "2024-05-01",
+    "buildings": [
+      {
+        "buildingId": "bld-048-a",
+        "name": "Distribution Warehouse",
+        "sqFootage": 65000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 3,
+            "rooms": [
+              { "name": "Receiving Bay", "type": "other" },
+              { "name": "Cold Storage Area", "type": "other" },
+              { "name": "Dry Goods Area", "type": "other" },
+              { "name": "Shipping Dock", "type": "other" },
+              { "name": "Break Room", "type": "kitchen" },
+              { "name": "Floor Office", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Management Office", "type": "office" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "HR Office", "type": "office" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-049",
+    "accountName": "Centennial Medical Plaza",
+    "status": "New",
+    "industry": "Healthcare",
+    "primaryContact": {
+      "name": "Robert Dempsey",
+      "title": "Facilities Manager",
+      "phone": "(708) 555-4923",
+      "email": "r.dempsey@centennialmedplaza.com"
+    },
+    "address": {
+      "street": "17000 S Oak Park Ave",
+      "city": "Tinley Park",
+      "state": "IL",
+      "zip": "60477"
+    },
+    "memberSince": "2025-06-01",
+    "buildings": [
+      {
+        "buildingId": "bld-049-a",
+        "name": "Medical Plaza Building A",
+        "sqFootage": 35000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Main Lobby", "type": "lobby" },
+              { "name": "Patient Check-In", "type": "office" },
+              { "name": "Primary Care Suite", "type": "other" },
+              { "name": "Lab & Diagnostics", "type": "other" },
+              { "name": "Pharmacy", "type": "other" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Specialist Offices", "type": "office" },
+              { "name": "Imaging Suite", "type": "other" },
+              { "name": "Conference Room", "type": "conference" },
+              { "name": "Staff Break Room", "type": "kitchen" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-049-b",
+        "name": "Medical Plaza Building B",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Urgent Care Suite", "type": "other" },
+              { "name": "Waiting Area", "type": "other" },
+              { "name": "Exam Rooms", "type": "other" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "accountId": "acc-099",
+    "accountName": "Broadway Properties",
+    "status": "Active",
+    "industry": "Commercial Real Estate",
+    "primaryContact": {
+      "name": "Alicia Bern",
+      "title": "Property Manager",
+      "phone": "(312) 555-1601",
+      "email": "a.bern@broadwaytower.com"
+    },
+    "address": {
+      "street": "190 N State St",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "memberSince": "2025-12-01",
+    "buildings": [
+      {
+        "buildingId": "bld-099-a",
+        "name": "Broadway Tower",
+        "sqFootage": 55000,
+        "cleaningFrequency": "Daily",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Grand Lobby", "type": "lobby" },
+              { "name": "Concierge Desk", "type": "office" },
+              { "name": "Retail Suite 101", "type": "other" },
+              { "name": "Building Management Office", "type": "office" }
+            ]
+          },
+          {
+            "floorNumber": 2,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 200", "type": "office" },
+              { "name": "Conference Room 2A", "type": "conference" },
+              { "name": "Kitchenette", "type": "kitchen" },
+              { "name": "Storage Room", "type": "storage" }
+            ]
+          },
+          {
+            "floorNumber": 3,
+            "restroomCount": 2,
+            "rooms": [
+              { "name": "Tenant Suite 300", "type": "office" },
+              { "name": "Tenant Suite 310", "type": "office" },
+              { "name": "Hallway", "type": "hallway" }
+            ]
+          }
+        ]
+      },
+      {
+        "buildingId": "bld-099-b",
+        "name": "Broadway Annex",
+        "sqFootage": 20000,
+        "cleaningFrequency": "Weekly",
+        "floors": [
+          {
+            "floorNumber": 1,
+            "restroomCount": 1,
+            "rooms": [
+              { "name": "Lobby", "type": "lobby" },
+              { "name": "Flex Office Space", "type": "office" },
+              { "name": "Small Meeting Room", "type": "conference" },
+              { "name": "Break Room", "type": "kitchen" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

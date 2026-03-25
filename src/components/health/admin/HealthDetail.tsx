@@ -1,41 +1,22 @@
-import { useState } from 'react';
-import { AlertTriangle, ShieldAlert, RefreshCw, Smartphone } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
+import { AlertTriangle, ShieldAlert, RefreshCw, Smartphone, Plus, Zap, FileText } from 'lucide-react';
 import { ScoreGauge } from './ScoreGauge';
-import { SignalRow } from './SignalRow';
-import { ActionItems } from './ActionItems';
-import { SurveyHistory } from './SurveyHistory';
-import type { AccountHealthScore, HealthTier } from '../../../types/health';
-import { TIER_REQUIREMENTS } from '../../../types/health';
+import { EventList } from './EventList';
+import { EventLogForm } from './EventLogForm';
+import { WeeklyReportModal } from './WeeklyReportModal';
+import type { AccountHealthScore, HealthTier, HealthEvent } from '../../../types/health';
 import type { HealthSelection } from './AccountHealthList';
+import type { ScoringConfig } from '../../../data/scoringConfig';
+import { computeLiveScore } from '../../../utils/healthScoring';
 
 interface HealthDetailProps {
   selection:           HealthSelection;
   deal:                AccountHealthScore | null;
   accountDeals:        AccountHealthScore[];
   onOpenPhonePreview?: () => void;
+  scoringConfig:       ScoringConfig;
 }
-
-// ─── Tab definitions ──────────────────────────────────────────────────────────
-
-type TabKey = 'complaints' | 'requests' | 'risks' | 'tier' | 'surveys';
-
-const SIGNAL_TAB: Record<string, TabKey> = {
-  'Customer Complaints':       'complaints',
-  'Complaint Volume':          'complaints',
-  'Customer Request':          'requests',
-  'ServiceMaster Request':     'requests',
-  'Sensitive Event':           'risks',
-  'Sensitive Event Volume':    'risks',
-  'New Cleaner':               'risks',
-  'New Contact Person':        'risks',
-  'Customer Visits':           'tier',
-  'Supply Deliveries':         'tier',
-  'Quality Inspections':       'tier',
-  'Quality Inspection Result': 'surveys',
-  'Customer Survey Results':   'surveys',
-  'Visit Sentiment':           'surveys',
-  'Project Outcome':           'surveys',
-};
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -45,19 +26,6 @@ const TIER_COLOR: Record<HealthTier, string> = {
   red:    '#DC2626',
 };
 
-function worstStatus(signals: AccountHealthScore['signals']): 'red' | 'yellow' | 'green' | 'na' {
-  if (signals.some(s => s.status === 'red'))    return 'red';
-  if (signals.some(s => s.status === 'yellow')) return 'yellow';
-  if (signals.some(s => s.status === 'green'))  return 'green';
-  return 'na';
-}
-
-const STATUS_DOT: Record<string, string> = {
-  red:    '#DC2626',
-  yellow: '#D97706',
-  green:  '#16A34A',
-  na:     '#C9C9C9',
-};
 
 // ─── Shared banners ───────────────────────────────────────────────────────────
 
@@ -90,7 +58,6 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
 }) {
   const accountName  = accountDeals[0]?.accountName ?? '';
   const accountTier  = accountDeals[0]?.accountTier;
-  const allActions   = accountDeals.flatMap(d => d.actionItems);
   const overallTier: HealthTier = accountDeals.some(d => d.tier === 'red')
     ? 'red'
     : accountDeals.some(d => d.tier === 'yellow')
@@ -104,7 +71,7 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
   return (
     <div className="px-5 py-5 flex flex-col gap-4">
       {hasOverride && (
-        <OverrideBanner message="One or more deals are locked to Red due to an open incident or sensitive event." />
+        <OverrideBanner message="One or more sites are locked to Red due to an open sensitive event with Red impact." />
       )}
       {riskProfile?.watchlist && (
         <WatchlistBanner riskProfile={riskProfile} />
@@ -138,7 +105,7 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
             {TIER_LABEL[overallTier]}
           </span>
           <span className="text-[11px] text-text-subtle">
-            {accountDeals.length} deal{accountDeals.length !== 1 ? 's' : ''}
+            {accountDeals.length} site{accountDeals.length !== 1 ? 's' : ''}
           </span>
         </div>
       </div>
@@ -146,7 +113,7 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
       {/* Deal list */}
       <div className="bg-white border border-border-card rounded-[8px] overflow-hidden">
         <p className="text-[11px] font-semibold text-text-subtle uppercase tracking-wider px-4 py-2.5 border-b border-border-card bg-surface-header">
-          Deals
+          Sites
         </p>
         <div className="divide-y divide-border-card">
           {accountDeals.map(deal => (
@@ -154,6 +121,11 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
               <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: TIER_COLOR[deal.tier] }} />
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] font-medium text-text-primary truncate">{deal.dealName}</p>
+                {deal.liveScoring && (
+                  <p className="text-[11px] text-[#00A2B2] mt-0.5 flex items-center gap-1">
+                    <Zap size={9} />Live scoring
+                  </p>
+                )}
                 {deal.incidentOverride && (
                   <p className="text-[11px] text-[#B91C1C] mt-0.5">Incident override active</p>
                 )}
@@ -165,44 +137,66 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
                 <span className="text-[11px]" style={{ color: deal.trend >= 0 ? '#16A34A' : '#DC2626' }}>
                   {deal.trend >= 0 ? '+' : ''}{deal.trend}
                 </span>
-                {deal.lastSurveyScore !== null && (
-                  <span className="text-[11px] text-text-subtle">{deal.lastSurveyScore.toFixed(1)}/5</span>
-                )}
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      {allActions.length > 0 && <ActionItems items={allActions} />}
     </div>
   );
 }
 
 // ─── Deal Detail (file view) ──────────────────────────────────────────────────
 
-function DealDetail({ account, onOpenPhonePreview }: {
+function DealDetail({ account, onOpenPhonePreview, scoringConfig }: {
   account:             AccountHealthScore;
   onOpenPhonePreview?: () => void;
+  scoringConfig:       ScoringConfig;
 }) {
-  const tierReqs   = TIER_REQUIREMENTS[account.accountTier];
-  const [activeTab, setActiveTab] = useState<TabKey>('complaints');
+  const [showLogEvent,      setShowLogEvent]      = useState(false);
+  const [showWeeklyReport,  setShowWeeklyReport]  = useState(false);
+  const [localEvents,       setLocalEvents]       = useState<HealthEvent[]>([]);
 
-  const TABS: { key: TabKey; label: string }[] = [
-    { key: 'complaints', label: 'Complaints' },
-    { key: 'requests',   label: 'Requests'   },
-    { key: 'risks',      label: 'Risks'      },
-    { key: 'tier',       label: `Tier ${account.accountTier}` },
-    { key: 'surveys',    label: 'Surveys'    },
-  ];
+  type EventOverride = { status: 'in_progress' | 'resolved'; note: string; by: string; at: string };
+  const [eventOverrides, setEventOverrides] = useState<Record<string, EventOverride>>({});
 
-  const signalsForTab  = (tab: TabKey) => account.signals.filter(s => SIGNAL_TAB[s.label] === tab);
-  const tabDotColor    = (tab: TabKey) => STATUS_DOT[worstStatus(signalsForTab(tab))];
+  // Merge localEvents + seed events, applying overrides for in_progress / resolved
+  const allEvents: HealthEvent[] = useMemo(() => {
+    const applyOverride = (e: HealthEvent): HealthEvent => {
+      const ov = eventOverrides[e.id];
+      if (!ov) return e;
+      return {
+        ...e,
+        resolutionStatus: ov.status,
+        resolutionNote:   ov.note || e.resolutionNote,
+        ...(ov.status === 'resolved'    ? { resolvedAt: ov.at,    resolvedBy: ov.by } : {}),
+        ...(ov.status === 'in_progress' ? { inProgressAt: ov.at, inProgressBy: ov.by } : {}),
+      };
+    };
+    return [...localEvents.map(applyOverride), ...(account.events ?? []).map(applyOverride)];
+  }, [localEvents, account.events, eventOverrides]);
+
+  // Live score computation for the demo deal
+  const liveScore = useMemo(() => {
+    if (!account.liveScoring) return null;
+    return computeLiveScore(allEvents, scoringConfig);
+  }, [account.liveScoring, allEvents, scoringConfig]);
+
+  const displayScore    = liveScore?.score    ?? account.score;
+  const displayTier     = liveScore?.tier     ?? account.tier;
+  const displayOverride = liveScore?.incidentOverride ?? account.incidentOverride;
+
+  function handleUpdateStatus(eventId: string, status: 'in_progress' | 'resolved', note: string) {
+    setEventOverrides(prev => ({
+      ...prev,
+      [eventId]: { status, note, by: 'Current User', at: new Date().toISOString() },
+    }));
+  }
 
   return (
     <div className="px-5 py-5 flex flex-col gap-4">
-      {account.incidentOverride && (
-        <OverrideBanner message="This deal is locked to Red due to an open incident or sensitive event. Score is computed but tier is held until resolved." />
+      {displayOverride && (
+        <OverrideBanner message="This site is locked to Red due to an open sensitive event with Red impact. Score is computed but tier is held until resolved." />
       )}
       {account.riskProfile.watchlist && (
         <WatchlistBanner riskProfile={account.riskProfile} />
@@ -210,99 +204,140 @@ function DealDetail({ account, onOpenPhonePreview }: {
 
       {/* Score header */}
       <div className="bg-white border border-border-card rounded-[8px] px-5 py-4 flex items-start gap-5 relative">
-        {onOpenPhonePreview && (
+        <div className="absolute top-4 right-4 flex items-center gap-2">
           <button
-            onClick={onOpenPhonePreview}
-            className="absolute top-4 right-4 flex items-center gap-1.5 text-[11px] text-text-subtle hover:text-text-primary border border-border-card hover:border-border px-2.5 py-1.5 rounded-[6px] transition-colors"
+            onClick={() => setShowLogEvent(true)}
+            className="flex items-center gap-1.5 text-[11px] text-white bg-[#00A2B2] hover:bg-[#008A99] px-2.5 py-1.5 rounded-[6px] transition-colors"
           >
-            <Smartphone size={12} />
-            Preview
+            <Plus size={12} />
+            Log Event
           </button>
-        )}
-        <ScoreGauge score={account.score} tier={account.tier} size="lg" />
+          {onOpenPhonePreview && (
+            <button
+              onClick={onOpenPhonePreview}
+              className="flex items-center gap-1.5 text-[11px] text-text-subtle hover:text-text-primary border border-border-card hover:border-border px-2.5 py-1.5 rounded-[6px] transition-colors"
+            >
+              <Smartphone size={12} />
+              Preview
+            </button>
+          )}
+        </div>
+        <ScoreGauge score={displayScore} tier={displayTier} size="lg" />
         <div className="flex-1 pt-1">
           <p className="text-[16px] font-semibold text-text-primary leading-tight">{account.accountName}</p>
           <p className="text-[13px] text-text-subtle mt-0.5">{account.dealName}</p>
           <div className="flex items-center gap-3 mt-3 text-[12px] text-text-subtle">
-            <span style={{ color: account.trend >= 0 ? '#16A34A' : '#DC2626' }}>
-              {account.trend >= 0 ? '+' : ''}{account.trend} pts this month
-            </span>
-            <span className="flex items-center gap-1">
-              <RefreshCw size={10} />
-              {new Date(account.lastComputedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-            </span>
-            {account.lastSurveyScore !== null && (
-              <span>Survey {account.lastSurveyScore.toFixed(1)}/5</span>
+            {account.liveScoring ? (
+              <span className="flex items-center gap-1 text-[#00A2B2] font-medium">
+                <Zap size={10} />
+                Live score from {allEvents.length} event{allEvents.length !== 1 ? 's' : ''}
+              </span>
+            ) : (
+              <>
+                <span style={{ color: account.trend >= 0 ? '#16A34A' : '#DC2626' }}>
+                  {account.trend >= 0 ? '+' : ''}{account.trend} pts this month
+                </span>
+                <span className="flex items-center gap-1">
+                  <RefreshCw size={10} />
+                  {new Date(account.lastComputedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                </span>
+              </>
             )}
           </div>
-        </div>
-      </div>
-
-      {/* Action items */}
-      {account.actionItems.length > 0 && <ActionItems items={account.actionItems} />}
-
-      {/* Signal tabs */}
-      <div className="bg-white border border-border-card rounded-[8px] overflow-hidden">
-        {/* Tab bar */}
-        <div className="flex border-b border-border-card overflow-x-auto">
-          {TABS.map(({ key, label }) => {
-            const isActive = activeTab === key;
-            return (
-              <button
-                key={key}
-                onClick={() => setActiveTab(key)}
-                className="flex items-center gap-1.5 px-4 py-2.5 text-[12px] font-medium whitespace-nowrap transition-colors flex-shrink-0 border-b-2"
-                style={{
-                  borderBottomColor: isActive ? '#00A2B2' : 'transparent',
-                  color:             isActive ? '#00A2B2' : '#6D6D6D',
-                  background:        isActive ? '#F2FCFD' : 'transparent',
-                }}
-              >
+          {/* Live score breakdown for demo deal */}
+          {liveScore && liveScore.breakdown.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {liveScore.breakdown.map(item => (
                 <span
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ background: tabDotColor(key) }}
-                />
-                {label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Tab content */}
-        <div>
-          {activeTab === 'tier' && (
-            <div className="px-4 py-2.5 bg-surface-header border-b border-border-card">
-              <p className="text-[11px] text-text-subtle">
-                {tierReqs.label} &nbsp;&mdash;&nbsp;
-                {tierReqs.visitsPerMonth >= 1 ? Math.round(tierReqs.visitsPerMonth) : '~1'} visit/mo &nbsp;&middot;&nbsp;
-                {tierReqs.qcPerMonth >= 1 ? tierReqs.qcPerMonth : 'bimonthly'} QC &nbsp;&middot;&nbsp;
-                {tierReqs.deliveriesPerMonth === 4 ? 'weekly' : tierReqs.deliveriesPerMonth >= 1 ? 'monthly' : 'with QC'} deliveries
-              </p>
+                  key={item.eventId}
+                  className="text-[10px] px-1.5 py-px rounded"
+                  style={{
+                    background: item.impact > 0 ? '#F0FDF4' : item.impact < 0 ? '#FEF2F2' : '#F4F7FA',
+                    color:      item.impact > 0 ? '#16A34A'  : item.impact < 0 ? '#DC2626'  : '#6D6D6D',
+                  }}
+                >
+                  {item.impact > 0 ? '+' : ''}{item.impact} {item.label.replace(/_/g, ' ')}
+                  {item.resolved ? ' ✓' : ''}
+                </span>
+              ))}
             </div>
           )}
-
-          <div className="px-4">
-            {signalsForTab(activeTab).map(signal => (
-              <SignalRow key={signal.id} signal={signal} />
-            ))}
-            {activeTab === 'surveys' && (
-              <div className="pt-3 pb-4">
-                <SurveyHistory surveys={account.recentSurveys} />
-              </div>
-            )}
-          </div>
         </div>
       </div>
+
+      {/* Activity Log */}
+      <div className="bg-white border border-border-card rounded-[8px] overflow-hidden">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-border-card bg-surface-header">
+          <p className="text-[11px] font-semibold text-text-subtle uppercase tracking-wider">Activity Log</p>
+          <div className="flex items-center gap-2">
+            {allEvents.length > 0 && (
+              <span className="text-[11px] text-text-subtle">{allEvents.length} event{allEvents.length !== 1 ? 's' : ''}</span>
+            )}
+            <button
+              onClick={() => setShowWeeklyReport(true)}
+              className="flex items-center gap-1 text-[11px] font-medium text-text-subtle hover:text-[#00A2B2] border border-border-card hover:border-[#00A2B2]/40 px-2 py-1 rounded-[5px] transition-colors"
+            >
+              <FileText size={10} />
+              Weekly Report
+            </button>
+          </div>
+        </div>
+        <div className="px-4 py-3">
+          <EventList events={allEvents} breakdown={liveScore?.breakdown} onUpdateStatus={handleUpdateStatus} />
+        </div>
+      </div>
+
+      {/* Weekly Report modal */}
+      {showWeeklyReport && createPortal(
+        <WeeklyReportModal
+          events={allEvents}
+          breakdown={liveScore?.breakdown}
+          dealName={account.dealName}
+          onClose={() => setShowWeeklyReport(false)}
+        />,
+        document.body
+      )}
+
+      {/* Log Event modal — rendered via portal to escape overflow clipping */}
+      {showLogEvent && createPortal(
+        <div
+          className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center"
+          onClick={() => setShowLogEvent(false)}
+        >
+          <div
+            className="bg-white rounded-[12px] p-5 w-[480px] max-h-[90vh] overflow-y-auto shadow-xl"
+            onClick={e => e.stopPropagation()}
+          >
+            <p className="text-[14px] font-semibold text-text-primary mb-4">
+              Log Event — {account.dealName}
+            </p>
+            <EventLogForm
+              dealName={account.dealName}
+              onSubmit={partial => {
+                setLocalEvents(prev => [{
+                  ...partial,
+                  id:       `ev-${Date.now()}`,
+                  dealId:   account.dealId,
+                  loggedAt: new Date().toISOString(),
+                }, ...prev]);
+                setShowLogEvent(false);
+              }}
+              onCancel={() => setShowLogEvent(false)}
+            />
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
 
 // ─── Main export ─────────────────────────────────────────────────────────────
 
-export function HealthDetail({ selection, deal, accountDeals, onOpenPhonePreview }: HealthDetailProps) {
+export function HealthDetail({ selection, deal, accountDeals, onOpenPhonePreview, scoringConfig }: HealthDetailProps) {
   if (selection.type === 'account') {
     return <AccountSummary accountDeals={accountDeals} onOpenPhonePreview={onOpenPhonePreview} />;
   }
   if (!deal) return null;
-  return <DealDetail account={deal} onOpenPhonePreview={onOpenPhonePreview} />;
+  return <DealDetail account={deal} onOpenPhonePreview={onOpenPhonePreview} scoringConfig={scoringConfig} />;
 }

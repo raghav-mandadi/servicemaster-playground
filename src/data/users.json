@@ -1,0 +1,76 @@
+[
+  {
+    "userId": "user-001",
+    "name": "Jennifer Walsh",
+    "role": "gm",
+    "email": "j.walsh@servicemaster.com",
+    "assignedSiteIds": []
+  },
+  {
+    "userId": "user-002",
+    "name": "Mike Torres",
+    "role": "ops_manager",
+    "email": "m.torres@servicemaster.com",
+    "assignedSiteIds": [
+      "deal-001", "deal-002", "deal-006", "deal-010", "deal-019", "deal-099"
+    ]
+  },
+  {
+    "userId": "user-003",
+    "name": "Rachel Kim",
+    "role": "ops_manager",
+    "email": "r.kim@servicemaster.com",
+    "assignedSiteIds": [
+      "deal-005", "deal-007", "deal-008", "deal-009", "deal-011", "deal-014", "deal-020"
+    ]
+  },
+  {
+    "userId": "user-004",
+    "name": "James Wright",
+    "role": "supervisor",
+    "email": "j.wright@servicemaster.com",
+    "assignedSiteIds": ["deal-001", "deal-002", "deal-006", "deal-014", "deal-019", "deal-099"]
+  },
+  {
+    "userId": "user-005",
+    "name": "David Park",
+    "role": "supervisor",
+    "email": "d.park@servicemaster.com",
+    "assignedSiteIds": ["deal-005", "deal-008", "deal-009", "deal-015", "deal-020"]
+  },
+  {
+    "userId": "user-006",
+    "name": "Lisa Chen",
+    "role": "supervisor",
+    "email": "l.chen@servicemaster.com",
+    "assignedSiteIds": ["deal-007", "deal-011", "deal-013", "deal-016"]
+  },
+  {
+    "userId": "user-007",
+    "name": "Carlos Martinez",
+    "role": "supervisor",
+    "email": "c.martinez@servicemaster.com",
+    "assignedSiteIds": ["deal-010", "deal-012", "deal-017", "deal-018"]
+  },
+  {
+    "userId": "user-008",
+    "name": "Sarah Chen",
+    "role": "cs",
+    "email": "s.chen@servicemaster.com",
+    "assignedSiteIds": []
+  },
+  {
+    "userId": "user-009",
+    "name": "Alex Rodriguez",
+    "role": "cs",
+    "email": "a.rodriguez@servicemaster.com",
+    "assignedSiteIds": []
+  },
+  {
+    "userId": "user-010",
+    "name": "Tom Bradley",
+    "role": "sales",
+    "email": "t.bradley@servicemaster.com",
+    "assignedSiteIds": []
+  }
+]

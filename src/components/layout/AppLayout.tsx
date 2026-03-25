@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { HelpCircle } from 'lucide-react';
 import { Sidebar } from './Sidebar';
-import { accounts } from '../../data/mockData';
+import { accounts } from '../../data/mockDataLoader';
 
 const routeTitles: Record<string, string> = {
   '/': 'Dashboard',
@@ -42,7 +42,7 @@ export function AppLayout() {
       <Sidebar />
       <main className={`flex-1 ml-[240px] flex flex-col ${isHealthRoute ? 'h-screen overflow-hidden' : 'overflow-y-auto'}`}>
         <ContentHeader />
-        <div className="flex-1 overflow-hidden">
+        <div className={isHealthRoute ? 'flex-1 overflow-hidden' : ''}>
           <Outlet />
         </div>
       </main>

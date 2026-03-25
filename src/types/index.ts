@@ -2,46 +2,51 @@ export type AccountStatus = 'Active' | 'Draft' | 'New' | 'Archived';
 export type DealStatus = 'Active' | 'Draft' | 'New' | 'Archived';
 export type UserRole = 'Admin' | 'Manager' | 'Rep';
 export type UserStatus = 'Active' | 'Inactive';
-export type CleaningFrequency = 'Daily' | 'Weekly' | 'Bi-weekly';
+export type CleaningFrequency = 'Daily' | 'Weekly' | 'Bi-Weekly' | 'Monthly';
 export type PricingType = 'Flat Rate' | 'Per Sq Ft' | 'Hourly';
+
+export type RoomType = 'office' | 'conference' | 'lobby' | 'kitchen' | 'restroom' | 'hallway' | 'storage' | 'other';
+
+export interface Room {
+  name: string;
+  type: RoomType;
+}
+
+export interface BuildingFloor {
+  floorNumber: number;
+  restroomCount: number;
+  rooms: Room[];
+}
+
+export interface BuildingDetail {
+  buildingId: string;
+  name: string;
+  sqFootage: number;
+  cleaningFrequency: CleaningFrequency;
+  floors: BuildingFloor[];
+}
 
 export interface Account {
   id: string;
   name: string;
   status: AccountStatus;
+  industry: string;
   primaryContact: {
     name: string;
+    title: string;
     email: string;
     phone: string;
   };
-  address: string;
-  accountType: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
   memberSince: string;
-  deals: number;
-  buildings: number;
+  buildings: BuildingDetail[];
+  siteCount: number;
   lastActivity: string;
-}
-
-export interface Deal {
-  id: string;
-  accountId: string;
-  name: string;
-  template: string;
-  buildings: number;
-  monthlyValue: number;
-  status: DealStatus;
-  createdDate: string;
-}
-
-export interface Building {
-  id: string;
-  accountId: string;
-  name: string;
-  address: string;
-  sqFootage: number;
-  floors: number;
-  restrooms: number;
-  cleaningFrequency: CleaningFrequency;
 }
 
 export interface Template {

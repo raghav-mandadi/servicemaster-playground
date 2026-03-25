@@ -84,6 +84,49 @@ export interface PostJobSurveyResponse {
   submittedAt: string;
 }
 
+// ─── Health Event Types ───────────────────────────────────────────────────────
+
+export type EventType =
+  | 'complaint'
+  | 'customer_request'
+  | 'sm_request'
+  | 'sensitive_event'
+  | 'new_cleaner'
+  | 'new_contact'
+  | 'customer_visit'
+  | 'supply_delivery'
+  | 'qc_inspection'
+  | 'project_outcome';
+
+export type EventSeverity = 'low' | 'medium' | 'high';
+
+export interface HealthEvent {
+  id:           string;
+  dealId:       string;
+  type:         EventType;
+  severity?:    EventSeverity;
+  description:  string;
+  outcome?:     string;       // 'pass'|'fail'|'positive'|'red'|'yellow'|'none' etc.
+  loggedBy:     string;
+  loggedByRole: 'supervisor' | 'cs' | 'operations';
+  loggedAt:     string;       // ISO timestamp
+  hasPhotos?:   boolean;
+  resolvedAt?:  string;       // ISO timestamp when resolved
+  resolvedBy?:  string;       // name of person who resolved
+  resolutionStatus?: 'in_progress' | 'resolved'; // undefined = open
+  resolutionNote?:   string;   // note captured when resolving or marking in progress
+  inProgressAt?:     string;   // ISO timestamp when marked in progress
+  inProgressBy?:     string;   // name of person who marked in progress
+  // new_contact / new_cleaner fields
+  contactName?:  string;
+  startDate?:    string;      // ISO date string
+  cleanerName?:  string;
+  // customer_visit fields
+  visitedBy?:    string;      // e.g. 'Ops Manager', 'GM', 'Sales'
+  // complaint / request fields
+  complainant?:  string;      // name of the person who complained / made the request
+}
+
 // ─── Health Score Signal Types ────────────────────────────────────────────────
 
 export type SignalStatus = 'green' | 'yellow' | 'red' | 'na';
@@ -127,12 +170,20 @@ export const TIER_REQUIREMENTS: Record<AccountTier, {
   5: { visitsPerMonth: 0.33, qcPerMonth: 0.5, deliveriesPerMonth: 0.5, label: 'Tier 5 ($0–$550/mo)' },
 };
 
+export interface SiteContact {
+  name:   string;
+  title:  string;
+  phone:  string;
+  email:  string;
+}
+
 export interface AccountHealthScore {
   accountId: string;
   accountName: string;
   dealId: string;
   dealName: string;
   score: number;         // 0–100
+  liveScoring?: boolean; // if true, score is computed live from events in HealthDetail
   tier: HealthTier;      // 70+ = green, 40–69 = yellow, 0–39 = red
   trend: number;         // delta vs last month (+/-)
   accountTier: AccountTier;   // revenue-based tier 1–5
@@ -143,9 +194,19 @@ export interface AccountHealthScore {
   signals: HealthSignal[];
   lastSurveyDate: string | null;
   lastSurveyScore: number | null;
-  recentSurveys: PostJobSurveyResponse[];
-  preJobSurveys: PreJobSurveyResponse[];
+  recentSurveys?: PostJobSurveyResponse[];
+  preJobSurveys?: PreJobSurveyResponse[];
   actionItems: string[];
+  events: HealthEvent[];
+  // Site detail fields
+  address?:           string;
+  city?:              string;
+  state?:             string;
+  serviceFrequency?:  string;
+  contractStartDate?: string;
+  contractEndDate?:   string;
+  primaryContact?:    SiteContact;
+  serviceNotes?:      string;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

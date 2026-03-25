@@ -2,7 +2,8 @@ import { Building2, FileText, DollarSign, Clock, Plus, UserPlus, Activity } from
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { StatusChip } from '../components/ui/StatusChip';
-import { accounts, recentActivity } from '../data/mockData';
+import { accounts } from '../data/mockDataLoader';
+import { recentActivity } from '../data/mockData';
 
 const statCards = [
   { label: 'Total Accounts', value: '42', trend: '+3 this month', icon: Building2 },
@@ -48,7 +49,7 @@ export function Dashboard() {
               <tr className="bg-surface-header border-b border-border-header">
                 <th className="text-left px-4 py-[10px] text-[14px] font-medium text-text-subtle">Account Name</th>
                 <th className="text-left px-4 py-[10px] text-[14px] font-medium text-text-subtle">Status</th>
-                <th className="text-left px-4 py-[10px] text-[14px] font-medium text-text-subtle">Deals</th>
+                <th className="text-left px-4 py-[10px] text-[14px] font-medium text-text-subtle">Sites</th>
                 <th className="text-left px-4 py-[10px] text-[14px] font-medium text-text-subtle">Last Activity</th>
               </tr>
             </thead>
@@ -59,7 +60,7 @@ export function Dashboard() {
                     <Link to={`/accounts/${acc.id}`} className="text-[14px] font-medium text-text-primary hover:text-primary">{acc.name}</Link>
                   </td>
                   <td className="px-4 py-3"><StatusChip status={acc.status} /></td>
-                  <td className="px-4 py-3 text-[14px] text-text-primary">{acc.deals}</td>
+                  <td className="px-4 py-3 text-[14px] text-text-primary">{acc.siteCount}</td>
                   <td className="px-4 py-3 text-[13px] text-text-subtle">{acc.lastActivity}</td>
                 </tr>
               ))}

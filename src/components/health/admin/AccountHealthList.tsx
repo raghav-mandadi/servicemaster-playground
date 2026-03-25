@@ -114,7 +114,7 @@ export function AccountHealthList({ accounts, selected, onSelect }: AccountHealt
           <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-subtle" />
           <input
             type="text"
-            placeholder="Search accounts or deals..."
+            placeholder="Search parent companies or sites..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-7 pr-3 py-1.5 border border-border rounded-[6px] text-[12px] bg-white text-text-primary outline-none focus:border-primary"
@@ -205,7 +205,7 @@ export function AccountHealthList({ accounts, selected, onSelect }: AccountHealt
                     </span>
                   )}
                   <span className="text-[10px] text-text-subtle flex-shrink-0 font-medium">
-                    {multiDeal ? `${group.deals.length} deals` : '1 deal'}
+                    {multiDeal ? `${group.deals.length} sites` : '1 site'}
                   </span>
                 </button>
               </div>

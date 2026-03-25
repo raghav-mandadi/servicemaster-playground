@@ -1,302 +1,182 @@
-# Health Scoring Module — UX & Requirements Documentation
+# Health Scoring Module — Technical Reference
 
-**Version:** 1.0
-**Scope:** Janitorial accounts only
-**Last Updated:** March 2026
+**Version:** 2.0
+**Scope:** Janitorial sites
+**Last Updated:** 2026-03-23
+**Source of truth:** `health-check-scoring-values.md` (Devin's Excel) + `health-check-design-requirements.md`
 
 ---
 
 ## Overview
 
-ServiceMaster Clean's Health Scoring module replaces generic star ratings with a psychologically grounded **Criteria-First Feedback™** framework. Instead of asking "how did we do?" in the abstract, customers define what success looks like *before* the job, then rate against those exact criteria *after* the job.
+The Health Scoring module gives ServiceMaster employees a real-time view of site health. Each site has a score (0–100) computed from a log of employee-reported events. Supervisors and CS staff log events directly; the score updates immediately.
 
-The module lives in the admin console as a split-panel view:
-- **Left panel** — Admin dashboard: account health scores, signal breakdowns, recommended actions
-- **Right panel** — Mobile phone simulator: live preview of the exact customer mobile app experience
+**Admin console:** Split-panel — left = site list + drill-down detail; right = field staff mobile preview.
 
 ---
 
-## The Framework — Criteria-First Feedback™
-
-### Psychological Basis
-
-Generic service ratings suffer from a fundamental problem: raters have no shared anchor. A 4/5 from one customer may reflect the same satisfaction level as a 2/5 from another, depending on individual expectations. This framework solves that with four well-researched principles:
-
-1. **Goal-Setting Theory (Locke & Latham, 1990)**
-   Specific, self-set goals produce more accurate performance evaluations than generic prompts. When customers choose their own criteria, they've made a commitment to evaluate on those terms.
-
-2. **Expectation Disconfirmation Theory (Oliver, 1980)**
-   Customer satisfaction = Perceived Performance − Expected Performance. By making expectations explicit and concrete before service, the post-job rating measures a real gap rather than a vague impression.
-
-3. **Commitment & Consistency (Cialdini)**
-   People behave consistently with prior public commitments. A customer who selected "Spotless restrooms" as a priority is psychologically invested in rating that criterion honestly.
-
-4. **Implementation Intentions (Gollwitzer, 1999)**
-   Pre-defining what success looks like creates a mental template that makes post-job evaluation sharper and more reliable.
-
-### The Two-Phase Loop
+## Data Hierarchy
 
 ```
-PRE-JOB:  "What does success look like for you today?"
-          → Customer selects 3–10 criteria from curated list
-          → Criteria are stored against the job record
-
-POST-JOB: "Did we hit your standards?"
-          → Customer rates us on exactly what THEY said mattered
-          → One screen per criterion (focused, specific, honest)
-          → Optional note per criterion
-          → Final gut-check: overall thumbs up/down
+Parent Company (optional grouping)
+  └── Site  ← atomic unit of health scoring (one physical place, one supervisor, one score)
 ```
 
----
-
-## Customer Mobile Experience
-
-The customer flow is accessed via SMS or email link, viewable on mobile. The phone simulator in the admin app previews this exact experience.
+- All scoring happens at the **site** level; parent company is a roll-up view only.
+- One site = one `AccountHealthScore` record in the data layer.
+- Multiple sites can share a parent company (`accountId`).
 
 ---
 
-### PRE-JOB SURVEY
+## Scoring Model
 
-#### Screen 1: Welcome
-- ServiceMaster teal branding
-- "Hi [First Name] 👋"
-- "Your ServiceMaster team is scheduled for [Day], [Date] at [Time]"
-- "Before they arrive, take 30 seconds to tell us what a great job looks like to you. We'll report back on exactly what you said mattered."
-- CTA (teal, full-width): **"Set My Standards →"**
+**Base score: 100 points.** Events add or subtract from this base. Score is clamped to 0–100.
 
-#### Screen 2: Criteria Selection
-- Title: "What matters most to you?"
-- Subtitle: "Select everything you want us to nail. Choose at least 3."
-- Progress: Step 1 of 2
-- Multi-select chips (2-column grid):
-
-| # | Emoji | Criterion |
+### Tier Thresholds (configurable)
+| Score | Tier | Label |
 |---|---|---|
-| 1 | 🚽 | Spotless restrooms |
-| 2 | 🚪 | Clean lobby & entryways |
-| 3 | 🗑️ | Trash removal — all areas |
-| 4 | ☕ | Clean break room / kitchen |
-| 5 | 🖥️ | Dust-free surfaces & desks |
-| 6 | ✨ | Polished floors |
-| 7 | 🪟 | Window ledges & glass |
-| 8 | ⏰ | On-time arrival |
-| 9 | 🔇 | Minimal disruption to staff |
-| 10 | 💬 | Clear communication from team |
+| ≥ 70 | Green | Healthy |
+| 40–69 | Yellow | Needs Attention |
+| 0–39 | Red | At Risk |
 
-- **Validation:** Minimum 3 selected required
-- CTA: **"These are my priorities →"** (disabled until ≥ 3 selected)
-
-#### Screen 3: Confirmation
-- Large animated checkmark (teal)
-- Title: "Your standards are set"
-- Shows selected criteria as teal checklist
-- "After your service, we'll ask you to rate us on each of these — nothing else."
-- CTA: **"Got it, I'm all set"**
+### Incident Override
+Any open `sensitive_event` with outcome `'red'` forces the tier to Red regardless of numeric score. The score is still computed accurately but the displayed tier is locked until resolved.
 
 ---
 
-### POST-JOB SURVEY
+## System-Wide Time Decay
 
-#### Screen 1: Service Complete Intro
-- Header: "Service Complete ✓"
-- "How did we do on what YOU said mattered?"
-- Shows their selected criteria as reminder chips
-- Progress bar: 0%
-- CTA: **"Start Rating →"**
+Per `health-check-scoring-values.md` §4, all events (except window-based ones) have their impact reduced as they age. This is a multiplier applied to the base deduction/bonus.
 
-#### Screens 2–N: Per-Criterion Rating
-One screen per selected criterion, in order selected.
-
-- Progress indicator: "2 of 6" + progress bar fill
-- Large criterion icon + name
-- Criterion-specific question (see table below)
-- **5-point emoji scale:**
-  - 😞 (1) Missed it
-  - 😐 (2) Below expectations
-  - 😊 (3) Met expectations
-  - 😄 (4) Above expectations
-  - 🌟 (5) Exceeded expectations
-- Optional text: "What specifically?" (collapsed by default)
-- Navigation: Back / Next
-
-**Criterion-to-Question Map:**
-
-| Criterion | Question Shown to Customer |
+| Days Old | Multiplier |
 |---|---|
-| Spotless restrooms | Were restrooms clean, stocked, and smelling fresh? |
-| Clean lobby & entryways | Was the first impression walking in a clean one? |
-| Trash removal | Were all trash receptacles emptied throughout the space? |
-| Clean break room / kitchen | Was the kitchen left clean, wiped down, and tidy? |
-| Dust-free surfaces & desks | Were work surfaces and common areas visibly dust-free? |
-| Polished floors | Did floors look clean and well-maintained? |
-| Window ledges & glass | Were ledges and glass surfaces clean and streak-free? |
-| On-time arrival | Did the team arrive on schedule? |
-| Minimal disruption | Did the team work without interrupting your day? |
-| Clear communication | Did you know what was happening and when? |
+| 1 | 1.00 |
+| 30 | 0.90 |
+| 45 | 0.80 |
+| 60 | 0.60 |
+| 90 | 0.40 |
+| 180 | 0.15 |
+| 360 | 0.10 |
 
-#### Screen N+1: Overall Gut Check
-- Title: "Last one — overall, how do you feel?"
-- Two large full-width buttons:
-  - 👍 **"Satisfied — great job overall"**
-  - 👎 **"Not satisfied — something was off"**
-- If thumbs-down: required text input — "What's most important for us to address?"
+Values between control points are linearly interpolated.
 
-#### Screen N+2: Thank You
-- Celebration animation
-- "Thank you, [First Name]!"
-- "Your feedback goes directly to your ServiceMaster team."
-- If any rating ≤ 2: "We noticed some areas didn't meet your standards. Your account manager will follow up within 24 hours."
-- Score display: "Your satisfaction score: [avg]/5" with teal progress bar
+**Applies to:** complaints, customer/SM requests, customer visits, QC inspections, project outcomes.
+**Does NOT apply to:** `sensitive_event` (uses its own linear decay), `new_cleaner`, `new_contact` (window-based).
+
+The decay multiplier can be toggled off per template in the Scoring Rules panel.
 
 ---
 
-## Admin Health Score View
+## Event Types & Scoring Rules
 
-### Layout
-```
-[Sidebar 240px] | [Admin Panel ~55%] | [Phone Simulator ~45%]
-```
+### Complaint
+- Severity: Low / Medium / High
+- Open complaint → flat deduction × time decay multiplier
+- Default deductions: Low −8, Medium −12, High −18 pts
+- Complaints persist and remain visible even after a positive visit
 
-The `/health` route uses a unique split-panel layout. The left side scrolls independently; the right side shows the phone simulator fixed in view.
+### Sensitive Event
+- Set by ops manager only; no forced subtype pick list
+- Impact level: **Red** (forces tier override + deduction), **Yellow** (deduction only), **None** (record only)
+- Deduction decays linearly to 0 over `sensitiveEventDecayDays` (default: 30 days)
+- Red outcome triggers `incidentOverride = true` → tier locked to Red until resolved
+- Default: Red −15, Yellow −8
 
----
+### Customer Request / SM Request
+- Per open/overdue request: Customer −6, SM −5
+- Impact reduced by time decay multiplier as request ages
 
-### Left Panel: Account Health List
+### New Cleaner Assigned
+Window-based (per scoring doc §9). Configurable day thresholds:
 
-**Filter bar:**
-- Search input
-- Tier filter: All | 🟢 Green | 🟡 Yellow | 🔴 Red
-
-**Account rows (64px height each):**
-- Account name (font-medium)
-- Mini score gauge (arc, colored by tier)
-- Score number (colored)
-- Trend arrow (↑ or ↓) with delta
-- Top risk signal text
-- Last survey date
-
-Clicking a row expands the detail panel below the list.
-
----
-
-### Left Panel: Health Score Detail
-
-Shown when an account is selected. Fully detailed view of all 15 signals.
-
-#### Score Header
-- Large circular score (0–100, colored by tier)
-- Tier label: "Healthy" / "At Risk" / "Critical"
-- Trend: ↑ +8 or ↓ -12 pts this month
-- Account + Deal name
-
-#### Signal Categories (accordion sections)
-
-**A. Reactive & Risk Signals (8 inputs)**
-
-| # | Signal | Red Condition | Yellow Condition | Green Condition |
-|---|---|---|---|---|
-| 1 | Customer Complaint | Open, any severity | Overdue | Resolved |
-| 2 | Complaint Volume | 2+ complaints in 0–60 days | 2+ complaints in 60–90 days | 90+ days since 2+ complaints |
-| 3 | Customer Request | Overdue | Open, not due yet | Resolved on time |
-| 4 | ServiceMaster Request | Overdue | Open, not due yet | Resolved on time |
-| 5 | Sensitive Event | Within last 30 days | — | 30+ days ago |
-| 6 | Sensitive Event Volume | 2+ events in 0–60 days | 2+ events in 60–90 days | 90+ days since 2+ events |
-| 7 | New Cleaner | Within 0–15 days | Within 15–30 days | 30+ days ago |
-| 8 | New Contact Person | Within 0–30 days | Within 30–60 days | 60+ days ago |
-
-**B. Tier-Based Activity (3 inputs)**
-Did we do the basics often enough in the last 30 days?
-
-| # | Signal | Below = | At/Above = |
-|---|---|---|---|
-| 9 | Customer Visits | Small negative per gap | Neutral / small positive |
-| 10 | Supply Deliveries | Small negative per gap | Neutral / small positive |
-| 11 | Quality Inspections | Small negative per gap | Neutral / small positive |
-
-**C. Outcome-Based Signals (4 inputs)**
-
-| # | Signal | Impact |
+| Window | Default Range | Deduction |
 |---|---|---|
-| 12 | Quality Inspection Results | Good = positive until next inspection; Poor = negative until next inspection |
-| 13 | Customer Survey Results | Positive = +score for 30 days; Negative = -score for 60 days |
-| 14 | Visit Sentiment / Gut Check | Positive = +score for 30 days; Negative = -score for 60 days |
-| 15 | Project Outcome | Positive = +score for 30 days; Negative = -score for 60 days |
+| Red | 0–7 days | −12 |
+| Yellow | 7–44 days | −6 |
+| Green | > 44 days | 0 |
 
-#### Recommended Actions Panel
-Generated from red/yellow signals. Ordered by severity. Example (for a RED account):
-1. 🔴 "Resolve 2 open complaints — both flagged as High severity"
-2. 🔴 "Complete new cleaner onboarding check-in"
-3. 🟡 "Schedule second customer visit this month"
-4. 🟡 "Complete overdue customer request"
-5. 🔴 "Follow up on survey: avg 2.1/5 — customer cited restrooms and floors"
+> **Design note:** New cleaner was previously modeled as 0–15d/15–30d. Updated to match Devin's Excel (0–7d Red is the correct field experience window).
 
-#### Survey Response History
-- Last 3 post-job surveys
-- Each: date, average score, overall sentiment, per-criterion scores, optional notes
+### New Contact Person
+Window-based (per scoring doc §10). **Longest automatic Red trigger in the system.**
 
----
-
-### Right Panel: Phone Simulator
-
-- iPhone-style device frame (notch, status bar, home indicator)
-- Inner screen: ~375px width
-- Two tabs inside the phone header: **Pre-Job** | **Post-Job**
-- Interactive: admin can tap through screens to preview the customer experience
-- Updates when a different account is selected from the list
-- Reset button returns to Screen 1
-
----
-
-## Scoring Algorithm
-
-**Base score: 100 points.** Signals add or subtract points. Score clamped 0–100.
-
-**Tier thresholds:**
-- 🟢 Green: 70–100
-- 🟡 Yellow: 40–69
-- 🔴 Red: 0–39
-
-**Deduction table (configurable — thresholds can evolve without changing inputs):**
-
-| Signal | Condition | Points |
+| Window | Default Range | Deduction |
 |---|---|---|
-| Complaint (low severity) | Open | −8 |
-| Complaint (medium severity) | Open | −12 |
-| Complaint (high severity) | Open | −18 |
-| Complaint (any) | Overdue | ×1.5 multiplier |
-| Complaint volume | RED window (0–60 days) | −15 |
-| Complaint volume | YELLOW window (60–90 days) | −8 |
-| Customer request | Overdue | −6 |
-| SM internal request | Overdue | −5 |
-| Sensitive event | Within 30 days | −10 |
-| Sensitive event volume | RED (0–60 days) | −12 |
-| Sensitive event volume | YELLOW (60–90 days) | −6 |
-| New cleaner | RED (0–15 days) | −12 |
-| New cleaner | YELLOW (15–30 days) | −6 |
-| New contact | RED (0–30 days) | −10 |
-| New contact | YELLOW (30–60 days) | −5 |
-| Visits below threshold | Per missing visit | −4 |
-| Deliveries below threshold | Per missing delivery | −3 |
-| Inspections below threshold | Per missing inspection | −4 |
-| Activity at/above threshold | Per category | +2 |
-| Inspection score < 70 | — | −10 |
-| Inspection score 70–85 | — | −3 |
-| Inspection score > 85 | — | +5 |
-| Survey avg < 2.5 | — | −18 |
-| Survey avg 2.5–3.5 | — | −8 |
-| Survey avg 3.5–4.5 | — | +5 |
-| Survey avg > 4.5 | — | +10 |
-| Negative gut check | — | −8 |
-| Positive gut check | — | +5 |
-| Negative project outcome | — | −10 |
-| Positive project outcome | — | +5 |
+| Red | 0–59 days | −10 |
+| Yellow | 60–89 days | −5 |
+| Green | > 89 days | 0 |
+
+> **Design note:** New contact was previously modeled as 0–30d/30–60d. Updated to match Devin's Excel — high churn risk justifies the extended Red window.
+
+### Customer Visit
+5-tier sentiment scale (ops manager+ only; supervisor cannot log this event type):
+
+| Sentiment | Value | Default Impact |
+|---|---|---|
+| Super Positive | `super_positive` | +10 |
+| Positive | `positive` | +5 |
+| Neutral | `neutral` | 0 |
+| Negative | `negative` | −8 |
+| Super Negative | `super_negative` | −15 |
+
+Impact reduced by time decay as visit ages. **A positive visit does NOT suppress open complaints** — complaints remain visible and continue affecting the score.
+
+### QC Inspection
+Per scoring doc §3 thresholds:
+
+| Score | Status | Default Impact |
+|---|---|---|
+| ≥ 86 | Pass (Green) | +5 |
+| 70–85 | Needs Attention (Yellow) | −3 |
+| ≤ 69 | Fail (Red) | −10 |
+
+Impact reduced by time decay until next inspection.
+
+### Project Outcome
+Positive +5, Negative −10. Time decay applies.
+
+### Supply Delivery
+Neutral in current model (impact = 0 unless overdue — simplified for demo).
 
 ---
 
-## Future: HubSpot Sync
+## Resolution Bonus
 
-Signal data will eventually sync from HubSpot (complaints, requests, visits, inspections). The mobile app and its survey data will push to HubSpot as a custom object. This module is designed to be the primary interface — HubSpot is the data backend, not the user-facing tool.
+When any open event is marked resolved, a configurable bonus is added to the score (default: +4 pts). Resolution does not remove the event from history — it remains visible in the Activity Log with a "Resolved" indicator.
+
+---
+
+## Live Scoring
+
+Sites with `liveScoring: true` compute their score in real-time from the event log rather than using a static stored score. This is used for the Broadway Tower demo deal and will be the model for all sites once the backend is connected.
+
+The score reacts immediately to:
+- New event logged
+- Event resolved
+- Scoring Rules config changed
+
+---
+
+## Scoring Configuration (Template System)
+
+All scoring values are stored in `ScoringConfig` and editable via the **Scoring Rules** slide-over panel. Changes take effect immediately on all live-scored sites. This is the default template — franchises can build their own.
+
+Key configurable fields:
+- Tier thresholds (green/yellow cutoff scores)
+- All deduction/bonus amounts
+- New cleaner Red/Yellow day windows
+- New contact Red/Yellow day windows
+- Sensitive event decay days
+- Time decay toggle (on/off)
+
+---
+
+## Unresolved Items (from scoring doc)
+
+- [ ] Full weighting formula for combining sub-type weights (1–4) into a 0–100 score — Devin to share
+- [ ] Complaint volume penalty formula (e.g. 3 complaints in 60 days) — TBD, to be added as a separate scoring input
+- [ ] "No Data / Caution" tier — for sites with insufficient activity to produce a reliable score (do not render as Green)
+- [ ] Staleness weight adjustment — accounts with no logged activity should drift downward; exact formula TBD
 
 ---
 
@@ -305,30 +185,32 @@ Signal data will eventually sync from HubSpot (complaints, requests, visits, ins
 ```
 src/
   docs/
-    health-scoring.md          ← This file
+    health-scoring.md              ← This file (technical reference)
   pages/
-    Health.tsx                 ← Main split-panel page
+    Health.tsx                     ← Main split-panel page + Scoring Rules state
   components/
     health/
-      PhoneFrame.tsx           ← iPhone device frame
-      MobileApp.tsx            ← Mobile app screen manager
+      PhoneFrame.tsx               ← iPhone device frame
+      MobileApp.tsx                ← Field staff mobile app (deals → detail → log event)
+      eventMeta.ts                 ← EVENT_META: icons, labels, colors per event type
       mobile/
-        WelcomeScreen.tsx
-        CriteriaSelect.tsx
-        CriteriaConfirm.tsx
-        PostJobIntro.tsx
-        CriterionRate.tsx
-        GutCheck.tsx
-        ThankYou.tsx
+        DealListScreen.tsx         ← Mobile: list of assigned sites
+        DealDetailScreen.tsx       ← Mobile: site detail + recent events
+        EventLogScreen.tsx         ← Mobile: log event wrapper
+        ContactScreen.tsx          ← Mobile: contact us
       admin/
-        AccountHealthList.tsx
-        HealthDetail.tsx
-        ScoreGauge.tsx
-        SignalRow.tsx
-        ActionItems.tsx
-        SurveyHistory.tsx
+        AccountHealthList.tsx      ← Sidebar: grouped site list with tier filter
+        HealthDetail.tsx           ← Detail panel: score, activity log, signals
+        ScoreGauge.tsx             ← Circular score gauge
+        SignalRow.tsx              ← Signal row with status dot
+        EventList.tsx              ← Activity log: open/resolved events, expand to details
+        EventLogForm.tsx           ← Shared log-event form (desktop + mobile)
+        ScoringRulesPanel.tsx      ← Admin slide-over for editing scoring config
   types/
-    health.ts
+    health.ts                      ← AccountHealthScore, HealthEvent, HealthTier, etc.
   data/
-    healthMockData.ts
+    healthMockData.ts              ← Mock accounts, sites, events
+    scoringConfig.ts               ← ScoringConfig interface + DEFAULT_SCORING_CONFIG
+  utils/
+    healthScoring.ts               ← computeLiveScore() — pure scoring engine
 ```

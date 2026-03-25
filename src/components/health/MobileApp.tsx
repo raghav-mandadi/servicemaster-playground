@@ -1,216 +1,156 @@
-import { useState } from 'react';
-import type { AccountHealthScore, CriterionRating } from '../../types/health';
-import { HomeScreen }       from './mobile/HomeScreen';
-import { WelcomeScreen }    from './mobile/WelcomeScreen';
-import { CriteriaSelect }   from './mobile/CriteriaSelect';
-import { CriteriaConfirm }  from './mobile/CriteriaConfirm';
-import { PostJobIntro }     from './mobile/PostJobIntro';
-import { CriterionRate }    from './mobile/CriterionRate';
-import { GutCheck }         from './mobile/GutCheck';
-import { ThankYou }         from './mobile/ThankYou';
-import { RecurringSurvey }  from './mobile/RecurringSurvey';
-import { FeedbackForm }     from './mobile/FeedbackForm';
-import { ComplaintForm }    from './mobile/ComplaintForm';
+import { useState, useEffect, useMemo } from 'react';
+import type { AccountHealthScore, HealthEvent } from '../../types/health';
+import { DealListScreen }    from './mobile/DealListScreen';
+import { DealDetailScreen } from './mobile/DealDetailScreen';
+import { EventLogScreen }    from './mobile/EventLogScreen';
 import { ContactScreen }    from './mobile/ContactScreen';
+import { computeLiveScore } from '../../utils/healthScoring';
+import { DEFAULT_SCORING_CONFIG } from '../../data/scoringConfig';
 
-export type PreviewMode = 'prejob' | 'postjob';
-type SurveyKey = 'prejob' | 'recurring' | 'postjob';
-type Section   = 'home' | 'prejob' | 'recurring' | 'postjob' | 'feedback' | 'complaint' | 'contact';
-type PreJobScreen  = 'welcome' | 'select' | 'confirm';
-type PostJobScreen = 'intro' | `rate-${number}` | 'gutcheck' | 'thankyou';
+// PreviewMode kept as never export to avoid breaking any residual imports
+export type PreviewMode = never;
+
+type Section = 'deals' | 'deal-detail' | 'log-event' | 'contact';
+
+export type MobileEventOverride = {
+  status: 'in_progress' | 'resolved';
+  note:   string;
+  by:     string;
+  at:     string;
+};
 
 interface MobileAppProps {
-  mode?:         PreviewMode;
-  account:       AccountHealthScore | null;
-  onModeChange?: (mode: PreviewMode) => void;
+  accounts:     AccountHealthScore[];
+  employeeName?: string;
 }
 
-export function MobileApp({ account }: MobileAppProps) {
-  // Navigation
-  const [section,  setSection]  = useState<Section>('home');
+export function MobileApp({ accounts, employeeName = 'Mike Torres' }: MobileAppProps) {
+  const [section,          setSection]          = useState<Section>('deals');
+  const [selectedDealId,   setSelectedDealId]   = useState<string | null>(null);
+  const [localEvents,      setLocalEvents]      = useState<HealthEvent[]>([]);
+  const [successBanner,    setSuccessBanner]    = useState<string | null>(null);
+  const [mobileOverrides,  setMobileOverrides]  = useState<Record<string, MobileEventOverride>>({});
+  const [mobilePhotos,     setMobilePhotos]     = useState<Record<string, number>>({});
 
-  // Survey completion
-  const [completedSurveys, setCompletedSurveys] = useState<Set<SurveyKey>>(new Set());
+  // Auto-clear success banner after 3s
+  useEffect(() => {
+    if (!successBanner) return;
+    const t = setTimeout(() => setSuccessBanner(null), 3000);
+    return () => clearTimeout(t);
+  }, [successBanner]);
 
-  // Pre-job state
-  const [preJobScreen,     setPreJobScreen]     = useState<PreJobScreen>('welcome');
-  const [selectedCriteria, setSelectedCriteria] = useState<string[]>([]);
+  const selectedAccount = accounts.find(a => a.dealId === selectedDealId) ?? null;
 
-  // Post-job state
-  const [postJobScreen, setPostJobScreen] = useState<PostJobScreen>('intro');
-  const [ratingIndex,   setRatingIndex]   = useState(0);
-  const [ratings,       setRatings]       = useState<{ criterion: string; rating: CriterionRating; note?: string }[]>([]);
-  const [gutCheck,      setGutCheck]      = useState<'positive' | 'negative' | null>(null);
+  // Local events for the currently selected deal
+  const dealLocalEvents = localEvents.filter(e => e.dealId === selectedDealId);
 
-  const preJobCriteria: string[] =
-    account?.preJobSurveys[0]?.selectedCriteria ??
-    ['restrooms', 'floors', 'trash', 'surfaces', 'lobby'];
+  // Merge overrides into all deal events (for scoring + display)
+  const mergedDealEvents = useMemo((): HealthEvent[] => {
+    const applyOverride = (e: HealthEvent): HealthEvent => {
+      const ov = mobileOverrides[e.id];
+      if (!ov) return e;
+      return {
+        ...e,
+        resolutionStatus: ov.status,
+        resolutionNote:   ov.note || e.resolutionNote,
+        ...(ov.status === 'resolved'    ? { resolvedAt: ov.at,    resolvedBy: ov.by } : {}),
+        ...(ov.status === 'in_progress' ? { inProgressAt: ov.at, inProgressBy: ov.by } : {}),
+      };
+    };
+    const seed = (selectedAccount?.events ?? []).map(applyOverride);
+    const local = dealLocalEvents.map(applyOverride);
+    return [...local, ...seed];
+  }, [selectedAccount, dealLocalEvents, mobileOverrides]);
 
-  const surveyAvg    = account?.lastSurveyScore ?? null;
-  const accountName  = account?.accountName ?? 'Your Location';
-  const firstName    = accountName.split(' ')[0];
-  const scheduledDate = account?.preJobSurveys[0]?.scheduledDate ?? '2025-01-23';
-  const dealName     = account?.dealName ?? 'Bi-Weekly Cleaning';
+  // Compute breakdown from merged events
+  const dealBreakdown = useMemo(() => {
+    if (!selectedAccount) return undefined;
+    return computeLiveScore(mergedDealEvents, DEFAULT_SCORING_CONFIG).breakdown;
+  }, [selectedAccount, mergedDealEvents]);
 
-  const jobs = [{ dealName, scheduledDate }];
-
-  function complete(survey: SurveyKey) {
-    setCompletedSurveys(prev => new Set([...prev, survey]));
-    setSection('home');
+  function handleSelectDeal(dealId: string) {
+    setSelectedDealId(dealId);
+    setSection('deal-detail');
   }
 
-  function resetAll() {
-    setCompletedSurveys(new Set());
-    setSection('home');
-    setPreJobScreen('welcome');
-    setSelectedCriteria([]);
-    setPostJobScreen('intro');
-    setRatingIndex(0);
-    setRatings([]);
-    setGutCheck(null);
+  function handleEventSubmit(partial: Omit<HealthEvent, 'id' | 'dealId' | 'loggedAt'>) {
+    if (!selectedDealId) return;
+    setLocalEvents(prev => [{
+      ...partial,
+      id:       `ev-${Date.now()}`,
+      dealId:   selectedDealId,
+      loggedAt: new Date().toISOString(),
+    }, ...prev]);
+    setSuccessBanner('Event logged successfully');
+    setSection('deal-detail');
   }
 
-  function startSurvey(key: SurveyKey) {
-    if (key === 'prejob') {
-      setPreJobScreen('welcome');
-      setSelectedCriteria([]);
-      setSection('prejob');
-    } else if (key === 'recurring') {
-      setSection('recurring');
-    } else {
-      setPostJobScreen('intro');
-      setRatingIndex(0);
-      setRatings([]);
-      setGutCheck(null);
-      setSection('postjob');
-    }
+  function handleUpdateStatus(eventId: string, status: 'in_progress' | 'resolved', note: string) {
+    setMobileOverrides(prev => ({
+      ...prev,
+      [eventId]: { status, note, by: employeeName, at: new Date().toISOString() },
+    }));
+    setSuccessBanner(status === 'resolved' ? 'Event resolved' : 'Marked in progress');
+  }
+
+  function handleAddPhoto(eventId: string) {
+    setMobilePhotos(prev => ({ ...prev, [eventId]: (prev[eventId] ?? 0) + 1 }));
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', position: 'relative' }}>
+      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}>
 
-        {/* ── Home ── */}
-        {section === 'home' && (
-          <HomeScreen
-            firstName={firstName}
-            accountName={accountName}
-            jobs={jobs}
-            completedSurveys={completedSurveys}
-            onStartSurvey={startSurvey}
-            onFeedback={() => setSection('feedback')}
-            onComplaint={() => setSection('complaint')}
-            onContact={() => setSection('contact')}
-            onReset={resetAll}
+        {/* Success banner */}
+        {successBanner && (
+          <div style={{
+            position: 'sticky', top: 0, zIndex: 10,
+            background: '#16A34A', color: '#fff',
+            fontSize: 13, fontWeight: 600,
+            padding: '10px 16px',
+            textAlign: 'center',
+            fontFamily: 'Helvetica Neue, sans-serif',
+          }}>
+            {successBanner}
+          </div>
+        )}
+
+        {section === 'deals' && (
+          <DealListScreen
+            accounts={accounts}
+            employeeName={employeeName}
+            onSelectDeal={handleSelectDeal}
+            onRefresh={() => {}}
           />
         )}
 
-        {/* ── Pre-job flow ── */}
-        {section === 'prejob' && (
-          <>
-            {preJobScreen === 'welcome' && (
-              <WelcomeScreen
-                firstName={firstName}
-                scheduledDate={scheduledDate}
-                onNext={() => setPreJobScreen('select')}
-                onSkip={() => complete('prejob')}
-              />
-            )}
-            {preJobScreen === 'select' && (
-              <CriteriaSelect
-                selected={selectedCriteria}
-                onChange={setSelectedCriteria}
-                onNext={() => setPreJobScreen('confirm')}
-              />
-            )}
-            {preJobScreen === 'confirm' && (
-              <CriteriaConfirm
-                selected={selectedCriteria}
-                onDone={() => complete('prejob')}
-              />
-            )}
-          </>
-        )}
-
-        {/* ── Recurring satisfaction ── */}
-        {section === 'recurring' && (
-          <RecurringSurvey
-            onBack={() => setSection('home')}
-            onComplete={() => complete('recurring')}
+        {section === 'deal-detail' && selectedAccount && (
+          <DealDetailScreen
+            account={selectedAccount}
+            mergedEvents={mergedDealEvents}
+            breakdown={dealBreakdown}
+            photos={mobilePhotos}
+            onBack={() => setSection('deals')}
+            onLogEvent={() => setSection('log-event')}
+            onUpdateStatus={handleUpdateStatus}
+            onAddPhoto={handleAddPhoto}
           />
         )}
 
-        {/* ── Post-job flow ── */}
-        {section === 'postjob' && (
-          <>
-            {postJobScreen === 'intro' && (
-              <PostJobIntro
-                criteria={preJobCriteria}
-                onStart={() => {
-                  setRatingIndex(0);
-                  setRatings([]);
-                  setPostJobScreen('rate-0');
-                }}
-              />
-            )}
-            {postJobScreen.startsWith('rate-') && (
-              <CriterionRate
-                criterion={preJobCriteria[ratingIndex]}
-                current={ratingIndex}
-                total={preJobCriteria.length}
-                onNext={(rating, note) => {
-                  const updated = [...ratings, { criterion: preJobCriteria[ratingIndex], rating, note }];
-                  setRatings(updated);
-                  const next = ratingIndex + 1;
-                  if (next >= preJobCriteria.length) {
-                    setPostJobScreen('gutcheck');
-                  } else {
-                    setRatingIndex(next);
-                    setPostJobScreen(`rate-${next}`);
-                  }
-                }}
-                onBack={() => {
-                  if (ratingIndex === 0) {
-                    setPostJobScreen('intro');
-                  } else {
-                    const prev = ratingIndex - 1;
-                    setRatingIndex(prev);
-                    setRatings(r => r.slice(0, -1));
-                    setPostJobScreen(`rate-${prev}`);
-                  }
-                }}
-              />
-            )}
-            {postJobScreen === 'gutcheck' && (
-              <GutCheck
-                onSubmit={(sentiment) => {
-                  setGutCheck(sentiment);
-                  setPostJobScreen('thankyou');
-                }}
-              />
-            )}
-            {postJobScreen === 'thankyou' && (
-              <ThankYou
-                firstName={firstName}
-                avgScore={surveyAvg ?? (ratings.reduce((s, r) => s + r.rating, 0) / ratings.length)}
-                hasLowRating={ratings.some(r => r.rating <= 2)}
-                sentiment={gutCheck ?? 'positive'}
-                onReset={() => complete('postjob')}
-              />
-            )}
-          </>
+        {section === 'log-event' && selectedAccount && (
+          <EventLogScreen
+            dealName={selectedAccount.dealName}
+            onSubmit={handleEventSubmit}
+            onBack={() => setSection('deal-detail')}
+          />
         )}
 
-        {/* ── Feedback ── */}
-        {section === 'feedback'  && <FeedbackForm  onBack={() => setSection('home')} />}
-
-        {/* ── Complaint ── */}
-        {section === 'complaint' && <ComplaintForm onBack={() => setSection('home')} />}
-
-        {/* ── Contact ── */}
-        {section === 'contact'   && <ContactScreen onBack={() => setSection('home')} />}
+        {section === 'contact' && (
+          <ContactScreen onBack={() => setSection('deals')} />
+        )}
 
       </div>
+
     </div>
   );
 }
