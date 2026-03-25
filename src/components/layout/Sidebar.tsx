@@ -1,5 +1,6 @@
+import { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Sparkles, LayoutDashboard, Building2, FileText, HeartPulse, Users, Settings } from 'lucide-react';
+import { Sparkles, LayoutDashboard, Building2, FileText, HeartPulse, Users, Settings, MapPin, ChevronDown, Check } from 'lucide-react';
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -18,6 +19,61 @@ const lastUpdated = new Date().toLocaleString('en-US', {
   month: 'short', day: 'numeric', year: 'numeric',
   hour: 'numeric', minute: '2-digit',
 });
+
+const LOCATIONS = ['Chicago', 'Indianapolis'] as const;
+type Location = typeof LOCATIONS[number];
+
+function LocationDropdown() {
+  const [active, setActive] = useState<Location>(() => {
+    const stored = localStorage.getItem('sm_active_location');
+    return (LOCATIONS.includes(stored as Location) ? stored : 'Chicago') as Location;
+  });
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
+
+  function select(loc: Location) {
+    setActive(loc);
+    localStorage.setItem('sm_active_location', loc);
+    setOpen(false);
+  }
+
+  return (
+    <div ref={ref} className="relative px-4 py-2.5 border-t border-border-header">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center gap-2 text-left group"
+      >
+        <MapPin size={13} className="text-text-subtle flex-shrink-0" />
+        <span className="flex-1 text-[13px] font-medium text-text-primary truncate">{active}</span>
+        <ChevronDown size={13} className={`text-text-subtle transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="absolute bottom-full left-3 right-3 mb-1 bg-white border border-border-card rounded-[8px] shadow-lg overflow-hidden z-50">
+          {LOCATIONS.map(loc => (
+            <button
+              key={loc}
+              onClick={() => select(loc)}
+              className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-surface-page transition-colors"
+            >
+              <span className={`flex-1 text-[13px] ${active === loc ? 'font-medium text-primary' : 'text-text-primary'}`}>
+                {loc}
+              </span>
+              {active === loc && <Check size={12} className="text-primary flex-shrink-0" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Sidebar() {
   const location = useLocation();
@@ -53,6 +109,8 @@ export function Sidebar() {
           );
         })}
       </nav>
+
+      <LocationDropdown />
 
       {/* User chip */}
       <div className="h-[64px] border-t border-border-header px-4 flex items-center gap-3">
