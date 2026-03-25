@@ -1,4 +1,4 @@
-import { getTierColors, getTierLabel } from '../../../types/health';
+import { getTierColors } from '../../../types/health';
 import type { HealthTier } from '../../../types/health';
 
 interface ScoreGaugeProps {
