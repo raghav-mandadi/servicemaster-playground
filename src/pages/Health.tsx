@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { X, SlidersHorizontal, Filter } from 'lucide-react';
 import { AccountHealthList } from '../components/health/admin/AccountHealthList';
 import type { HealthSelection } from '../components/health/admin/AccountHealthList';
@@ -9,7 +9,12 @@ import { ScoringRulesPanel } from '../components/health/admin/ScoringRulesPanel'
 import { accountHealthScores } from '../data/mockDataLoader';
 import { DEFAULT_SCORING_CONFIG } from '../data/scoringConfig';
 import type { ScoringConfig } from '../data/scoringConfig';
+import { computeLiveScore } from '../utils/healthScoring';
+import type { HealthEvent } from '../types/health';
+import eventsJson from '../data/events.json';
 import usersJson from '../data/users.json';
+
+const STORAGE_KEY = 'sm_health_events';
 
 const ROLE_DISPLAY: Record<string, string> = {
   gm:          'GM',
@@ -20,13 +25,48 @@ const ROLE_DISPLAY: Record<string, string> = {
 };
 
 export function Health() {
-  const firstRed = accountHealthScores.find(a => a.tier === 'red');
+  const [eventsMap, setEventsMap] = useState<Record<string, HealthEvent[]>>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) return JSON.parse(stored) as Record<string, HealthEvent[]>;
+    } catch {
+      // ignore
+    }
+    // Seed from JSON: group events by dealId
+    const map: Record<string, HealthEvent[]> = {};
+    (eventsJson as HealthEvent[]).forEach(ev => {
+      if (!map[ev.dealId]) map[ev.dealId] = [];
+      map[ev.dealId].push(ev);
+    });
+    return map;
+  });
+
+  // Persist eventsMap to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(eventsMap));
+    } catch {
+      // ignore quota errors
+    }
+  }, [eventsMap]);
+
+  const [scoringConfig, setScoringConfig] = useState<ScoringConfig>(DEFAULT_SCORING_CONFIG);
+
+  // Compute live scores from eventsMap
+  const liveAccountScores = useMemo(() => {
+    return accountHealthScores.map(base => {
+      const events = eventsMap[base.dealId] ?? [];
+      const { score, tier, incidentOverride } = computeLiveScore(events, scoringConfig);
+      return { ...base, score, tier, incidentOverride, events };
+    });
+  }, [eventsMap, scoringConfig]);
+
+  const firstRed = liveAccountScores.find(a => a.tier === 'red');
   const [selected, setSelected] = useState<HealthSelection | null>(
     firstRed ? { type: 'deal', dealId: firstRed.dealId, accountId: firstRed.accountId } : null
   );
   const [showPhoneModal,   setShowPhoneModal]   = useState(false);
   const [showScoringRules, setShowScoringRules] = useState(false);
-  const [scoringConfig,    setScoringConfig]    = useState<ScoringConfig>(DEFAULT_SCORING_CONFIG);
   const [currentUserId,    setCurrentUserId]    = useState<string>('user-004');
   const [filterMySites,    setFilterMySites]    = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
@@ -45,10 +85,25 @@ export function Health() {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
+  // Event mutation callbacks
+  function handleAddEvent(dealId: string, event: HealthEvent) {
+    setEventsMap(prev => ({
+      ...prev,
+      [dealId]: [event, ...(prev[dealId] ?? [])],
+    }));
+  }
+
+  function handleDeleteEvent(dealId: string, eventId: string) {
+    setEventsMap(prev => ({
+      ...prev,
+      [dealId]: (prev[dealId] ?? []).filter(e => e.id !== eventId),
+    }));
+  }
+
   // Filter scores by assigned sites when toggled
   const visibleScores = filterMySites && currentUser.assignedSiteIds?.length
-    ? accountHealthScores.filter(s => currentUser.assignedSiteIds.includes(s.dealId))
-    : accountHealthScores;
+    ? liveAccountScores.filter(s => currentUser.assignedSiteIds.includes(s.dealId))
+    : liveAccountScores;
 
   const selectedDeal = selected?.type === 'deal'
     ? visibleScores.find(a => a.dealId === selected.dealId) ?? null
@@ -203,6 +258,9 @@ export function Health() {
               accountDeals={selectedAccountDeals}
               onOpenPhonePreview={() => setShowPhoneModal(true)}
               scoringConfig={scoringConfig}
+              eventsForDeal={selectedDeal ? (eventsMap[selectedDeal.dealId] ?? []) : []}
+              onAddEvent={handleAddEvent}
+              onDeleteEvent={handleDeleteEvent}
             />
           ) : (
             <div className="flex items-center justify-center h-48 text-[13px] text-text-subtle">

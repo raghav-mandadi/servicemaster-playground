@@ -16,6 +16,9 @@ interface HealthDetailProps {
   accountDeals:        AccountHealthScore[];
   onOpenPhonePreview?: () => void;
   scoringConfig:       ScoringConfig;
+  eventsForDeal:       HealthEvent[];
+  onAddEvent:          (dealId: string, event: HealthEvent) => void;
+  onDeleteEvent:       (dealId: string, eventId: string) => void;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -145,19 +148,21 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
 
 // ─── Deal Detail (file view) ──────────────────────────────────────────────────
 
-function DealDetail({ account, onOpenPhonePreview, scoringConfig }: {
+function DealDetail({ account, onOpenPhonePreview, scoringConfig, events, onAddEvent, onDeleteEvent }: {
   account:             AccountHealthScore;
   onOpenPhonePreview?: () => void;
   scoringConfig:       ScoringConfig;
+  events:              HealthEvent[];
+  onAddEvent:          (dealId: string, event: HealthEvent) => void;
+  onDeleteEvent:       (dealId: string, eventId: string) => void;
 }) {
   const [showLogEvent,      setShowLogEvent]      = useState(false);
   const [showWeeklyReport,  setShowWeeklyReport]  = useState(false);
-  const [localEvents,       setLocalEvents]       = useState<HealthEvent[]>([]);
 
   type EventOverride = { status: 'in_progress' | 'resolved'; note: string; by: string; at: string };
   const [eventOverrides, setEventOverrides] = useState<Record<string, EventOverride>>({});
 
-  // Merge localEvents + seed events, applying overrides for in_progress / resolved
+  // Apply overrides for in_progress / resolved status changes (ephemeral UI state)
   const allEvents: HealthEvent[] = useMemo(() => {
     const applyOverride = (e: HealthEvent): HealthEvent => {
       const ov = eventOverrides[e.id];
@@ -170,8 +175,8 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig }: {
         ...(ov.status === 'in_progress' ? { inProgressAt: ov.at, inProgressBy: ov.by } : {}),
       };
     };
-    return [...localEvents.map(applyOverride), ...(account.events ?? []).map(applyOverride)];
-  }, [localEvents, account.events, eventOverrides]);
+    return events.map(applyOverride);
+  }, [events, eventOverrides]);
 
   // Live score computation for the demo deal
   const liveScore = useMemo(() => {
@@ -188,6 +193,10 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig }: {
       ...prev,
       [eventId]: { status, note, by: 'Current User', at: new Date().toISOString() },
     }));
+  }
+
+  function handleDeleteEvent(eventId: string) {
+    onDeleteEvent(account.dealId, eventId);
   }
 
   return (
@@ -280,7 +289,7 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig }: {
           </div>
         </div>
         <div className="px-4 py-3">
-          <EventList events={allEvents} breakdown={liveScore?.breakdown} onUpdateStatus={handleUpdateStatus} />
+          <EventList events={allEvents} breakdown={liveScore?.breakdown} onUpdateStatus={handleUpdateStatus} onDelete={handleDeleteEvent} />
         </div>
       </div>
 
@@ -311,12 +320,12 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig }: {
             <EventLogForm
               dealName={account.dealName}
               onSubmit={partial => {
-                setLocalEvents(prev => [{
+                onAddEvent(account.dealId, {
                   ...partial,
                   id:       `ev-${Date.now()}`,
                   dealId:   account.dealId,
                   loggedAt: new Date().toISOString(),
-                }, ...prev]);
+                });
                 setShowLogEvent(false);
               }}
               onCancel={() => setShowLogEvent(false)}
@@ -331,10 +340,19 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig }: {
 
 // ─── Main export ─────────────────────────────────────────────────────────────
 
-export function HealthDetail({ selection, deal, accountDeals, onOpenPhonePreview, scoringConfig }: HealthDetailProps) {
+export function HealthDetail({ selection, deal, accountDeals, onOpenPhonePreview, scoringConfig, eventsForDeal, onAddEvent, onDeleteEvent }: HealthDetailProps) {
   if (selection.type === 'account') {
     return <AccountSummary accountDeals={accountDeals} onOpenPhonePreview={onOpenPhonePreview} />;
   }
   if (!deal) return null;
-  return <DealDetail account={deal} onOpenPhonePreview={onOpenPhonePreview} scoringConfig={scoringConfig} />;
+  return (
+    <DealDetail
+      account={deal}
+      onOpenPhonePreview={onOpenPhonePreview}
+      scoringConfig={scoringConfig}
+      events={eventsForDeal}
+      onAddEvent={onAddEvent}
+      onDeleteEvent={onDeleteEvent}
+    />
+  );
 }
