@@ -83,9 +83,10 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260325-5fu | Health page cleanup: remove trend markers, fix live scoring, clear event data, add event deletion, persist events to localStorage | 2026-03-25 | 69d494f | [260325-5fu-health-page-cleanup-remove-trend-markers](./quick/260325-5fu-health-page-cleanup-remove-trend-markers/) |
+| 260325-5zh | Health page UI polish: replace StatusDot with unread-dot badge (localStorage), remove live-scoring labels, redesign AccountSummary with stat cards and View Account link | 2026-03-25 | 46f30dc | [260325-5zh-health-page-ui-polish-remove-activity-lo](./quick/260325-5zh-health-page-ui-polish-remove-activity-lo/) |
 
 ## Session Continuity
 
-Last session: 2026-03-25T10:55:01.369Z
-Stopped at: Completed quick task 260325-5fu: Health page cleanup
+Last session: 2026-03-25T11:15:00.000Z
+Stopped at: Completed quick task 260325-5zh: Health page UI polish
 Resume file: None
