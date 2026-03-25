@@ -9,7 +9,7 @@ import { WeeklyReportModal } from './WeeklyReportModal';
 import type { AccountHealthScore, HealthTier, HealthEvent } from '../../../types/health';
 import type { HealthSelection } from './AccountHealthList';
 import type { ScoringConfig } from '../../../data/scoringConfig';
-import { computeLiveScore } from '../../../utils/healthScoring';
+import { computeLiveScore, isInherentlyPositive } from '../../../utils/healthScoring';
 
 interface HealthDetailProps {
   selection:           HealthSelection;
@@ -31,6 +31,10 @@ const TIER_COLOR: Record<HealthTier, string> = {
   red:    '#DC2626',
 };
 
+
+function isDisplayResolved(event: HealthEvent): boolean {
+  return !!event.resolvedAt || event.resolutionStatus === 'resolved' || isInherentlyPositive(event);
+}
 
 // ─── Shared banners ───────────────────────────────────────────────────────────
 
@@ -245,8 +249,8 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig, events, onAddE
       )}
 
       {/* Score header */}
-      <div className="bg-white border border-border-card rounded-[8px] px-5 py-4 flex items-start gap-5 relative">
-        <div className="absolute top-4 right-4 flex items-center gap-2">
+      <div className="bg-white border border-border-card rounded-[8px] px-4 py-3 flex items-start gap-4 relative">
+        <div className="absolute top-3 right-4 flex items-center gap-2">
           <button
             onClick={() => setShowLogEvent(true)}
             className="flex items-center gap-1.5 text-[11px] text-white bg-[#00A2B2] hover:bg-[#008A99] px-2.5 py-1.5 rounded-[6px] transition-colors"
@@ -264,11 +268,15 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig, events, onAddE
             </button>
           )}
         </div>
-        <ScoreGauge score={displayScore} tier={displayTier} size="lg" />
-        <div className="flex-1 pt-1">
-          <p className="text-[16px] font-semibold text-text-primary leading-tight">{account.accountName}</p>
-          <p className="text-[13px] text-text-subtle mt-0.5">{account.dealName}</p>
-          <div className="flex items-center gap-3 mt-3 text-[12px] text-text-subtle">
+        <ScoreGauge score={displayScore} tier={displayTier} size="sm" />
+        <div className="flex-1 min-w-0">
+          {/* Name + deal */}
+          <div className="flex items-baseline gap-2 flex-wrap pr-28">
+            <p className="text-[15px] font-semibold text-text-primary leading-tight">{account.accountName}</p>
+            <p className="text-[12px] text-text-subtle">{account.dealName}</p>
+          </div>
+          {/* Trend + date */}
+          <div className="flex items-center gap-3 mt-0.5 text-[11px] text-text-subtle">
             <span style={{ color: account.trend >= 0 ? '#16A34A' : '#DC2626' }}>
               {account.trend >= 0 ? '+' : ''}{account.trend} pts this month
             </span>
@@ -277,22 +285,44 @@ function DealDetail({ account, onOpenPhonePreview, scoringConfig, events, onAddE
               {new Date(account.lastComputedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
             </span>
           </div>
-          {/* Live score breakdown for demo deal */}
-          {liveScore && liveScore.breakdown.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {liveScore.breakdown.map(item => (
-                <span
-                  key={item.eventId}
-                  className="text-[10px] px-1.5 py-px rounded"
-                  style={{
-                    background: item.impact > 0 ? '#F0FDF4' : item.impact < 0 ? '#FEF2F2' : '#F4F7FA',
-                    color:      item.impact > 0 ? '#16A34A'  : item.impact < 0 ? '#DC2626'  : '#6D6D6D',
-                  }}
-                >
-                  {item.impact > 0 ? '+' : ''}{item.impact} {item.label.replace(/_/g, ' ')}
-                  {item.resolved ? ' ✓' : ''}
+          {/* Activity summary chips */}
+          <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+            {([30, 60, 90] as const).map(days => {
+              const cutoff = Date.now() - days * 86_400_000;
+              const count  = allEvents.filter(e => new Date(e.loggedAt).getTime() >= cutoff).length;
+              return (
+                <span key={days} className="text-[10px] px-2 py-0.5 rounded-full border border-border-card bg-surface-header text-text-subtle">
+                  <span className="font-semibold text-text-primary">{count}</span> in {days}d
                 </span>
-              ))}
+              );
+            })}
+            {(() => {
+              const resolved = allEvents.filter(e => isDisplayResolved(e)).length;
+              return resolved > 0 ? (
+                <span className="text-[10px] px-2 py-0.5 rounded-full border border-[#16A34A]/20 bg-[#F0FDF4] text-[#16A34A]">
+                  <span className="font-semibold">{resolved}</span> resolved
+                </span>
+              ) : null;
+            })()}
+            {(() => {
+              const open = allEvents.filter(e => !isDisplayResolved(e) && e.resolutionStatus == null).length;
+              return open > 0 ? (
+                <span className="text-[10px] px-2 py-0.5 rounded-full border border-[#DC2626]/20 bg-[#FEF2F2] text-[#DC2626]">
+                  <span className="font-semibold">{open}</span> open
+                </span>
+              ) : null;
+            })()}
+          </div>
+          {/* Primary contact */}
+          {account.primaryContact && (
+            <div className="mt-2 flex items-center gap-1.5 text-[11px] text-text-subtle flex-wrap">
+              <span className="font-medium text-text-primary">{account.primaryContact.name}</span>
+              <span>·</span>
+              <span>{account.primaryContact.title}</span>
+              <span>·</span>
+              <span>{account.primaryContact.phone}</span>
+              <span>·</span>
+              <span>{account.primaryContact.email}</span>
             </div>
           )}
         </div>
