@@ -68,9 +68,6 @@ export function ScoreGauge({ score, tier, size = 'lg' }: ScoreGaugeProps) {
           <span className="text-[11px] text-text-subtle mt-0.5">/ 100</span>
         </div>
       </div>
-      <div className={`px-3 py-1 rounded-full text-[12px] font-semibold ${colors.bg} ${colors.text} ${colors.border} border`}>
-        {getTierLabel(tier)}
-      </div>
     </div>
   );
 }
