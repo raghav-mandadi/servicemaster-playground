@@ -35,7 +35,6 @@ interface RawSite {
   lastSurveyScore:      number | null;
   signals:              HealthSignal[];
   actionItems:          string[];
-  riskProfile:          RiskProfile;
   contractStartDate?:   string;
   contractEndDate?:     string;
   primaryContact?:      SiteContact;
@@ -73,6 +72,30 @@ export function buildHealthScores(config: ScoringConfig = DEFAULT_SCORING_CONFIG
     const events = (eventsJson as HealthEvent[]).filter(e => e.dealId === site.dealId);
     const { score, tier, incidentOverride } = computeLiveScore(events, config);
 
+    // Compute riskProfile from event history
+    const twelveMonthsAgo = new Date();
+    twelveMonthsAgo.setFullYear(twelveMonthsAgo.getFullYear() - 1);
+    const twelveMonthsAgoIso = twelveMonthsAgo.toISOString();
+
+    const events12m = events.filter(e => e.loggedAt >= twelveMonthsAgoIso);
+    const incidentCount12m = events12m.filter(
+      e => e.type === 'complaint' || e.type === 'sensitive_event'
+    ).length;
+    const lastEventAt = events.reduce<string>((latest, ev) => {
+      return ev.loggedAt > latest ? ev.loggedAt : latest;
+    }, '');
+    const watchlist = incidentCount12m >= 2;
+
+    const computedRiskProfile: RiskProfile = {
+      eventCount12m:    events12m.length,
+      incidentCount12m,
+      lastEventAt:      lastEventAt || new Date().toISOString(),
+      watchlist,
+      watchlistReason:  watchlist
+        ? `${incidentCount12m} incident${incidentCount12m !== 1 ? 's' : ''} in 12 months`
+        : undefined,
+    };
+
     return {
       accountId:       site.accountId,
       accountName,
@@ -85,7 +108,7 @@ export function buildHealthScores(config: ScoringConfig = DEFAULT_SCORING_CONFIG
       accountTier:     site.accountTier as 1 | 2 | 3 | 4 | 5,
       monthlyRevenue:  site.monthlyRevenue,
       liveScoring:     site.liveScoring,
-      riskProfile:     site.riskProfile,
+      riskProfile:     computedRiskProfile,
       lastComputedAt:  new Date().toISOString(),
       signals:         site.signals,
       lastSurveyDate:  site.lastSurveyDate,
