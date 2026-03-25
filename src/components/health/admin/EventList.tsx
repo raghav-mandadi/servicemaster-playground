@@ -140,7 +140,7 @@ function EventCard({ event, impact, isExpanded, isUnread, onToggle, onUpdateStat
             <span className="text-[11px] text-text-subtle flex-shrink-0">{formatDate(event.loggedAt)}</span>
           </div>
           {/* Row 2: description, indented under icon */}
-          <p className="text-[11px] text-text-subtle leading-snug line-clamp-2 pl-[28px] mt-0.5">
+          <p className="text-[11px] text-text-subtle leading-snug line-clamp-2 pl-[48px] mt-0.5">
             {event.description}
           </p>
         </div>
