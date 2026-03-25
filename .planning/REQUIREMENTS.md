@@ -16,7 +16,7 @@
 ### Data
 
 - [x] **DATA-01**: All pages (Accounts, Health, Dashboard, Users) import from a single data loader (`mockDataLoader.ts`) — no parallel data sources
-- [ ] **DATA-02**: Accounts displayed on the Accounts page match exactly the accounts displayed on the Health page
+- [x] **DATA-02**: Accounts displayed on the Accounts page match exactly the accounts displayed on the Health page
 - [x] **DATA-03**: User data consolidated to a single schema — `users.json` is the canonical source; `mockData.ts` user list retired
 - [x] **DATA-04**: `riskProfile` fields derived dynamically from events rather than hardcoded in `sites.json`
 
@@ -24,7 +24,7 @@
 
 - [x] **CLEAN-01**: Orphaned imports and type references from deleted mobile survey screens removed (ComplaintForm, CriteriaConfirm, CriteriaSelect, CriterionRate, FeedbackForm, GutCheck, HomeScreen, PostJobIntro, RecurringSurvey, ThankYou, WelcomeScreen)
 - [x] **CLEAN-02**: Unused types in `src/types/health.ts` related to deleted survey flow removed or clearly marked as deferred
-- [ ] **CLEAN-03**: `src/data/healthMockData.ts` removed if unused (deleted in git status)
+- [x] **CLEAN-03**: `src/data/healthMockData.ts` removed if unused (deleted in git status)
 - [x] **CLEAN-04**: Dead exports and unused constants from `src/data/mockData.ts` cleaned up
 
 ### Context
@@ -66,12 +66,12 @@
 | TENANT-04 | Phase 2 | Pending |
 | TENANT-05 | Phase 2 | Pending |
 | DATA-01 | Phase 1 | Complete |
-| DATA-02 | Phase 1 | Pending |
+| DATA-02 | Phase 1 | Complete |
 | DATA-03 | Phase 1 | Complete |
 | DATA-04 | Phase 1 | Complete |
 | CLEAN-01 | Phase 1 | Complete |
 | CLEAN-02 | Phase 1 | Complete |
-| CLEAN-03 | Phase 1 | Pending |
+| CLEAN-03 | Phase 1 | Complete |
 | CLEAN-04 | Phase 1 | Complete |
 | CTX-01 | Phase 3 | Pending |
 | CTX-02 | Phase 3 | Pending |

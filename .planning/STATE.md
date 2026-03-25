@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 01-cleanup-data-unification plan 02 (data layer migration)
-last_updated: "2026-03-25T10:38:13.373Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 01-cleanup-data-unification plan 03 (page migration and mockData retirement)
+last_updated: "2026-03-25T10:41:23.835Z"
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -48,6 +48,7 @@ Plan: 3 of 3
 *Updated after each plan completion*
 | Phase 01-cleanup-data-unification P01 | 2 | 2 tasks | 2 files |
 | Phase 01-cleanup-data-unification P02 | 2 | 2 tasks | 1 files |
+| Phase 01-cleanup-data-unification P03 | 1 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,8 @@ Recent decisions affecting current work:
 - [Phase 01-cleanup-data-unification]: Compute riskProfile from events.json at load time in buildHealthScores() — no longer read from sites.json
 - [Phase 01-cleanup-data-unification]: mockDataLoader.ts is the single import point for all app data (accounts, accountHealthScores, users, templates, recentActivity)
 - [Phase 01-cleanup-data-unification]: watchlist threshold: incidentCount12m >= 2 (complaint + sensitive_event types only)
+- [Phase 01-cleanup-data-unification]: ROLE_LABEL map defined inline in Users.tsx — single-use lookup does not warrant a shared constants file
+- [Phase 01-cleanup-data-unification]: mockData.ts deleted outright — file fully superseded by mockDataLoader.ts, all 5 pages now import exclusively from mockDataLoader.ts
 
 ### Pending Todos
 
@@ -77,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T10:38:13.371Z
-Stopped at: Completed 01-cleanup-data-unification plan 02 (data layer migration)
+Last session: 2026-03-25T10:41:23.833Z
+Stopped at: Completed 01-cleanup-data-unification plan 03 (page migration and mockData retirement)
 Resume file: None

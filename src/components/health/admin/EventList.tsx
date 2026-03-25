@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, ChevronDown, ChevronUp, CheckCircle2, Clock, Circle } from 'lucide-react';
+import { Camera, ChevronDown, ChevronUp, CheckCircle2, Clock, Circle, Trash2 } from 'lucide-react';
 import type { HealthEvent, EventType } from '../../../types/health';
 import type { ScoreBreakdownItem } from '../../../utils/healthScoring';
 import { isInherentlyPositive } from '../../../utils/healthScoring';
@@ -9,6 +9,7 @@ interface EventListProps {
   events:          HealthEvent[];
   breakdown?:      ScoreBreakdownItem[];
   onUpdateStatus?: (eventId: string, status: 'in_progress' | 'resolved', note: string) => void;
+  onDelete?:       (eventId: string) => void;
 }
 
 const ROLE_LABEL: Record<string, string> = {
@@ -146,9 +147,10 @@ interface EventCardProps {
   isExpanded:      boolean;
   onToggle:        () => void;
   onUpdateStatus?: (eventId: string, status: 'in_progress' | 'resolved', note: string) => void;
+  onDelete?:       (eventId: string) => void;
 }
 
-function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus }: EventCardProps) {
+function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus, onDelete }: EventCardProps) {
   const [noteMode, setNoteMode] = useState<'in_progress' | 'resolved' | null>(null);
 
   const meta       = EVENT_META[event.type];
@@ -336,6 +338,19 @@ function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus }: Even
                 <p className="text-[11px] text-text-subtle/60 italic">No photos attached</p>
               )}
             </div>
+
+            {/* Delete affordance */}
+            {onDelete && (
+              <div className="flex justify-end pt-1 border-t border-border-card mt-1">
+                <button
+                  onClick={() => onDelete(event.id)}
+                  className="flex items-center gap-1 text-[11px] text-text-subtle hover:text-[#DC2626] transition-colors"
+                >
+                  <Trash2 size={11} />
+                  Delete event
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -345,7 +360,7 @@ function EventCard({ event, impact, isExpanded, onToggle, onUpdateStatus }: Even
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export function EventList({ events, breakdown, onUpdateStatus }: EventListProps) {
+export function EventList({ events, breakdown, onUpdateStatus, onDelete }: EventListProps) {
   const [expandedId,  setExpandedId]  = useState<string | null>(null);
   const [typeFilter,  setTypeFilter]  = useState<EventType | 'all'>('all');
 
@@ -386,6 +401,7 @@ export function EventList({ events, breakdown, onUpdateStatus }: EventListProps)
               isExpanded={expandedId === ev.id}
               onToggle={() => setExpandedId(expandedId === ev.id ? null : ev.id)}
               onUpdateStatus={onUpdateStatus}
+              onDelete={onDelete}
             />
           ))}
         </div>

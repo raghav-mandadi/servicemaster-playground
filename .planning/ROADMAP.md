@@ -12,7 +12,7 @@ Three phases turn the current codebase into a consistent, tenant-aware app. Phas
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Cleanup & Data Unification** - Remove dead code and consolidate all pages to a single data loader
+- [x] **Phase 1: Cleanup & Data Unification** - Remove dead code and consolidate all pages to a single data loader (completed 2026-03-25)
 - [ ] **Phase 2: Tenant Context** - Add React Context, JSON tenant tags, sidebar switcher, and per-page filtering
 - [ ] **Phase 3: Project Memory** - Create CLAUDE.md and memory artifacts for session continuity
 
@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md — Update User type in types/index.ts and remove survey types from types/health.ts
 - [x] 01-02-PLAN.md — Extend mockDataLoader.ts: derive riskProfile from events, add users/templates/recentActivity exports
-- [ ] 01-03-PLAN.md — Migrate Users.tsx, Dashboard.tsx, Templates.tsx to mockDataLoader.ts; retire mockData.ts
+- [x] 01-03-PLAN.md — Migrate Users.tsx, Dashboard.tsx, Templates.tsx to mockDataLoader.ts; retire mockData.ts
 
 ### Phase 2: Tenant Context
 **Goal**: Users can switch between Indianapolis and Chicago and see only that location's data everywhere
@@ -63,6 +63,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Cleanup & Data Unification | 2/3 | In Progress|  |
+| 1. Cleanup & Data Unification | 3/3 | Complete   | 2026-03-25 |
 | 2. Tenant Context | 0/TBD | Not started | - |
 | 3. Project Memory | 0/TBD | Not started | - |

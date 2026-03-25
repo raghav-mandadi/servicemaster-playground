@@ -134,9 +134,6 @@ function AccountSummary({ accountDeals, onOpenPhonePreview }: {
                 <span className="text-[15px] font-semibold" style={{ color: TIER_COLOR[deal.tier] }}>
                   {deal.score}
                 </span>
-                <span className="text-[11px]" style={{ color: deal.trend >= 0 ? '#16A34A' : '#DC2626' }}>
-                  {deal.trend >= 0 ? '+' : ''}{deal.trend}
-                </span>
               </div>
             </div>
           ))}

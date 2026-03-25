@@ -234,18 +234,12 @@ export function AccountHealthList({ accounts, selected, onSelect }: AccountHealt
                     {/* Deal name */}
                     <span className="text-[12px] text-text-primary truncate flex-1">{deal.dealName}</span>
 
-                    {/* Score + trend */}
+                    {/* Score */}
                     <span
                       className="text-[13px] font-bold flex-shrink-0"
                       style={{ color: dealColor }}
                     >
                       {deal.score}
-                    </span>
-                    <span
-                      className="text-[10px] font-semibold flex-shrink-0"
-                      style={{ color: deal.trend >= 0 ? '#16A34A' : '#DC2626' }}
-                    >
-                      {deal.trend >= 0 ? '↑' : '↓'}{Math.abs(deal.trend)}
                     </span>
                   </button>
                 );
