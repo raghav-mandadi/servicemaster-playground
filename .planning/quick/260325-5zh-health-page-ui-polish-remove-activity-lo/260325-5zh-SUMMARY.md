@@ -107,3 +107,12 @@ None — all changes are wired to real data (localStorage, useNavigate, TIER_COL
 ---
 *Phase: quick*
 *Completed: 2026-03-25*
+
+## Self-Check: PASSED
+
+- FOUND: src/components/health/admin/EventList.tsx
+- FOUND: src/components/health/admin/HealthDetail.tsx
+- FOUND: .planning/quick/260325-5zh.../260325-5zh-SUMMARY.md
+- FOUND commit: 91ce9a0 (Task 1)
+- FOUND commit: 46f30dc (Task 2)
+- Build: clean (0 TypeScript errors, 0 warnings)

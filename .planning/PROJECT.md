@@ -18,6 +18,10 @@ Every screen shows consistent, trustworthy data for the active location — no o
 - ✓ Core pages — Dashboard, Accounts, AccountDetail, Templates, Health, Users — existing
 - ✓ Sidebar navigation with `AppLayout` shell — existing
 - ✓ JSON-based mock data layer (`accounts.json`, `sites.json`, `events.json`, `users.json`) — existing
+- ✓ Single data source — all pages import from `mockDataLoader.ts` only; `mockData.ts` retired — Phase 1
+- ✓ Unified User schema — `users.json` canonical, `FieldRole` type, `assignedSiteIds` — Phase 1
+- ✓ Computed `riskProfile` — derived from events dynamically, not hardcoded in `sites.json` — Phase 1
+- ✓ Dead code removed — survey types, orphaned references from deleted mobile screens — Phase 1
 
 ### Active
 
@@ -83,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after initialization*
+*Last updated: 2026-03-25 after Phase 1 completion*
